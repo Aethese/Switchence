@@ -89,6 +89,11 @@
       "name": "paper-mario",
       "img": "paper-mario",
       "fname": "Paper Mario: The Origami King"
+    },
+    {
+      "name": "fortnite",
+      "img": "fortnite",
+      "fname": "Fortnite"
     }
   ]
 }

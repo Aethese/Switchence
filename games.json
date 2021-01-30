@@ -41,6 +41,11 @@
       "fname": "Super Mario Odyssey"
     },
     {
+      "name": "maker",
+      "img": "maker",
+      "fname": "Super Mario Maker 2"
+    },
+    {
       "name": "stardew",
       "img": "stardew",
       "fname": "Stardew Valley"
@@ -54,11 +59,6 @@
       "name": "cuphead",
       "img": "cuphead",
       "fname": "Cuphead"
-    },
-    {
-      "name": "maker",
-      "img": "maker",
-      "fname": "Super Mario Maker 2"
     }
   ]
 }

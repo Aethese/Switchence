@@ -1,0 +1,64 @@
+{
+  "games": [
+    {
+      "name": "animal-crossing",
+      "img": "animal-crossing",
+      "fname": "Animal Crossing New Horizons"
+    },
+    {
+      "name": "smash",
+      "img": "smash",
+      "fname": "Super Smash Bros. Ultimate"
+    },
+    {
+      "name": "splatoon",
+      "img": "splatoon",
+      "fname": "Splatoon 2"
+    },
+    {
+      "name": "clubhouse",
+      "img": "clubhouse",
+      "fname": "Clubhouse Games: 51 Worldwide Classics"
+    },
+    {
+      "name": "yoshi",
+      "img": "yoshi",
+      "fname": "Yoshi's Crafted World"
+    },
+    {
+      "name": "kart",
+      "img": "kart",
+      "fname": "Mario Kart 8 Deluxe"
+    },
+    {
+      "name": "zelda",
+      "img": "zelda",
+      "fname": "The Legend of Zelda: Breath of the Wild"
+    },
+    {
+      "name": "mario",
+      "img": "mario",
+      "fname": "Super Mario Odyssey"
+    },
+    {
+      "name": "stardew",
+      "img": "stardew",
+      "fname": "Stardew Valley"
+    },
+    {
+      "name": "hollow",
+      "img": "hollow",
+      "fname": "Hollow Knight"
+    },
+    {
+      "name": "cuphead",
+      "img": "cuphead",
+      "fname": "Cuphead"
+    },
+    {
+      "name": "maker",
+      "img": "maker",
+      "fname": "Super Mario Maker 2"
+    }
+  ]
+}

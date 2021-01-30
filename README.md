@@ -8,7 +8,7 @@ This entire project is still a WIP :)
 * A Discord account
 * An internet connection
 
-##### If you are using the source code:
+### If you are using the source code:
 * A Discord Account
 * An internet connect
 * Python version 3.7

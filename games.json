@@ -59,6 +59,36 @@
       "name": "cuphead",
       "img": "cuphead",
       "fname": "Cuphead"
+    },
+    {
+      "name": "nes",
+      "img": "nes",
+      "fname": "Nintendo Entertainment System"
+    },
+    {
+      "name": "snes",
+      "img": "snes",
+      "fname": "Super Nintendo Entertainment System"
+    },
+    {
+      "name": "yt",
+      "img": "yt",
+      "fname": "YouTube"
+    },
+    {
+      "name": "hulu",
+      "img": "hulu",
+      "fname": "Hulu"
+    },
+    {
+      "name": "rocket-league",
+      "img": "rocket-league",
+      "fname": "Rocket League"
+    },
+    {
+      "name": "paper-mario",
+      "img": "paper-mario",
+      "fname": "Paper Mario: The Origami King"
     }
   ]
 }

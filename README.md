@@ -11,7 +11,7 @@ This entire project is still a WIP :)
 ### If you are using the source code:
 * A Discord Account
 * An internet connection
-* Python version 3.7
+* Python version 3.7+ with pip
 * Everything in the requirements.txt file
 
 # Inspiration

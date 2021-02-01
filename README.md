@@ -2,7 +2,7 @@
 This entire project is still a WIP :)
 
 # Switchence
-**Simple** Nintendo Switch rich presence app
+**Simple** Nintendo Switch rich presence app that allows you to show that you're playing it on Discord. What makes this better than other Discord rich presence apps is that this one auto-updates it's game list whenever you start it so you don't have to create your own Discord app, add your own images and edit the json file.
 
 # Prerequisites
 * A Discord account

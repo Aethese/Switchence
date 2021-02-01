@@ -10,7 +10,7 @@ This entire project is still a WIP :)
 
 ### If you are using the source code:
 * A Discord Account
-* An internet connect
+* An internet connection
 * Python version 3.7
 * Everything in the requirements.txt file
 

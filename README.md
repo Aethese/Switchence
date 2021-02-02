@@ -7,6 +7,8 @@ This entire project is still a WIP :)
 # Prerequisites
 * A Discord account
 * An internet connection
+* Empty file called "sw-code.txt"
+* Empty file called "version.txt"
 
 ### If you are using the source code:
 * A Discord Account

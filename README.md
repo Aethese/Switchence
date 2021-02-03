@@ -7,15 +7,12 @@ This entire project is still a WIP :)
 # Prerequisites
 * A Discord account
 * An internet connection
-* Empty file called "sw-code.txt"
-* Empty file called "version.txt"
 
 ### If you are using the source code:
 * A Discord Account
 * An internet connection
 * Python version 3.7+ with pip
 * Everything in the requirements.txt file
-* Download or make your own copy of the sw-code.txt file (keep it empty)
 
 # Requests
 I do take requests for games. All you have to do is create an issue with the title being "Game Request" and the game name in the description

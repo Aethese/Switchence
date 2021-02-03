@@ -7,54 +7,9 @@
       "fname": "Animal Crossing New Horizons"
     },
     {
-      "name": "smash",
-      "img": "smash",
-      "fname": "Super Smash Bros. Ultimate"
-    },
-    {
-      "name": "splatoon",
-      "img": "splatoon",
-      "fname": "Splatoon 2"
-    },
-    {
       "name": "clubhouse",
       "img": "clubhouse",
       "fname": "Clubhouse Games: 51 Worldwide Classics"
-    },
-    {
-      "name": "yoshi",
-      "img": "yoshi",
-      "fname": "Yoshi's Crafted World"
-    },
-    {
-      "name": "kart",
-      "img": "kart",
-      "fname": "Mario Kart 8 Deluxe"
-    },
-    {
-      "name": "zelda",
-      "img": "zelda",
-      "fname": "The Legend of Zelda: Breath of the Wild"
-    },
-    {
-      "name": "mario",
-      "img": "mario",
-      "fname": "Super Mario Odyssey"
-    },
-    {
-      "name": "maker",
-      "img": "maker",
-      "fname": "Super Mario Maker 2"
-    },
-    {
-      "name": "stardew",
-      "img": "stardew",
-      "fname": "Stardew Valley"
-    },
-    {
-      "name": "hollow",
-      "img": "hollow",
-      "fname": "Hollow Knight"
     },
     {
       "name": "cuphead",
@@ -62,19 +17,14 @@
       "fname": "Cuphead"
     },
     {
-      "name": "nes",
-      "img": "nes",
-      "fname": "Nintendo Entertainment System"
+      "name": "fortnite",
+      "img": "fortnite",
+      "fname": "Fortnite"
     },
     {
-      "name": "snes",
-      "img": "snes",
-      "fname": "Super Nintendo Entertainment System"
-    },
-    {
-      "name": "yt",
-      "img": "yt",
-      "fname": "YouTube"
+      "name": "hollow",
+      "img": "hollow",
+      "fname": "Hollow Knight"
     },
     {
       "name": "hulu",
@@ -82,9 +32,24 @@
       "fname": "Hulu"
     },
     {
-      "name": "rocket-league",
-      "img": "rocket-league",
-      "fname": "Rocket League"
+      "name": "kart",
+      "img": "kart",
+      "fname": "Mario Kart 8 Deluxe"
+    },
+    {
+      "name": "maker",
+      "img": "maker",
+      "fname": "Super Mario Maker 2"
+    },
+    {
+      "name": "mario",
+      "img": "mario",
+      "fname": "Super Mario Odyssey"
+    },
+    {
+      "name": "nes",
+      "img": "nes",
+      "fname": "Nintendo Entertainment System"
     },
     {
       "name": "paper-mario",
@@ -92,9 +57,44 @@
       "fname": "Paper Mario: The Origami King"
     },
     {
-      "name": "fortnite",
-      "img": "fortnite",
-      "fname": "Fortnite"
+      "name": "rocket-league",
+      "img": "rocket-league",
+      "fname": "Rocket League"
+    },
+    {
+      "name": "smash",
+      "img": "smash",
+      "fname": "Super Smash Bros. Ultimate"
+    },
+    {
+      "name": "snes",
+      "img": "snes",
+      "fname": "Super Nintendo Entertainment System"
+    },
+    {
+      "name": "splatoon",
+      "img": "splatoon",
+      "fname": "Splatoon 2"
+    },
+    {
+      "name": "stardew",
+      "img": "stardew",
+      "fname": "Stardew Valley"
+    },
+    {
+      "name": "yoshi",
+      "img": "yoshi",
+      "fname": "Yoshi's Crafted World"
+    },
+    {
+      "name": "yt",
+      "img": "yt",
+      "fname": "YouTube"
+    },
+    {
+      "name": "zelda",
+      "img": "zelda",
+      "fname": "The Legend of Zelda: Breath of the Wild"
     }
   ]
 }

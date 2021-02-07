@@ -7,6 +7,26 @@
       "fname": "Animal Crossing: New Horizons"
     },
     {
+      "name": "arms",
+      "img": "arms",
+      "fname": "Arms"
+    },
+    {
+      "name": "boxboy-boxgirl",
+      "img": "boxboy-boxgirl",
+      "fname": "BOXBOY! + BOXGIRL!"
+    },
+    {
+      "name": "cadence-hyrule",
+      "img": "cadence-hyrule",
+      "fname": "Cadence of Hyrule"
+    },
+    {
+      "name": "celeste",
+      "img": "celeste",
+      "fname": "Celeste"
+    },
+    {
       "name": "clubhouse",
       "img": "clubhouse",
       "fname": "Clubhouse Games: 51 Worldwide Classics"
@@ -15,6 +35,26 @@
       "name": "cuphead",
       "img": "cuphead",
       "fname": "Cuphead"
+    },
+    {
+      "name": "devil-may-cry",
+      "img": "devil-may-cry",
+      "fname": "Devil May Cry 3"
+    },
+    {
+      "name": "doom",
+      "img": "doom",
+      "fname": "DOOM"
+    },
+    {
+      "name": "fire-emblem-houses",
+      "img": "fire-emblem-houses",
+      "fname": "Fire Emblem: Three Houses"
+    },
+    {
+      "name": "fire-emblem-warriors",
+      "img": "fire-emblem-warriors",
+      "fname": "Fire Emblem Warriors"
     },
     {
       "name": "fortnite",
@@ -32,9 +72,24 @@
       "fname": "Hulu"
     },
     {
-      "name": "kart",
-      "img": "kart",
-      "fname": "Mario Kart 8 Deluxe"
+      "name": "hyrule-warriors",
+      "img": "hyrule-warriors",
+      "fname": "Hyrule Warrios: Definited Edition"
+    },
+    {
+      "name": "kirby",
+      "img": "kirby",
+      "fname": "Kirby Star Allies"
+    },
+    {
+      "name": "link-awakening",
+      "img": "link-awakening",
+      "fname": "The Legend of Zelda: Link's Awakening"
+    },
+    {
+      "name": "luigi-mansion",
+      "img": "luigi-mansion",
+      "fname": "Luigi's Mansion 3"
     },
     {
       "name": "maker",
@@ -47,9 +102,49 @@
       "fname": "Super Mario Odyssey"
     },
     {
+      "name": "mario-kart",
+      "img": "mario-kart",
+      "fname": "Mario Kart 8 Deluxe"
+    },
+    {
+      "name": "mario-party",
+      "img": "mario-party",
+      "fname": "Super Mario Party"
+    },
+    {
+      "name": "mario-tennis",
+      "img": "mario-tennis",
+      "fname": "Mario Tennis Aces"
+    },
+    {
+      "name": "minecraft",
+      "img": "minecraft",
+      "fname": "Minecraft"
+    },
+    {
       "name": "nes",
       "img": "nes",
       "fname": "Nintendo Entertainment System"
+    },
+    {
+      "name": "octopath",
+      "img": "octopath",
+      "fname": "OCTOPATH TRAVELER"
+    },
+    {
+      "name": "overcooked-2",
+      "img": "overcooked-2",
+      "fname": "Overcooked! 2"
+    },
+    {
+      "name": "overcooked-special",
+      "img": "overcooked-special",
+      "fname": "Overcooked! Special Edition"
+    },
+    {
+      "name": "overwatch",
+      "img": "overwatch",
+      "fname": "Overwatch"
     },
     {
       "name": "paper-mario",
@@ -57,9 +152,39 @@
       "fname": "Paper Mario: The Origami King"
     },
     {
+      "name": "pokemon-mystery",
+      "img": "pokemon-mystery",
+      "fname": "Pokémon Mystery Dungeon: Rescue Team DX"
+    },
+    {
+      "name": "pokemon-shield",
+      "img": "pokemon-shield",
+      "fname": "Pokemon Shield"
+    },
+    {
+      "name": "pokemon-sword",
+      "img": "pokemon-sword",
+      "fname": "Pokemon Sword"
+    },
+    {
+      "name": "rayman",
+      "img": "rayman",
+      "fname": "Rayman Legends: Definitive Edition"
+    },
+    {
+      "name": "ring-fit",
+      "img": "ring-fit",
+      "fname": "Ring Fit Adventure"
+    },
+    {
       "name": "rocket-league",
       "img": "rocket-league",
       "fname": "Rocket League"
+    },
+    {
+      "name": "skyrim",
+      "img": "skyrim",
+      "fname": "The Elder Scrolls V: Skyrim"
     },
     {
       "name": "smash",
@@ -72,6 +197,16 @@
       "fname": "Super Nintendo Entertainment System"
     },
     {
+      "name": "snipperclips",
+      "img": "snipperclips",
+      "fname": "Snipperclips"
+    },
+    {
+      "name": "sonic-mania",
+      "img": "sonic-mania",
+      "fname": "Sonic Mania"
+    },
+    {
       "name": "splatoon",
       "img": "splatoon",
       "fname": "Splatoon 2"
@@ -80,6 +215,16 @@
       "name": "stardew",
       "img": "stardew",
       "fname": "Stardew Valley"
+    },
+    {
+      "name": "tetris",
+      "img": "tetris",
+      "fname": "Tetris 99"
+    },
+    {
+      "name": "xenoblade",
+      "img": "xenoblade",
+      "fname": "Xenoblade Chronicles 2"
     },
     {
       "name": "yoshi",

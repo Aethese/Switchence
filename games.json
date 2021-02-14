@@ -2,9 +2,29 @@
   "version": "1.0.0",
   "games": [
     {
+      "name": "1-2-switch",
+      "img": "1-2-switch",
+      "fname": "1-2-Switch"
+    },
+    {
+      "name": "3d-all-stars",
+      "img": "3d-all-stars",
+      "fname": "Super Mario 3D World + Bowser's Fury"
+    },
+    {
+      "name": "ace-attorney",
+      "img": "ace-attorney",
+      "fname": "Phoenix Wright: Ace Attorney Trilogy"
+    },
+    {
       "name": "animal-crossing",
       "img": "animal-crossing",
       "fname": "Animal Crossing: New Horizons"
+    },
+    {
+      "name": "among-us",
+      "img": "among-us",
+      "fname": "Among Us"
     },
     {
       "name": "arms",
@@ -22,6 +42,11 @@
       "fname": "Cadence of Hyrule"
     },
     {
+      "name": "captain-toad",
+      "img": "captain-toad",
+      "fname": "Captain Toad: Treasure Tracker"
+    },
+    {
       "name": "celeste",
       "img": "celeste",
       "fname": "Celeste"
@@ -30,6 +55,11 @@
       "name": "clubhouse",
       "img": "clubhouse",
       "fname": "Clubhouse Games: 51 Worldwide Classics"
+    },
+    {
+      "name": "cooking-simulator",
+      "img": "cooking-simulator",
+      "fname": "Cooking Simulator"
     },
     {
       "name": "cuphead",
@@ -62,6 +92,21 @@
       "fname": "Fortnite"
     },
     {
+      "name": "funimation",
+      "img": "funimation",
+      "fname": "Funimation"
+    },
+    {
+      "name": "gris",
+      "img": "gris",
+      "fname": "GRIS"
+    },
+    {
+      "name": "hades",
+      "img": "hades",
+      "fname": "Hades"
+    },
+    {
       "name": "hollow",
       "img": "hollow",
       "fname": "Hollow Knight"
@@ -82,6 +127,11 @@
       "fname": "Kirby Star Allies"
     },
     {
+      "name": "kirby-clash",
+      "img": "kirby-clash",
+      "fname": "Super Kirby Clash"
+    },
+    {
       "name": "link-awakening",
       "img": "link-awakening",
       "fname": "The Legend of Zelda: Link's Awakening"
@@ -100,6 +150,11 @@
       "name": "mario",
       "img": "mario",
       "fname": "Super Mario Odyssey"
+    },
+    {
+      "name": "mario-bros-deluxe",
+      "img": "mario-bros-deluxe",
+      "fname": "Super Mario Bros. U Deluxe"
     },
     {
       "name": "mario-kart",
@@ -132,6 +187,11 @@
       "fname": "OCTOPATH TRAVELER"
     },
     {
+      "name": "okami-hd",
+      "img": "okami-hd",
+      "fname": "Okami HD"
+    },
+    {
       "name": "overcooked-2",
       "img": "overcooked-2",
       "fname": "Overcooked! 2"
@@ -152,6 +212,21 @@
       "fname": "Paper Mario: The Origami King"
     },
     {
+      "name": "pikmin-3",
+      "img": "pikmin-3",
+      "fname": "Pikmin 3 Deluxe"
+    },
+    {
+      "name": "pokemon-lets-go-eevee",
+      "img": "pokemon-lets-go-eevee",
+      "fname": "Pokémon: Let's Go, Eevee!"
+    },
+    {
+      "name": "pokemon-lets-go-pikachu",
+      "img": "pokemon-lets-go-pikachu",
+      "fname": "Pokémon: Let's Go, Pikachu!"
+    },
+    {
       "name": "pokemon-mystery",
       "img": "pokemon-mystery",
       "fname": "Pokémon Mystery Dungeon: Rescue Team DX"
@@ -165,6 +240,11 @@
       "name": "pokemon-sword",
       "img": "pokemon-sword",
       "fname": "Pokemon Sword"
+    },
+    {
+      "name": "puyopuyo-tetris",
+      "img": "puyopuyo-tetris",
+      "fname": "Puyo Puyo Tetris"
     },
     {
       "name": "rayman",
@@ -217,9 +297,24 @@
       "fname": "Stardew Valley"
     },
     {
+      "name": "terraria",
+      "img": "terraria",
+      "fname": "Terraria"
+    },
+    {
       "name": "tetris",
       "img": "tetris",
       "fname": "Tetris 99"
+    },
+    {
+      "name": "undertale",
+      "img": "undertale",
+      "fname": "Undertale"
+    },
+    {
+      "name": "witcher-3",
+      "img": "witcher-3",
+      "fname": "The Witcher 3: Wild Hunt"
     },
     {
       "name": "xenoblade",

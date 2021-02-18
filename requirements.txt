@@ -1,2 +1,2 @@
-pypresence==4.1.2
+pypresence==4.2.0
 requests==2.25.1

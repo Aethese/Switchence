@@ -1,5 +1,5 @@
 # READ ME
-This entire project is still a WIP :) Version 1.0.0 should be releasing soon with the source code released and exe file along with it.
+This entire project is still a WIP :) [Version 1.0.0](https://github.com/Aethese/switchence/releases) should be releasing soon along with the source code and exe file along with it.
 
 # Switchence
 **Simple** Nintendo Switch rich presence app that allows you to show what game you're playing on Discord. What makes this better than other Discord rich presence apps is that this one **auto-updates** it's game list whenever you start it so you don't have to create your own Discord app, add your own images and edit the json file. You also get notified if their is a new update available for the program. What's great about this is that you can still use the program you have currently installed even if it is a lower version!

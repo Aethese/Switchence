@@ -67,6 +67,11 @@
       "fname": "Cuphead"
     },
     {
+      "name": "dead-by-daylight",
+      "img": "dead-by-daylight",
+      "fname": "Dead by Daylight"
+    },
+    {
       "name": "devil-may-cry",
       "img": "devil-may-cry",
       "fname": "Devil May Cry 3"
@@ -167,6 +172,11 @@
       "fname": "Super Mario Party"
     },
     {
+      "name": "mario-sonic-olympic-games",
+      "img": "mario-sonic-olympic-games",
+      "fname": "Mario & Sonic at the Olympic Games Tokyo 2020"
+    },
+    {
       "name": "mario-tennis",
       "img": "mario-tennis",
       "fname": "Mario Tennis Aces"
@@ -175,6 +185,11 @@
       "name": "minecraft",
       "img": "minecraft",
       "fname": "Minecraft"
+    },
+    {
+      "name": "monopoly",
+      "img": "monopoly",
+      "fname": "Monopoly"
     },
     {
       "name": "nes",
@@ -210,6 +225,11 @@
       "name": "paper-mario",
       "img": "paper-mario",
       "fname": "Paper Mario: The Origami King"
+    },
+    {
+      "name": "persona-5",
+      "img": "persona-5",
+      "fname": "Persona 5 Strikers"
     },
     {
       "name": "pikmin-3",

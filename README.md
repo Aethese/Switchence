@@ -17,4 +17,4 @@ I do take requests for games. All you have to do is create an issue with the tit
 Report it! You can do so by creating an [issue](https://github.com/Aethese/Switchence/issues/) so I can figure out how to help you and/or fix the problem for the next release!
 
 # Inspiration
-Most inspiration from this project came from myself, but also [this](https://github.com/Da532/NS-RPC) repo. I recommend you check that it out :) *it has more games and looks better lol*
+Most inspiration from this project came from myself, but also [this](https://github.com/Da532/NS-RPC) repo. I recommend you check that it out :) *it looks better lol*

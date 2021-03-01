@@ -2,7 +2,7 @@
 **Simple** Nintendo Switch rich presence app for Windows that allows you to show what game you're playing on Discord. What makes this better than other Discord rich presence apps is that this one **auto-updates** it's game list whenever you start it so you don't have to create your own Discord app, add your own images and edit the json file. You also get notified if their is a new update available for the program. What's great about this is that you can still use the program you have currently installed even if it is a lower version!
 
 # Prerequisites
-* Download the latest version from [releases](https://github.com/Aethese/Switchence/releases/)
+* Download the latest version from [releases](https://github.com/Aethese/Switchence/releases/) (download the zip file)
 * A Discord account
 * An internet connection
 * Everything in the *requirements.txt* file

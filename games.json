@@ -102,6 +102,11 @@
       "fname": "Funimation"
     },
     {
+      "name": "good-job",
+      "img": "good-job",
+      "fname": "Good Job!"
+    },
+    {
       "name": "gris",
       "img": "gris",
       "fname": "GRIS"
@@ -230,6 +235,11 @@
       "name": "persona-5",
       "img": "persona-5",
       "fname": "Persona 5 Strikers"
+    },
+    {
+      "name": "phogs",
+      "img": "phogs",
+      "fname": "PHOGS!"
     },
     {
       "name": "pikmin-3",

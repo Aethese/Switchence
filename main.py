@@ -8,58 +8,68 @@ import sys
 
 class log:
     def error(text: str):
-        print('[Error] {}\nPlease report this error on the Switchence GitHub issue page if this error happens consistently'.format(text))
-        time.sleep(3)
+        print('\n[Error] {}\nPlease report this error on the Switchence GitHub issue page if this error happens consistently'.format(text))
+        time.sleep(5)
         webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
-        time.sleep(10)
+        time.sleep(600)
+        sys.exit()
+
+    def info(text: str):
+        print('\n[Info] {}\nThis program will now close in 1 minute'.format(text))
+        time.sleep(60)
         sys.exit()
 
 version = None
-if os.path.isfile('version.txt') == True:
-    with open('version.txt', 'r') as vf:
-        version = vf.read()
-elif os.path.isfile('version.txt') == False:
+sw = None
+updatenotifier = None
+configfname = None
+if os.path.isfile('config.json') == True:
     try:
-        with open('version.txt', 'a'):
-            pass
-    except:
-        log.error('Couldn\'t create version file')
-else:
-    log.error('Couldn\'t search for a file')
-    time.sleep(2)
-    webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
-    time.sleep(10)
-    sys.exit()
-
-sw = ''
-if os.path.isfile('sw-code.txt') == True:
-    with open('sw-code.txt', 'r') as swc:
-        sw = swc.read()
-elif os.path.isfile('sw-code.txt') == False:
+        with open('config.json', 'r') as jsonfile:
+            jsonFile = json.load(jsonfile)
+            for details in jsonFile['config']:
+                sw = details['sw-code']
+                version = details['version']
+                updatenotifier = details['update-notifier']
+                configfname = details['fname']
+    except Exception as error:
+        log.error('Couldn\'t load config file (1) | {}'.format(error))
+elif os.path.isfile('config.json') == False:
     try:
-        with open('sw-code.txt', 'a'):
-            pass
-    except:
-        log.error('Couldn\'t create sw-code file')
+        configjson = {}
+        configjson['config'] = [{
+            "sw-code": "",
+            "version": "1.1.0",
+            "update-notifier": True,
+            "fname": False
+        }]
+        with open('config.json', 'w') as jsonfile:
+            json.dump(configjson, jsonfile, indent=4)
+        with open('config.json', 'r') as jsonfile: # actually get the info lol
+            jsonFile = json.load(jsonfile)
+            for details in jsonFile['config']:
+                sw = details['sw-code']
+                version = details['version']
+                updatenotifier = details['update-notifier']
+                configfname = details['fname']
+    except Exception as error:
+        log.error('Couldn\'t load config file (2) | {}'.format(error))
 else:
-    log.error('Couldn\'t search for a file')
-    time.sleep(2)
-    webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
-    time.sleep(10)
-    sys.exit()
+    log.error('Couldn\'t load config settings | {}'.format(error))
 
-game = ''
 gamenames = []
 gamefnames = []
 chosenOne = ''
 img = ''
 fname = ''
+
 try:
     gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json') # auto update list :)
     gamejsontext = gamejson.text
     games = json.loads(gamejsontext)
-except:
-    log.error('Couldn\'t load game list')
+except Exception as error:
+    log.error('Couldn\'t load game list | {}'.format(error))
+
 oVersion = games['version']
 
 print("""
@@ -73,70 +83,138 @@ Y88b  d88P Y88b 888 d88P 888 Y88b.  Y88b.    888  888 Y8b.     888  888 Y88b.   
  "Y8888P"   "Y8888888P"  888  "Y888  "Y8888P 888  888  "Y8888  888  888  "Y8888P  "Y8888    
 \n""")
 
-if version == '' or version == None: # gets current version. if your current version doesn't equal the version online, it tells you that you can update your software and opens up the github page
+if version == '' or version == None: # checks your version
     try:
-        with open('version.txt', 'a') as vfile:
-            vfile.write(oVersion)
-    except:
-        log.error('Couldn\'t write to the version file')
+        with open('config.json', 'r') as jsonfile:
+            jsonFile = json.load(jsonfile)
+            for details in jsonFile['config']:
+                details['version'] = oVersion
+        with open('config.json', 'w') as jsonfile:
+            json.dump(jsonFile, jsonfile, indent=4)
+    except Exception as error:
+        log.error('Couldn\'t write to the version file | {}'.format(error))
 elif version != oVersion:
-    print('Your current version of Switchence (v{}) is not up to date. You can update Switchence to the current version (v{}) on the official GitHub page or continue using the program as usual.\n'.format(version, oVersion))
-    time.sleep(2)
-    webbrowser.open('https://github.com/Aethese/Switchence', new=2, autoraise=True)
-    time.sleep(3)
+    if updatenotifier == True:
+        print('Your current version of Switchence (v{}) is not up to date'.format(version))
+        print('You can update Switchence to the current version (v{}) on the official GitHub page or continue using the program as usual'.format(oVersion))
+        print('If you wish to turn off update notifications, type \'update notifier\' in the game selection input\n')
+        time.sleep(2)
+        webbrowser.open('https://github.com/Aethese/Switchence', new=2, autoraise=True)
+        time.sleep(3)
+    else:
+        pass
 
 try:
     for details in games['games']:
         gamenames.append(details['name'])
         gamefnames.append(details['fname'])
-except:
-    log.error('Couldn\'t load game names from list')
+except Exception as error:
+    log.error('Couldn\'t load game names from list | {}'.format(error))
 
 id = '803309090696724554'
 try:
     RPC = Presence(id)
     RPC.connect()
-except:
-    log.error('RPC couldn\'t connect')
+except Exception as error:
+    log.error('RPC couldn\'t connect | {}'.format(error))
 
 def changePresence(swStatus, pName, pImg, pFname):
     start_time = time.time()
-    local = time.localtime()
-    string = time.strftime("%H:%M", local)
     if swStatus == False:
         try:
             RPC.update(large_image=pImg, large_text=pFname, details=pFname, start=start_time)
             print('Set game to {} at {}'.format(pFname, string))
-        except:
-            log.error('Couldn\'t set RPC to {} (1)'.format(pName))
+        except Exception as error:
+            log.error('Couldn\'t set RPC to {} (1) | {}'.format(pName, error))
     elif swStatus == True:
         try:
             RPC.update(large_image=pImg, large_text=pFname, details=pFname, state='SW-{}'.format(sw), start=start_time)
             print('Set game to {} at {} with friend code "SW-{}" showing'.format(pFname, string, sw))
-        except:
-            log.error('Couldn\'t set RPC to {} (2)'.format(pName))
+        except Exception as error:
+            log.error('Couldn\'t set RPC to {} (2) | {}'.format(pName, error))
     else:
-        print('An error occured getting friend code status. If this error persists please create an issue on the Github page stating the issue and how you got to said issue')
-        time.sleep(3)
-        webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
-        sys.exit()
+        log.error('Couldn\'t get friend code status')
+
+def changeUpdateNotifier():
+    picked = input('What setting do you want the Update Notifier to be on (on or off)? ')
+    picked = picked.lower()
+    if picked == 'on' or picked == 'true' or picked == 't': # why do you want this on tbh
+        try:
+            with open('config.json', 'r') as jsonfile: # very weird/hacky way to do this lol
+                jsonFile = json.load(jsonfile)
+                for details in jsonFile['config']:
+                    details['update-notifier'] = True
+            with open('config.json', 'w') as jsonfile:
+                json.dump(jsonFile, jsonfile, indent=4)
+        except Exception as error:
+            log.error('Couldn\'t change update-notifier setting | {}'.format(error))
+        log.info('Update notifier set to TRUE. Rerun the program to use it as usual')
+    elif picked == 'off' or picked == 'false' or picked == 'f':
+        try:
+            with open('config.json', 'r') as jsonfile: # very weird/hacky way to do this lol
+                jsonFile = json.load(jsonfile)
+                for details in jsonFile['config']:
+                    details['update-notifier'] = False
+            with open('config.json', 'w') as jsonfile:
+                json.dump(jsonFile, jsonfile, indent=4)
+        except Exception as error:
+            log.error('Couldn\'t change update-notifier setting | {}'.format(error))
+        log.info('Update notifier set to FALSE. Rerun the program to use it as usual')
+
+def changeFNameSetting():
+    k = input('\nYour current setting is set to: {}. What do you want to change it to (full for full game names, short for shortened game names)? '.format(configfname))
+    if k == 'full' or k == 'f':
+        try:
+            with open('config.json', 'r') as jsonfile: # man i can use this anywhere lol
+                jsonFile = json.load(jsonfile)
+                for details in jsonFile['config']:
+                    details['fname'] = True
+            with open('config.json', 'w') as jsonfile:
+                json.dump(jsonFile, jsonfile, indent=4)
+            log.info('Set game name to "Full"')
+        except Exception as error:
+            log.error('Couldn\'t change fname setting | {}'.format(error))
+    elif k == 'short' or k == 's':
+        try:
+            with open('config.json', 'r') as jsonfile:
+                jsonFile = json.load(jsonfile)
+                for details in jsonFile['config']:
+                    details['fname'] = False
+            with open('config.json', 'w') as jsonfile:
+                json.dump(jsonFile, jsonfile, indent=4)
+            log.info('Set game name to "Short"')
+        except Exception as error:
+            log.error('Couldn\'t change fname setting | {}'.format(error))
 
 print('Here are the current games: ')
-print(', '.join(gamenames))
+if configfname == False:
+    print(', '.join(gamenames))
+elif configfname == True:
+    print(', '.join(gamefnames))
+else:
+    log.error('Couldn\'t print game names')
 x = input('\nWhat game do you wanna play? ')
 x = x.lower()
 
-if x == 'help' or x == 'h': # help command to see full name of lists
-    print('\nHere are the full name for the games specified above: ')
-    print(', '.join(gamefnames))
-    print('\nPlease rerun the program to select a game') # this is stupid, i need to redo all of the code lmao
-    time.sleep(5)
-    sys.exit()
+if x == 'help' or x == 'h': # help command to see full name of lists, only shows if you have fnames set to false in config file
+    if configfname == False:
+        print('\nHere are the full names for the games specified above: ')
+        print(', '.join(gamefnames))
+        print('\nPlease rerun the program to select a game') # this is stupid, i need to redo all of the code lmao
+        time.sleep(5)
+        sys.exit()
+    else:
+        print('\nYou already have game full names showing\n')
+        time.sleep(2)
 elif x == 'github' or x == 'gh':
     print('i mean i guess')
-    time.sleep(2)
+    time.sleep(3)
     webbrowser.open('https://github.com/Aethese/Switchence/', new=2, autoraise=True)
     sys.exit()
+elif x == 'update notifier' or x == 'update-notifier' or x == 'un' or x == 'u-n':
+    changeUpdateNotifier()
+elif x == 'change-name' or x =='change name' or x == 'c-n' or x == 'c n':
+    changeFNameSetting()
 
 y = input('Do you want to show your friend code "SW-{}" (you can change this by typing "change")? '.format(sw))
 y = y.lower()
@@ -152,24 +230,30 @@ elif y == 'change' or y == 'c':
     b = b.lower()
     if b == 'yes' or b == 'y':
         try:
-            with open('sw-code.txt', 'w') as file:
-                file.write(c)
+            with open('config.json', 'r') as jsonfile: # i use this because it works, don't judge me
+                jsonFile = json.load(jsonfile)
+                for details in jsonFile['config']:
+                    details['sw-code'] = c
+            with open('config.json', 'w') as jsonfile:
+                json.dump(jsonFile, jsonfile, indent=4)
             sw = c
             print('Friend code changed to SW-{}'.format(c))
             y = 'yes'
-        except:
-            log.error('Couldn\'t change sw-code')
+        except Exception as error:
+            log.error('Couldn\'t change sw-code | {}'.format(error))
     else:
         print('Friend code not changed')
 
 try:
-    for n in games['games']: # really need a backup plan for when things don't work out because if you type in a game that doesn't exist, it'll search FOREVER lol
+    for n in games['games']:
         z = n['name']
         if z == x:
             chosenOne = z
             break
-except:
-    log.error('Can\'t find the game ({}) the user specified (1)'.format(x))
+    else:
+        log.info('The game you specified is not in the current game list')
+except Exception as error:
+    log.error('Can\'t find the game ({}) the user specified (1) | {}'.format(x, error))
 
 try:
     for i in games['games']:
@@ -185,8 +269,8 @@ try:
             else:
                 changePresence(False, chosenOne, img, fname)
                 break
-except:
-    log.error('Can\'t find the game ({}) specified (2)'.format(chosenOne))
+except Exception as error:
+    log.error('Can\'t find the game ({}) specified (2) | {}'.format(chosenOne, error))
 
 while 1: # trust me, we need this
     time.sleep(15)

@@ -302,6 +302,11 @@
       "fname": "Super Smash Bros. Ultimate"
     },
     {
+      "name": "snake-pass",
+      "img": "snake-pass",
+      "fname": "Snake Pass"
+    },
+    {
       "name": "snes",
       "img": "snes",
       "fname": "Super Nintendo Entertainment System"

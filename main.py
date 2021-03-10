@@ -1,10 +1,5 @@
 from pypresence import Presence
-import time
-import json
-import requests
-import webbrowser
-import os
-import sys
+import time, json, requests, webbrowser, os, sys
 
 class log:
     def error(text: str):
@@ -18,11 +13,21 @@ class log:
         print('\n[Info] {}\nThis program will now close in 1 minute'.format(text))
         time.sleep(60)
         sys.exit()
+    
+    def warning(text: str):
+        print('\n[WARNING] {}'.format(text))
 
+id = '803309090696724554'
 version = None
 sw = None
 updatenotifier = None
 configfname = None
+gamenames = []
+gamefnames = []
+chosenOne = ''
+img = ''
+fname = ''
+
 if os.path.isfile('config.json') == True:
     try:
         with open('config.json', 'r') as jsonfile:
@@ -57,12 +62,6 @@ elif os.path.isfile('config.json') == False:
 else:
     log.error('Couldn\'t load config settings | {}'.format(error))
 
-gamenames = []
-gamefnames = []
-chosenOne = ''
-img = ''
-fname = ''
-
 try:
     gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json') # auto update list :)
     gamejsontext = gamejson.text
@@ -72,7 +71,7 @@ except Exception as error:
 
 oVersion = games['version']
 
-print("""
+print('''
  .d8888b.                d8b 888             888                                          
 d88P  Y88b               Y8P 888             888                                          
 Y88b.                        888             888                                          
@@ -81,7 +80,8 @@ Y88b.                        888             888
       "888 888  888  888 888 888    888      888  888 88888888 888  888 888      88888888 
 Y88b  d88P Y88b 888 d88P 888 Y88b.  Y88b.    888  888 Y8b.     888  888 Y88b.    Y8b.     
  "Y8888P"   "Y8888888P"  888  "Y888  "Y8888P 888  888  "Y8888  888  888  "Y8888P  "Y8888    
-\n""")
+Made by: Aethese#1337
+''')
 
 if version == '' or version == None: # checks your version
     try:
@@ -111,7 +111,6 @@ try:
 except Exception as error:
     log.error('Couldn\'t load game names from list | {}'.format(error))
 
-id = '803309090696724554'
 try:
     RPC = Presence(id)
     RPC.connect()
@@ -120,18 +119,20 @@ except Exception as error:
 
 def changePresence(swStatus, pName, pImg, pFname):
     start_time = time.time()
+    local = time.localtime()
+    string = time.strftime("%H:%M", local)
     if swStatus == False:
         try:
             RPC.update(large_image=pImg, large_text=pFname, details=pFname, start=start_time)
             print('Set game to {} at {}'.format(pFname, string))
         except Exception as error:
-            log.error('Couldn\'t set RPC to {} (1) | {}'.format(pName, error))
+            log.error('Couldn\'t set RPC(1) to {} | {}'.format(pName, error))
     elif swStatus == True:
         try:
             RPC.update(large_image=pImg, large_text=pFname, details=pFname, state='SW-{}'.format(sw), start=start_time)
             print('Set game to {} at {} with friend code "SW-{}" showing'.format(pFname, string, sw))
         except Exception as error:
-            log.error('Couldn\'t set RPC to {} (2) | {}'.format(pName, error))
+            log.error('Couldn\'t set RPC(2) to {} | {}'.format(pName, error))
     else:
         log.error('Couldn\'t get friend code status')
 
@@ -140,7 +141,7 @@ def changeUpdateNotifier():
     picked = picked.lower()
     if picked == 'on' or picked == 'true' or picked == 't': # why do you want this on tbh
         try:
-            with open('config.json', 'r') as jsonfile: # very weird/hacky way to do this lol
+            with open('config.json', 'r') as jsonfile: # very weird/hacky way to do this lol, but it does work tho
                 jsonFile = json.load(jsonfile)
                 for details in jsonFile['config']:
                     details['update-notifier'] = True
@@ -148,7 +149,7 @@ def changeUpdateNotifier():
                 json.dump(jsonFile, jsonfile, indent=4)
         except Exception as error:
             log.error('Couldn\'t change update-notifier setting | {}'.format(error))
-        log.info('Update notifier set to TRUE. Rerun the program to use it as usual')
+        log.info('Update notifier set to TRUE. Rerun the program to use it with the new settings')
     elif picked == 'off' or picked == 'false' or picked == 'f':
         try:
             with open('config.json', 'r') as jsonfile: # very weird/hacky way to do this lol
@@ -159,10 +160,11 @@ def changeUpdateNotifier():
                 json.dump(jsonFile, jsonfile, indent=4)
         except Exception as error:
             log.error('Couldn\'t change update-notifier setting | {}'.format(error))
-        log.info('Update notifier set to FALSE. Rerun the program to use it as usual')
+        log.info('Update notifier set to FALSE. Rerun the program to use it with the new settings')
 
-def changeFNameSetting():
-    k = input('\nYour current setting is set to: {}. What do you want to change it to (full for full game names, short for shortened game names)? '.format(configfname))
+def changeFNameSetting(): # might have a feature in the future where you can type in the full names for the app too
+    log.warning('If you have full game names on, you still have to type in the shortened name for the app to work!')
+    k = input('Your current setting is set to: {}. What do you want to change it to ("full" for full game names, "short" for shortened game names)? '.format(configfname))
     if k == 'full' or k == 'f':
         try:
             with open('config.json', 'r') as jsonfile: # man i can use this anywhere lol
@@ -200,12 +202,9 @@ if x == 'help' or x == 'h': # help command to see full name of lists, only shows
     if configfname == False:
         print('\nHere are the full names for the games specified above: ')
         print(', '.join(gamefnames))
-        print('\nPlease rerun the program to select a game') # this is stupid, i need to redo all of the code lmao
-        time.sleep(5)
-        sys.exit()
+        log.info('Please rerun the program to select a game') # this is stupid, i need to redo all of the code lmao
     else:
-        print('\nYou already have game full names showing\n')
-        time.sleep(2)
+        log.info('You already have game full names showing')
 elif x == 'github' or x == 'gh':
     print('i mean i guess')
     time.sleep(3)

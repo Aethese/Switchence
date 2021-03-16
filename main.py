@@ -44,7 +44,7 @@ elif os.path.isfile('config.json') == False:
         configjson = {}
         configjson['config'] = [{
             "sw-code": "",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "update-notifier": True,
             "fname": False
         }]

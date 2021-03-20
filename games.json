@@ -1,5 +1,5 @@
 {
-  "version": "1.1.1",
+  "version": "1.1.2",
   "games": [
     {
       "name": "1-2-switch",
@@ -9,7 +9,12 @@
     {
       "name": "3d-all-stars",
       "img": "3d-all-stars",
-      "fname": "Super Mario 3D World + Bowser's Fury"
+      "fname": "Super Mario 3D All-Stars"
+    },
+    {
+      "name": "3d-world",
+      "img": "3d-world",
+      "fname": "Super Mario 3d World + Bowser's Fury"
     },
     {
       "name": "ace-attorney",

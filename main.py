@@ -3,6 +3,7 @@ import time, json, requests, webbrowser, os, sys
 
 class log:
     def error(text: str):
+        clear()
         print('\n[Error] {}\nPlease report this error on the Switchence GitHub issue page if this error happens consistently'.format(text))
         time.sleep(5)
         webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
@@ -10,12 +11,17 @@ class log:
         sys.exit()
 
     def info(text: str):
-        print('\n[Info] {}\nThis program will now close in 1 minute'.format(text))
+        clear()
+        print('[Info] {}\nThis program will now close in 1 minute'.format(text))
         time.sleep(60)
         sys.exit()
     
     def warning(text: str):
-        print('\n[WARNING] {}'.format(text))
+        print('\n[WARNING] {}\n'.format(text))
+
+def clear():
+    os.system('cls' if os.name =='nt' else 'clear')
+clear()
 
 id = '803309090696724554'
 version = None
@@ -44,7 +50,7 @@ elif os.path.isfile('config.json') == False:
         configjson = {}
         configjson['config'] = [{
             "sw-code": "",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "update-notifier": True,
             "fname": False
         }]
@@ -162,8 +168,7 @@ def changeUpdateNotifier():
             log.error('Couldn\'t change update-notifier setting | {}'.format(error))
         log.info('Update notifier set to FALSE. Rerun the program to use it with the new settings')
 
-def changeFNameSetting(): # might have a feature in the future where you can type in the full names for the app too
-    log.warning('If you have full game names on, you still have to type in the shortened name for the app to work!')
+def changeFNameSetting():
     k = input('Your current setting is set to: {}. What do you want to change it to ("full" for full game names, "short" for shortened game names)? '.format(configfname))
     if k == 'full' or k == 'f':
         try:
@@ -212,7 +217,7 @@ elif x == 'github' or x == 'gh':
     sys.exit()
 elif x == 'update notifier' or x == 'update-notifier' or x == 'un' or x == 'u-n':
     changeUpdateNotifier()
-elif x == 'change-name' or x =='change name' or x == 'c-n' or x == 'c n':
+elif x == 'change-name' or x =='change name' or x == 'c-n' or x == 'cn':
     changeFNameSetting()
 
 y = input('Do you want to show your friend code "SW-{}" (you can change this by typing "change")? '.format(sw))
@@ -220,9 +225,7 @@ y = y.lower()
 
 if y == 'yes' or y == 'y':
     if sw == '' or sw == None:
-        print('Friend code not set. Rerun the program and change your friend code to your friend code')
-        time.sleep(5)
-        sys.exit()
+        log.info('Friend code not set. Rerun the program and change your friend code to your friend code')
 elif y == 'change' or y == 'c':
     c = input('What is your new friend code (just type the numbers)? ')
     b = input('Is "SW-{}" correct? '.format(c))
@@ -246,8 +249,12 @@ elif y == 'change' or y == 'c':
 try:
     for n in games['games']:
         z = n['name']
+        o = n['fname']
         if z == x:
             chosenOne = z
+            break
+        elif o.lower() == x:
+            chosenOne = o
             break
     else:
         log.info('The game you specified is not in the current game list')
@@ -256,17 +263,15 @@ except Exception as error:
 
 try:
     for i in games['games']:
-        if i['name'] == chosenOne:
+        if i['name'] == chosenOne or i['fname'] == chosenOne:
+            name = i['name']
             img = i['img']
             fname = i['fname']
             if y == 'yes' or y == 'y':
-                changePresence(True, chosenOne, img, fname)
-                break
-            elif y == 'no' or y == 'n':
-                changePresence(False, chosenOne, img, fname)
+                changePresence(True, name, img, fname)
                 break
             else:
-                changePresence(False, chosenOne, img, fname)
+                changePresence(False, name, img, fname)
                 break
 except Exception as error:
     log.error('Can\'t find the game ({}) specified (2) | {}'.format(chosenOne, error))

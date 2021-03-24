@@ -3,7 +3,7 @@
 
 # Prerequisites
 * Download the latest version from [releases](https://github.com/Aethese/Switchence/releases/) (download the zip file)
-* A Discord account
+* A Discord account and the Discord desktop app
 * An internet connection
 * Everything in the *requirements.txt* file
 ```

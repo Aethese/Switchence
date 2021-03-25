@@ -1,5 +1,5 @@
 {
-  "version": "1.1.2",
+  "version": "1.2.0",
   "games": [
     {
       "name": "1-2-switch",
@@ -180,6 +180,11 @@
       "name": "mario-party",
       "img": "mario-party",
       "fname": "Super Mario Party"
+    },
+    {
+      "name": "mario-rabbids",
+      "img": "mario-rabbids",
+      "fname": "Mario & Rabbids: Kingdom Battle"
     },
     {
       "name": "mario-sonic-olympic-games",

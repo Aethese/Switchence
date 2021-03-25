@@ -1,10 +1,15 @@
-from pypresence import Presence
-import time, json, requests, webbrowser, os, sys
+try:
+    import time, json, requests, webbrowser, os, sys, colorama
+    from pypresence import Presence
+    from colorama import Fore, init
+    init(autoreset=True)
+except Exception as error:
+    print('Couldn\'t import everything | {}'.format(error))
 
 class log:
     def error(text: str):
         clear()
-        print('\n[Error] {}\nPlease report this error on the Switchence GitHub issue page if this error happens consistently'.format(text))
+        print(Fore.RED+'\n[Error] {}\nPlease report this error on the Switchence GitHub issue page if this error happens consistently'.format(text))
         time.sleep(5)
         webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
         time.sleep(600)
@@ -17,7 +22,7 @@ class log:
         sys.exit()
     
     def warning(text: str):
-        print('\n[WARNING] {}\n'.format(text))
+        print(Fore.YELLOW+'\n[WARNING] {}\n'.format(text))
 
 def clear():
     os.system('cls' if os.name =='nt' else 'clear')
@@ -28,6 +33,7 @@ version = None
 sw = None
 updatenotifier = None
 configfname = None
+showbutton = None
 gamenames = []
 gamefnames = []
 chosenOne = ''
@@ -43,6 +49,7 @@ if os.path.isfile('config.json') == True:
                 version = details['version']
                 updatenotifier = details['update-notifier']
                 configfname = details['fname']
+                showbutton = details['show-button']
     except Exception as error:
         log.error('Couldn\'t load config file (1) | {}'.format(error))
 elif os.path.isfile('config.json') == False:
@@ -50,9 +57,10 @@ elif os.path.isfile('config.json') == False:
         configjson = {}
         configjson['config'] = [{
             "sw-code": "",
-            "version": "1.1.2",
+            "version": "1.2.0",
             "update-notifier": True,
-            "fname": False
+            "fname": False,
+            "show-button": True
         }]
         with open('config.json', 'w') as jsonfile:
             json.dump(configjson, jsonfile, indent=4)
@@ -63,6 +71,7 @@ elif os.path.isfile('config.json') == False:
                 version = details['version']
                 updatenotifier = details['update-notifier']
                 configfname = details['fname']
+                showbutton = details['show-button']
     except Exception as error:
         log.error('Couldn\'t load config file (2) | {}'.format(error))
 else:
@@ -101,9 +110,9 @@ if version == '' or version == None: # checks your version
         log.error('Couldn\'t write to the version file | {}'.format(error))
 elif version != oVersion:
     if updatenotifier == True:
-        print('Your current version of Switchence (v{}) is not up to date'.format(version))
-        print('You can update Switchence to the current version (v{}) on the official GitHub page or continue using the program as usual'.format(oVersion))
-        print('If you wish to turn off update notifications, type \'update notifier\' in the game selection input\n')
+        print(Fore.RED+'Your current version of Switchence (v{}) is not up to date'.format(version))
+        print(Fore.RED+'You can update Switchence to the current version (v{}) on the official GitHub page or continue using the program as usual'.format(oVersion))
+        print(Fore.RED+'If you wish to turn off update notifications, type \'update notifier\' in the game selection input\n')
         time.sleep(2)
         webbrowser.open('https://github.com/Aethese/Switchence', new=2, autoraise=True)
         time.sleep(3)
@@ -127,16 +136,29 @@ def changePresence(swStatus, pName, pImg, pFname):
     start_time = time.time()
     local = time.localtime()
     string = time.strftime("%H:%M", local)
+    url = 'https://github.com/Aethese/Switchence/releases'
     if swStatus == False:
         try:
-            RPC.update(large_image=pImg, large_text=pFname, details=pFname, start=start_time)
-            print('Set game to {} at {}'.format(pFname, string))
+            if showbutton == True:
+                RPC.update(large_image=pImg, large_text=pFname, details=pFname, buttons=[{'label': 'Use this program here', 'url': url}], start=start_time)
+                print('Set game to {} at {}'.format(pFname, string))
+            elif showbutton == False:
+                RPC.update(large_image=pImg, large_text=pFname, details=pFname, start=start_time)
+                print('Set game to {} at {}'.format(pFname, string))
+            else:
+                log.error('Couldn\'t get button info (1)')
         except Exception as error:
             log.error('Couldn\'t set RPC(1) to {} | {}'.format(pName, error))
     elif swStatus == True:
         try:
-            RPC.update(large_image=pImg, large_text=pFname, details=pFname, state='SW-{}'.format(sw), start=start_time)
-            print('Set game to {} at {} with friend code "SW-{}" showing'.format(pFname, string, sw))
+            if showbutton == True:
+                RPC.update(large_image=pImg, large_text=pFname, details=pFname, state='SW-{}'.format(sw), buttons=[{'label': 'Use this program here', 'url': url}], start=start_time)
+                print('Set game to {} at {} with friend code "SW-{}" showing'.format(pFname, string, sw))
+            elif showbutton == False:
+                RPC.update(large_image=pImg, large_text=pFname, details=pFname, state='SW-{}'.format(sw), start=start_time)
+                print('Set game to {} at {} with friend code "SW-{}" showing'.format(pFname, string, sw))
+            else:
+                log.error('Couldn\'t get button info (2)')
         except Exception as error:
             log.error('Couldn\'t set RPC(2) to {} | {}'.format(pName, error))
     else:
@@ -169,7 +191,14 @@ def changeUpdateNotifier():
         log.info('Update notifier set to FALSE. Rerun the program to use it with the new settings')
 
 def changeFNameSetting():
-    k = input('Your current setting is set to: {}. What do you want to change it to ("full" for full game names, "short" for shortened game names)? '.format(configfname))
+    if configfname == False:
+        l = 'short'
+    elif configfname == True:
+        l = 'full'
+    else:
+        log.error('Couldn\'t get config name setting')
+
+    k = input('Your current setting is set to: {}. What do you want to change it to ("full" for full game names, "short" for shortened game names)? '.format(l))
     if k == 'full' or k == 'f':
         try:
             with open('config.json', 'r') as jsonfile: # man i can use this anywhere lol

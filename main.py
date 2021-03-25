@@ -140,7 +140,7 @@ def changePresence(swStatus, pName, pImg, pFname):
     if swStatus == False:
         try:
             if showbutton == True:
-                RPC.update(large_image=pImg, large_text=pFname, details=pFname, buttons=[{'label': 'Use this program here', 'url': url}], start=start_time)
+                RPC.update(large_image=pImg, large_text=pFname, details=pFname, buttons=[{'label': 'Get this program here', 'url': url}], start=start_time)
                 print('Set game to {} at {}'.format(pFname, string))
             elif showbutton == False:
                 RPC.update(large_image=pImg, large_text=pFname, details=pFname, start=start_time)
@@ -152,7 +152,7 @@ def changePresence(swStatus, pName, pImg, pFname):
     elif swStatus == True:
         try:
             if showbutton == True:
-                RPC.update(large_image=pImg, large_text=pFname, details=pFname, state='SW-{}'.format(sw), buttons=[{'label': 'Use this program here', 'url': url}], start=start_time)
+                RPC.update(large_image=pImg, large_text=pFname, details=pFname, state='SW-{}'.format(sw), buttons=[{'label': 'Get this program here', 'url': url}], start=start_time)
                 print('Set game to {} at {} with friend code "SW-{}" showing'.format(pFname, string, sw))
             elif showbutton == False:
                 RPC.update(large_image=pImg, large_text=pFname, details=pFname, state='SW-{}'.format(sw), start=start_time)

@@ -26,6 +26,6 @@ Most inspiration from this project came from myself, but also [this](https://git
 ### These are the major future plans for the program
 - [x] Update games to make super mario 3d all stars and super mario 3d world and bowsers fury 2 different games instead of combing the two (why did i do this)
 - [ ] Add pictures to the README file
-- [ ] Give the program colors
+- [x] Give the program colors
 - [ ] Have the program the option to auto-update
 - [ ] Rewrite code + make a good ui lol

@@ -20,7 +20,7 @@ Report it! You can do so by creating an [issue](https://github.com/Aethese/Switc
 I currently only support **Windows** for this app. It should work on Linux, but I have not tested this.
 
 # Inspiration
-Most inspiration from this project came from myself, but also [this](https://github.com/Da532/NS-RPC) repo. I recommend you check  it out :) *it looks better lol*
+Most inspiration from this project came from myself, but also [this](https://github.com/Da532/NS-RPC) repo. I recommend to check it out :) *it looks better lol*
 
 # Future Plans
 ### These are the major future plans for the program

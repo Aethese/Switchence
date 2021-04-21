@@ -17,15 +17,12 @@ I do take requests for games. All you have to do is create an issue with the tit
 Report it! You can do so by creating an [issue](https://github.com/Aethese/Switchence/issues/) so I can figure out how to help you and/or fix the problem for the next release!
 
 # Supported OS
-I currently only support **Windows** for this app. It might work on Linux, but I have not tested this.
+I currently only support **Windows** for this app. It might work on Linux and Mac, but I have not tested this.
 
 # Inspiration
 Most inspiration from this project came from myself, but also [this](https://github.com/Da532/NS-RPC) repo. I recommend to check it out :) *it looks better lol*
 
 # Future Plans
 ### These are the major future plans for the program
-- [x] Update games to make super mario 3d all stars and super mario 3d world and bowsers fury 2 different games instead of combing the two (why did i do this)
-- [ ] Add pictures to the README file
-- [x] Give the program colors
-- [ ] Have the program the option to auto-update
-- [ ] Rewrite code + make a good ui lol
+- [ ] Version 1.3.0
+- [ ] Version 2.0.0 (big boi update)

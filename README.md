@@ -24,5 +24,5 @@ Most inspiration from this project came from myself, but also [this](https://git
 
 # Future Plans
 ### These are the major future plans for the program
-- [ ] Version 1.3.0
+- [x] Version 1.3.0
 - [ ] Version 2.0.0 (big boi update)

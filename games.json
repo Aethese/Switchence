@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "games": [
     {
       "name": "1-2-switch",
@@ -122,6 +122,11 @@
       "fname": "Hades"
     },
     {
+      "name": "hatsune-miku",
+      "img": "hatsune-miku",
+      "fname": "Hatsune Miku: Project Diva Megamix"
+    },
+    {
       "name": "hollow",
       "img": "hollow",
       "fname": "Hollow Knight"
@@ -207,6 +212,11 @@
       "fname": "Monopoly"
     },
     {
+      "name": "monster-hunter",
+      "img": "monster-hunt",
+      "fname": "Monster Hunter Rise"
+    },
+    {
       "name": "nes",
       "img": "nes",
       "fname": "Nintendo Entertainment System"
@@ -235,6 +245,11 @@
       "name": "overwatch",
       "img": "overwatch",
       "fname": "Overwatch"
+    },
+    {
+      "name": "pacman99",
+      "img": "pacman99",
+      "fname": "PAC-MAN 99"
     },
     {
       "name": "paper-mario",
@@ -347,7 +362,7 @@
       "fname": "Terraria"
     },
     {
-      "name": "tetris",
+      "name": "tetris99",
       "img": "tetris",
       "fname": "Tetris 99"
     },

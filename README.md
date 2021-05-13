@@ -17,7 +17,7 @@ I do take requests for games. All you have to do is create an issue with the tit
 Report it! You can do so by creating an [issue](https://github.com/Aethese/Switchence/issues/) so I can figure out how to help you and/or fix the problem for the next release!
 
 # Supported OS
-I currently only support **Windows** for this app. It might work on Linux and Mac, but I have not tested this.
+I currently only support **Windows** for this app. It currently doesn't work for Linux or Mac but I have plans on making it work for version 2.0.0 and possibly a legacy update.
 
 # Inspiration
 Most inspiration from this project came from myself, but also [this](https://github.com/Da532/NS-RPC) repo. I recommend to check it out :) *it looks better lol*

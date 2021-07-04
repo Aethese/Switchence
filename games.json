@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.3.1",
   "games": [
     {
       "name": "1-2-switch",
@@ -279,17 +279,17 @@
     {
       "name": "pokemon-lets-go-eevee",
       "img": "pokemon-lets-go-eevee",
-      "fname": "Pokémon: Let's Go, Eevee!"
+      "fname": "Pok�mon: Let's Go, Eevee!"
     },
     {
       "name": "pokemon-lets-go-pikachu",
       "img": "pokemon-lets-go-pikachu",
-      "fname": "Pokémon: Let's Go, Pikachu!"
+      "fname": "Pok�mon: Let's Go, Pikachu!"
     },
     {
       "name": "pokemon-mystery",
       "img": "pokemon-mystery",
-      "fname": "Pokémon Mystery Dungeon: Rescue Team DX"
+      "fname": "Pok�mon Mystery Dungeon: Rescue Team DX"
     },
     {
       "name": "pokemon-shield",

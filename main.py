@@ -66,7 +66,7 @@ elif os.path.isfile('config.json') == False:
         configjson = {}
         configjson['config'] = [{
             'sw-code': '',
-            'version': '1.3.0',
+            'version': '1.3.1',
             'update-notifier': True,
             'fname': False,
             'show-button': True
@@ -233,6 +233,19 @@ def changeFNameSetting():
         except Exception as error:
             log.error(f'Couldn\'t change fname setting | {error}')
 
+log.loading('Attempting to set looking for game status...')
+try:
+    start_time = time.time()
+    if showbutton:
+        RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game', 
+                   buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
+        log.loading('Succesfully set looking for game status!')
+    elif showbutton == False:
+        RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game', start=start_time)
+        log.loading('Succesfully set looking for game status!')
+except Exception as error:
+    log.error(f'Couldn\'t set looking for game status')
+time.sleep(0.5)
 clear()
 print('''
  .d8888b.                d8b 888             888                                          

@@ -177,6 +177,11 @@
       "fname": "Super Mario Bros. U Deluxe"
     },
     {
+      "name": "mario-golf",
+      "img": "mario-golf",
+      "fname": "Mario Golf: Super Rush"
+    },
+    {
       "name": "mario-kart",
       "img": "mario-kart",
       "fname": "Mario Kart 8 Deluxe"
@@ -279,22 +284,27 @@
     {
       "name": "pokemon-lets-go-eevee",
       "img": "pokemon-lets-go-eevee",
-      "fname": "Pok�mon: Let's Go, Eevee!"
+      "fname": "Pokémon: Let's Go, Eevee!"
     },
     {
       "name": "pokemon-lets-go-pikachu",
       "img": "pokemon-lets-go-pikachu",
-      "fname": "Pok�mon: Let's Go, Pikachu!"
+      "fname": "Pokémon: Let's Go, Pikachu!"
     },
     {
       "name": "pokemon-mystery",
       "img": "pokemon-mystery",
-      "fname": "Pok�mon Mystery Dungeon: Rescue Team DX"
+      "fname": "Pokémon Mystery Dungeon: Rescue Team DX"
     },
     {
       "name": "pokemon-shield",
       "img": "pokemon-shield",
-      "fname": "Pokemon Shield"
+      "fname": "Pokémon Shield"
+    },
+    {
+      "name": "pokemon-snap",
+      "img": "pokemon-snap",
+      "fname": "New Pokémon Snap"
     },
     {
       "name": "pokemon-sword",

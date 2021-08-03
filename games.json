@@ -1,5 +1,5 @@
 {
-  "version": "1.3.1",
+  "version": "1.4.0",
   "games": [
     {
       "name": "1-2-switch",
@@ -34,7 +34,7 @@
     {
       "name": "arms",
       "img": "arms",
-      "fname": "Arms"
+      "fname": "ARMS"
     },
     {
       "name": "boxboy-boxgirl",
@@ -167,11 +167,6 @@
       "fname": "Super Mario Maker 2"
     },
     {
-      "name": "mario",
-      "img": "mario",
-      "fname": "Super Mario Odyssey"
-    },
-    {
       "name": "mario-bros-deluxe",
       "img": "mario-bros-deluxe",
       "fname": "Super Mario Bros. U Deluxe"
@@ -185,6 +180,11 @@
       "name": "mario-kart",
       "img": "mario-kart",
       "fname": "Mario Kart 8 Deluxe"
+    },
+    {
+      "name": "mario-odyssey",
+      "img": "mario-odyssey",
+      "fname": "Super Mario Odyssey"
     },
     {
       "name": "mario-party",

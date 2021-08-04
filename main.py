@@ -94,7 +94,7 @@ elif os.path.isfile('config.json') == False:
 		configjson = {}
 		configjson['config'] = [{
 			'sw-code': '',
-			'version': '1.4.0',
+			'version': '1.4.1',
 			'update-notifier': True,
 			'fname': False,
 			'show-button': True,
@@ -250,6 +250,7 @@ def changeFNameSetting():
 	else:
 		log.error('Couldn\'t get config name setting')
 	k = input(f'Your current setting is set to: {Fore.LIGHTGREEN_EX}{l}{Fore.RESET}. What do you want to change it to ("full" for full game names, "short" for shortened game names)? ')
+	k = k.lower()
 	if k == 'full' or k == 'f':
 		try:
 			with open('config.json', 'r') as jsonfile: # man i can use this anywhere lol
@@ -276,6 +277,7 @@ def changeFNameSetting():
 def changeAutoUpdate():
 	print(f'Your current Auto Update setting is set to {Fore.LIGHTGREEN_EX}{autoupdate}{Fore.RESET}')
 	ask = input('What would you like to change it to? On or off? ')
+	ask = ask.lower()
 	if ask == 'on':
 		try:
 			with open('config.json', 'r') as jsonfile:
@@ -356,7 +358,7 @@ if y == 'yes' or y == 'y':
 		log.info('Friend code not set. Rerun the program and change your friend code to your friend code')
 elif y == 'change' or y == 'c':
 	c = input('What is your new friend code (just type the numbers)? ')
-	b = input('Is "SW-{}" correct? '.format(c))
+	b = input(f'Is "SW-{c}" correct? ')
 	b = b.lower()
 	if b == 'yes' or b == 'y':
 		try:
@@ -367,7 +369,7 @@ elif y == 'change' or y == 'c':
 			with open('config.json', 'w') as jsonfile:
 				json.dump(jsonFile, jsonfile, indent=4)
 			sw = c
-			print('Friend code changed to SW-{}'.format(c))
+			print(f'Friend code changed to SW-{c}')
 			y = 'yes'
 		except Exception as error:
 			log.error(f'Couldn\'t change sw-code | {error}')

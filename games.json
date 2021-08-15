@@ -1,6 +1,6 @@
 {
   "version": "1.5.0",
-  "announcement": "New update available!",
+  "announcement": "New update available! Version 1.5.0",
   "games": [
     {
       "name": "1-2-switch",
@@ -422,15 +422,15 @@
       "img": "yt",
       "fname": "YouTube"
     },
-    {
-      "name": "zelda",
-      "img": "zelda",
-      "fname": "The Legend of Zelda: Breath of the Wild"
-    },
-    {
+	{
+		"name": "zelda",
+		"img": "zelda",
+		"fname": "The Legend of Zelda: Breath of the Wild"
+	},
+	{
 		"name": "zelda-skyward-sword",
 		"img": "zelda-skyward-sword",
 		"fname": "The Legend of Zelda™: Skyward Sword HD"
-	  }
-  ]
+	}
+	]
 }

@@ -1,5 +1,6 @@
 {
-  "version": "1.4.1",
+  "version": "1.5.0",
+  "announcement": "New update available!",
   "games": [
     {
       "name": "1-2-switch",
@@ -20,6 +21,11 @@
       "name": "ace-attorney",
       "img": "ace-attorney",
       "fname": "Phoenix Wright: Ace Attorney Trilogy"
+    },
+    {
+      "name": "ace-attorney-chronicles",
+      "img": "ace-attorney-chronicles",
+      "fname": "The Great Ace Attorney Chronicles"
     },
     {
       "name": "animal-crossing",
@@ -312,6 +318,11 @@
       "fname": "Pokemon Sword"
     },
     {
+      "name": "pokemon-unite",
+      "img": "pokemon-unite",
+      "fname": "Pokémon UNITE"
+    },
+    {
       "name": "puyopuyo-tetris",
       "img": "puyopuyo-tetris",
       "fname": "Puyo Puyo Tetris"
@@ -415,6 +426,11 @@
       "name": "zelda",
       "img": "zelda",
       "fname": "The Legend of Zelda: Breath of the Wild"
-    }
+    },
+    {
+		"name": "zelda-skyward-sword",
+		"img": "zelda-skyward-sword",
+		"fname": "The Legend of Zelda™: Skyward Sword HD"
+	  }
   ]
 }

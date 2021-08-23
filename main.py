@@ -1,11 +1,19 @@
 #+= imports =+#
 try:
-	import time, json, requests, webbrowser, os, sys, ctypes
+	import time
+	import json
+	import requests
+	import webbrowser
+	import os
+	import sys
+	import ctypes
 	from pypresence import Presence
 	from colorama import Fore, init
 	init(autoreset=True) # auto reset color every print
 except Exception as error:
 	print(f'Couldn\'t import everything (did you install requirements?) | {error}')
+	time.sleep(10)
+	sys.exit()
 
 #+= important functions =+#
 class log:
@@ -21,7 +29,7 @@ class log:
 	def info(text: str):
 		changeWindowTitle('Info')
 		clear()
-		print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}')
+		print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}\nThis program will now close in 10 minutes')
 		time.sleep(600)
 		sys.exit()
 
@@ -37,36 +45,48 @@ def clear():
 clear()
 
 def changeWindowTitle(title):
-	if os.name == 'nt':
+	if os.name == 'nt': # hopefully multi platform support
 		ctypes.windll.kernel32.SetConsoleTitleW(f'Switchence | {title}')
 changeWindowTitle('Loading')
 
-def updateProgram(setting, onlineVer): # 5132-1460-8735
+def updateConfig(changePart, changeTo):
+	try:
+		with open('config.json', 'r') as jsonfile:
+			jsonFile = json.load(jsonfile)
+			for details in jsonFile['config']:
+				details[changePart] = changeTo
+		with open('config.json', 'w') as jsonfile:
+			json.dump(jsonFile, jsonfile, indent=4)
+	except Exception as error:
+		log.error(f'Couldn\'t update config file | {error}')
+
+def updateProgram(setting, onlineVer):
 	if setting:
 		changeWindowTitle('Updating')
+		log.loading(f'Updating to version {onlineVer}...')
 		try:
 			currentOnlineVersion = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/main.py')
+			log.loading('Checking new version...')
 			if currentOnlineVersion.status_code != 200:
-				print(f'{Fore.LIGHTRED_EX}[ERROR]{Fore.RESET} Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
+				log.error(f'Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
+			elif currentOnlineVersion.status_code == 429:
+				log.info('Woah, slow down! You\'re being rate limited!')
 			else:
-				onlineVersionBinary = currentOnlineVersion.content # if status code = success update to latest version
+				log.loading('Successfully loaded new version! Getting new update...')
+				onlineVersionBinary = currentOnlineVersion.content # if status code = 200, update to latest version
 				with open('main.py', 'wb') as file: # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz for getting this to work!
 					file.write(onlineVersionBinary)
-				with open('config.json', 'r') as jsonfile:
-					jsonFile = json.load(jsonfile)
-					for details in jsonFile['config']:
-						details['version'] = onlineVer
-				with open('config.json', 'w') as jsonfile:
-					json.dump(jsonFile, jsonfile, indent=4)
-				log.info('Updated to the latest version!')
+				log.loading('Installed latest version! Updating local version...')
+				updateConfig('version', onlineVer)
+				log.info(f'Finished updating to version {onlineVer}!')
 		except Exception as error:
 			log.error(f'Couldn\'t change version setting when updating | {error}')
-		log.info('Successfully updated to the latest version of Switchence!')
 	elif setting == False:
 		log.warning('Attempted to update program without the Auto Updater on')
 
 #+= variables =+#
 id = '803309090696724554' # just pre defining variables
+beta = True # if current build is a test build
 version = None
 oVersion = None # online version
 sw = None
@@ -90,15 +110,17 @@ def createFiles():
 		configjson = {}
 		configjson['config'] = [{
 			'sw-code': sw,
-			'version': '1.5.0',
+			'version': '1.6.0',
 			'update-notifier': True,
 			'fname': False,
 			'show-button': True,
 			'legacy': True,
 			'auto-update': False
 		}]
+		log.loading('Got settings to save, saving them...')
 		with open('config.json', 'w') as jsonfile:
 			json.dump(configjson, jsonfile, indent=4)
+		log.loading('Saved settings!')
 		with open('config.json', 'r') as jsonfile: # actually get the info lol
 			log.loading('Setting config settings...')
 			jsonFile = json.load(jsonfile)
@@ -135,7 +157,7 @@ if os.path.isfile('config.json'):
 			if sw == None: # in case an empty config folder is found
 				sw = ''
 			if version == None:
-				version = '1.5.0' # this will not be changed
+				version = '1.6.0'
 			log.loading('Missing config settings found, creating them...')
 			createFiles()
 		except Exception as error:
@@ -156,6 +178,8 @@ try:
 	gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json') # auto update game list :)
 	if gamejson.status_code != 200:
 		log.error(f'Could not get game list with status code {gamejson.status_code}')
+	elif gamejson.status_code == 429:
+		log.info('Woah, slow down! You\'re being rate limited!')
 	gamejsontext = gamejson.text
 	games = json.loads(gamejsontext)
 	oVersion = games['version']
@@ -178,12 +202,7 @@ log.loading('Checking file version...')
 if version == '' or version == None: # checks your version
 	log.loading('File version not found, attempting to create...')
 	try:
-		with open('config.json', 'r') as jsonfile:
-			jsonFile = json.load(jsonfile)
-			for details in jsonFile['config']:
-				details['version'] = oVersion
-		with open('config.json', 'w') as jsonfile:
-			json.dump(jsonFile, jsonfile, indent=4)
+		updateConfig('version', oVersion)
 		log.loading('Successfully created file version!')
 	except Exception as error:
 		log.error(f'Couldn\'t write to the version file | {error}')
@@ -204,64 +223,60 @@ def changePresence(swStatus, pName, pImg, pFname):
 	start_time = time.time()
 	local = time.localtime()
 	string = time.strftime('%H:%M', local)
+	if beta: # set small image to indicate build ran by user is a beta build
+		smallText = 'Switchence Beta'
+		smallImg = 'gold_icon'
+	else:
+		smallText = f'Switchence v{version}'
+		smallImg = 'switch_png'
 	if swStatus == False:
 		try:
 			if showbutton:
-				RPC.update(large_image=pImg, large_text=pFname, small_image='switch_png', small_text=f'Switchence v{version}', details=pFname, 
+				RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, 
 						   buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 				print(f'Set game to {pFname} at {string}')
 				changeWindowTitle(f'Playing {pFname}')
 			elif showbutton == False:
-				RPC.update(large_image=pImg, large_text=pFname, small_image='switch_png', small_text=f'Switchence v{version}', details=pFname, start=start_time)
+				RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, start=start_time)
 				print(f'Set game to {pFname} at {string}')
 				changeWindowTitle(f'Playing {pFname}')
 			else:
-				log.error('Couldn\'t get button info (1)')
+				log.error(f'Couldn\'t get button info (1) | setting: {showbutton}')
 		except Exception as error:
 			log.error(f'Couldn\'t set RPC(1) to {pName} | {error}')
 	elif swStatus:
 		try:
 			if showbutton == True:
-				RPC.update(large_image=pImg, large_text=pFname, small_image='switch_png', small_text=f'Switchence v{version}', details=pFname, 
+				RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, 
 						   state=f'SW-{sw}', buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 				print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
 				changeWindowTitle(f'Playing {pFname}')
 			elif showbutton == False:
-				RPC.update(large_image=pImg, large_text=pFname, small_image='switch_png', small_text=f'Switchence v{version}', details=pFname, state=f'SW-{sw}', start=start_time)
+				RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, state=f'SW-{sw}', start=start_time)
 				print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
 				changeWindowTitle(f'Playing {pFname}')
 			else:
-				log.error('Couldn\'t get button info (2)')
+				log.error(f'Couldn\'t get button info (2) | setting: {showbutton}')
 		except Exception as error:
 			log.error(f'Couldn\'t set RPC(2) to {pName} | {error}')
 	else:
-		log.error('Couldn\'t get friend code status')
+		log.error(f'Couldn\'t get friend code status | swstatus: {swStatus}')
 
 def changeUpdateNotifier():
 	picked = input('What setting do you want the Update Notifier to be on (on or off)? ')
 	picked = picked.lower()
 	if picked == 'on' or picked == 'true' or picked == 't': # why do you want this on tbh
 		try:
-			with open('config.json', 'r') as jsonfile: # very weird/hacky way to do this lol, but it does work tho
-				jsonFile = json.load(jsonfile)
-				for details in jsonFile['config']:
-					details['update-notifier'] = True
-			with open('config.json', 'w') as jsonfile:
-				json.dump(jsonFile, jsonfile, indent=4)
+			updateConfig('update-notifier', True)
 		except Exception as error:
 			log.error(f'Couldn\'t change update-notifier setting | {error}')
-		log.info('Update notifier set to {Fore.GREEN}TRUE{Fore.RESET}. Rerun the program to use it with the new settings')
+		log.info(f'Update notifier set to {Fore.LIGHTGREEN_EX}TRUE{Fore.RESET}. Rerun the program to use it with the new settings')
 	elif picked == 'off' or picked == 'false' or picked == 'f':
 		try:
-			with open('config.json', 'r') as jsonfile: # very weird/hacky way to do this lol
-				jsonFile = json.load(jsonfile)
-				for details in jsonFile['config']:
-					details['update-notifier'] = False
-			with open('config.json', 'w') as jsonfile:
-				json.dump(jsonFile, jsonfile, indent=4)
+			updateConfig('update-notifier', False)
 		except Exception as error:
 			log.error(f'Couldn\'t change update-notifier setting | {error}')
-		log.info('Update notifier set to {Fore.YELLOW}FALSE{Fore.RESET}. Rerun the program to use it with the new settings')
+		log.info(f'Update notifier set to {Fore.LIGHTRED_EX}FALSE{Fore.RESET}. Rerun the program to use it with the new settings')
 
 def changeFNameSetting():
 	if configfname == False:
@@ -269,29 +284,19 @@ def changeFNameSetting():
 	elif configfname == True:
 		l = 'full'
 	else:
-		log.error('Couldn\'t get config name setting')
+		log.error(f'Couldn\'t get config name setting | configfname: {configfname}')
 	k = input(f'Your current setting is set to: {Fore.LIGHTGREEN_EX}{l}{Fore.RESET}. What do you want to change it to (\'full\' for full game names, \'short\' for shortened game names)? ')
 	k = k.lower()
 	if k == 'full' or k == 'f':
 		try:
-			with open('config.json', 'r') as jsonfile: # man i can use this anywhere lol
-				jsonFile = json.load(jsonfile)
-				for details in jsonFile['config']:
-					details['fname'] = True
-			with open('config.json', 'w') as jsonfile:
-				json.dump(jsonFile, jsonfile, indent=4)
-			log.info(f'Set game name to {Fore.LIGHTYELLOW_EX}Full{Fore.RESET}')
+			updateConfig('fname', True)
+			log.info(f'Set game name to {Fore.LIGHTGREEN_EX}Full{Fore.RESET}')
 		except Exception as error:
 			log.error(f'Couldn\'t change fname setting | {error}')
 	elif k == 'short' or k == 's':
 		try:
-			with open('config.json', 'r') as jsonfile:
-				jsonFile = json.load(jsonfile)
-				for details in jsonFile['config']:
-					details['fname'] = False
-			with open('config.json', 'w') as jsonfile:
-				json.dump(jsonFile, jsonfile, indent=4)
-			log.info(f'Set game name to {Fore.LIGHTYELLOW_EX}Short{Fore.RESET}')
+			updateConfig('fname', False)
+			log.info(f'Set game name to {Fore.LIGHTGREEN_EX}Short{Fore.RESET}')
 		except Exception as error:
 			log.error(f'Couldn\'t change fname setting | {error}')
 
@@ -301,28 +306,18 @@ def changeAutoUpdate():
 	ask = ask.lower()
 	if ask == 'on':
 		try:
-			with open('config.json', 'r') as jsonfile:
-				jsonFile = json.load(jsonfile)
-				for details in jsonFile['config']:
-					details['auto-update'] = True
-			with open('config.json', 'w') as jsonfile:
-				json.dump(jsonFile, jsonfile, indent=4)
+			updateConfig('auto-update', True)
 			log.info(f'Set Auto Update setting to {Fore.LIGHTGREEN_EX}True{Fore.RESET}')
 		except Exception as error:
 			log.error(f'Couldn\'t change fname setting | {error}')
 	elif ask == 'off':
 		try:
-			with open('config.json', 'r') as jsonfile:
-				jsonFile = json.load(jsonfile)
-				for details in jsonFile['config']:
-					details['auto-update'] = False
-			with open('config.json', 'w') as jsonfile:
-				json.dump(jsonFile, jsonfile, indent=4)
+			updateConfig('auto-update', False)
 			log.info(f'Set Auto Update setting to {Fore.LIGHTRED_EX}False{Fore.RESET}')
 		except Exception as error:
 			log.error(f'Couldn\'t change fname setting | {error}')
 	else:
-		log.info(f'Your sellection, {ask}, is not a good answer, please answer with \'on\' or \'off\' next time')
+		log.info(f'Your answer, {ask}, is not a good answer, please answer with \'on\' or \'off\' next time')
 
 #+= looking for game status before picking a game =+#
 log.loading('Attempting to set looking for game status...')
@@ -337,7 +332,7 @@ try:
 		log.loading('Successfully set looking for game status!')
 except Exception as error:
 	log.error(f'Couldn\'t set looking for game status')
-time.sleep(0.75)
+time.sleep(0.4)
 changeWindowTitle('Picking a game')
 clear()
 print('''
@@ -363,14 +358,12 @@ if updateAvailable:
 		print(f'{Fore.LIGHTGREEN_EX}[INFO]{Fore.RESET} You can update Switchence to the current version {Fore.LIGHTRED_EX}v{oVersion}{Fore.RESET} by turning on Auto Updates or by visiting the official GitHub page')
 		print(f'{Fore.LIGHTGREEN_EX}[INFO]{Fore.RESET} If you wish to turn on auto updates type \'auto update\' in the game selection input')
 		print(f'{Fore.LIGHTGREEN_EX}[INFO]{Fore.RESET} If you wish to turn off update notifications, type \'update notifier\' in the game selection input')
-		print(f'{Fore.LIGHTYELLOW_EX}The program will return to normal shortly')
+		webbrowser.open('https://github.com/Aethese/Switchence/releases/', new=2, autoraise=True)
 		time.sleep(2)
-		webbrowser.open('https://github.com/Aethese/Switchence/releases', new=2, autoraise=True)
-		time.sleep(7)
 
 #+= handle announcement =+#
-if announcement != None or announcement != '':
-	print(f'\n{Fore.LIGHTCYAN_EX}[ANNOUNCEMENT]{Fore.RESET} {announcement}\n')
+if announcement != None and announcement != '':
+	print(f'{Fore.LIGHTCYAN_EX}[ANNOUNCEMENT]{Fore.RESET} {announcement}\n')
 
 #+= pick game =+#
 print('Here are the current games: ')
@@ -397,13 +390,12 @@ elif x == 'change-name' or x =='change name' or x == 'c-n' or x == 'cn':
 elif x == 'auto-update' or x == 'auto update' or x == 'a-u' or x == 'a u':
 	changeAutoUpdate()
 elif x == 'options' or x == 'o':
-	log.info('''The current options are:
+	log.info(f'''The current options are:
 \'github\' this will bring up the public GitHub repo
-\'update notifier\' which toggles the built-in update notifier
-\'change name\' this will toggle how game names are shown on the game select screen
-\'auto update\' which toggles the built-in auto updater
-\'options\' this will bring up this page
-''')
+\'update notifier\' which toggles the built-in update notifier, this is set to {Fore.LIGHTCYAN_EX}{updatenotifier}{Fore.RESET}
+\'change name\' this will toggle how game names are shown on the game select screen, this is set to {Fore.LIGHTCYAN_EX}{configfname}{Fore.RESET}
+\'auto update\' which toggles the built-in auto updater, this is {Fore.LIGHTCYAN_EX}{autoupdate}{Fore.RESET}
+\'options\' this will bring up this page''')
 
 #+= sw handling =+#
 y = input(f'Do you want to show your friend code \'SW-{sw}\' (you can change this by typing \'change\')? ')
@@ -417,19 +409,16 @@ elif y == 'change' or y == 'c':
 	b = b.lower()
 	if b == 'yes' or b == 'y':
 		try:
-			with open('config.json', 'r') as jsonfile: # i use this because it works, don't judge me
-				jsonFile = json.load(jsonfile)
-				for details in jsonFile['config']:
-					details['sw-code'] = c
-			with open('config.json', 'w') as jsonfile:
-				json.dump(jsonFile, jsonfile, indent=4)
+			updateConfig('sw-code', c)
 			sw = c
 			print(f'Friend code changed to SW-{c}')
 			y = 'yes'
 		except Exception as error:
 			log.error(f'Couldn\'t change sw-code | {error}')
 	else:
-		print('Friend code not changed')
+		print('Friend code not changed, continuing with setting set to off')
+		y = 'n'
+
 
 #+= search for game =+#
 try:
@@ -443,9 +432,9 @@ try:
 			chosenOne = o
 			break
 	else:
-		log.info('The game you specified is not in the current game list')
+		log.info(f'The game you specified ({chosenOne}) is not in the current game list')
 except Exception as error:
-	log.error(f'Can\'t find the game ({x}) the user specified (1) | {error}')
+	log.error(f'Could not get game name/fname (1) | {error}')
 
 #+= send info to changePresence function about game picked =+#
 try:

@@ -1,427 +1,427 @@
 {
-  "version": "1.5.0",
-  "announcement": "Version 1.6.0 will be released soon!",
-  "games": [
-    {
-      "name": "1-2-switch",
-      "img": "1-2-switch",
-      "fname": "1-2-Switch"
-    },
-    {
-      "name": "3d-all-stars",
-      "img": "3d-all-stars",
-      "fname": "Super Mario 3D All-Stars"
-    },
-    {
-      "name": "3d-world",
-      "img": "3d-world",
-      "fname": "Super Mario 3d World + Bowser's Fury"
-    },
-    {
-      "name": "ace-attorney",
-      "img": "ace-attorney",
-      "fname": "Phoenix Wright: Ace Attorney Trilogy"
-    },
-    {
-      "name": "ace-attorney-chronicles",
-      "img": "ace-attorney-chronicles",
-      "fname": "The Great Ace Attorney Chronicles"
-    },
-    {
-      "name": "animal-crossing",
-      "img": "animal-crossing",
-      "fname": "Animal Crossing: New Horizons"
-    },
-    {
-      "name": "among-us",
-      "img": "among-us",
-      "fname": "Among Us"
-    },
-    {
-      "name": "arms",
-      "img": "arms",
-      "fname": "ARMS"
-    },
-    {
-      "name": "boxboy-boxgirl",
-      "img": "boxboy-boxgirl",
-      "fname": "BOXBOY! + BOXGIRL!"
-    },
-    {
-      "name": "cadence-hyrule",
-      "img": "cadence-hyrule",
-      "fname": "Cadence of Hyrule"
-    },
-    {
-      "name": "captain-toad",
-      "img": "captain-toad",
-      "fname": "Captain Toad: Treasure Tracker"
-    },
-    {
-      "name": "celeste",
-      "img": "celeste",
-      "fname": "Celeste"
-    },
-    {
-      "name": "clubhouse",
-      "img": "clubhouse",
-      "fname": "Clubhouse Games: 51 Worldwide Classics"
-    },
-    {
-      "name": "cooking-simulator",
-      "img": "cooking-simulator",
-      "fname": "Cooking Simulator"
-    },
-    {
-      "name": "cuphead",
-      "img": "cuphead",
-      "fname": "Cuphead"
-    },
-    {
-      "name": "dead-by-daylight",
-      "img": "dead-by-daylight",
-      "fname": "Dead by Daylight"
-    },
-    {
-      "name": "devil-may-cry",
-      "img": "devil-may-cry",
-      "fname": "Devil May Cry 3"
-    },
-    {
-      "name": "doom",
-      "img": "doom",
-      "fname": "DOOM"
-    },
-    {
-      "name": "fire-emblem-houses",
-      "img": "fire-emblem-houses",
-      "fname": "Fire Emblem: Three Houses"
-    },
-    {
-      "name": "fire-emblem-warriors",
-      "img": "fire-emblem-warriors",
-      "fname": "Fire Emblem Warriors"
-    },
-    {
-      "name": "fortnite",
-      "img": "fortnite",
-      "fname": "Fortnite"
-    },
-    {
-      "name": "funimation",
-      "img": "funimation",
-      "fname": "Funimation"
-    },
-    {
-      "name": "good-job",
-      "img": "good-job",
-      "fname": "Good Job!"
-    },
-    {
-      "name": "gris",
-      "img": "gris",
-      "fname": "GRIS"
-    },
-    {
-      "name": "hades",
-      "img": "hades",
-      "fname": "Hades"
-    },
-    {
-      "name": "hatsune-miku",
-      "img": "hatsune-miku",
-      "fname": "Hatsune Miku: Project Diva Megamix"
-    },
-    {
-      "name": "hollow",
-      "img": "hollow",
-      "fname": "Hollow Knight"
-    },
-    {
-      "name": "hulu",
-      "img": "hulu",
-      "fname": "Hulu"
-    },
-    {
-      "name": "hyrule-warriors",
-      "img": "hyrule-warriors",
-      "fname": "Hyrule Warrios: Definited Edition"
-    },
-    {
-      "name": "kirby",
-      "img": "kirby",
-      "fname": "Kirby Star Allies"
-    },
-    {
-      "name": "kirby-clash",
-      "img": "kirby-clash",
-      "fname": "Super Kirby Clash"
-    },
-    {
-      "name": "link-awakening",
-      "img": "link-awakening",
-      "fname": "The Legend of Zelda: Link's Awakening"
-    },
-    {
-      "name": "luigi-mansion",
-      "img": "luigi-mansion",
-      "fname": "Luigi's Mansion 3"
-    },
-    {
-      "name": "maker",
-      "img": "maker",
-      "fname": "Super Mario Maker 2"
-    },
-    {
-      "name": "mario-bros-deluxe",
-      "img": "mario-bros-deluxe",
-      "fname": "Super Mario Bros. U Deluxe"
-    },
-    {
-      "name": "mario-golf",
-      "img": "mario-golf",
-      "fname": "Mario Golf: Super Rush"
-    },
-    {
-      "name": "mario-kart",
-      "img": "mario-kart",
-      "fname": "Mario Kart 8 Deluxe"
-    },
-    {
-      "name": "mario-odyssey",
-      "img": "mario-odyssey",
-      "fname": "Super Mario Odyssey"
-    },
-    {
-      "name": "mario-party",
-      "img": "mario-party",
-      "fname": "Super Mario Party"
-    },
-    {
-      "name": "mario-rabbids",
-      "img": "mario-rabbids",
-      "fname": "Mario & Rabbids: Kingdom Battle"
-    },
-    {
-      "name": "mario-sonic-olympic-games",
-      "img": "mario-sonic-olympic-games",
-      "fname": "Mario & Sonic at the Olympic Games Tokyo 2020"
-    },
-    {
-      "name": "mario-tennis",
-      "img": "mario-tennis",
-      "fname": "Mario Tennis Aces"
-    },
-    {
-      "name": "miitopia",
-      "img": "miitopia",
-      "fname": "Miitopia"
-    },
-    {
-      "name": "minecraft",
-      "img": "minecraft",
-      "fname": "Minecraft"
-    },
-    {
-      "name": "monopoly",
-      "img": "monopoly",
-      "fname": "Monopoly"
-    },
-    {
-      "name": "monster-hunter",
-      "img": "monster-hunter",
-      "fname": "Monster Hunter Rise"
-    },
-    {
-      "name": "nes",
-      "img": "nes",
-      "fname": "Nintendo Entertainment System"
-    },
-    {
-      "name": "octopath",
-      "img": "octopath",
-      "fname": "OCTOPATH TRAVELER"
-    },
-    {
-      "name": "okami",
-      "img": "okami-hd",
-      "fname": "Okami HD"
-    },
-    {
-      "name": "overcooked-2",
-      "img": "overcooked-2",
-      "fname": "Overcooked! 2"
-    },
-    {
-      "name": "overcooked-special",
-      "img": "overcooked-special",
-      "fname": "Overcooked! Special Edition"
-    },
-    {
-      "name": "overwatch",
-      "img": "overwatch",
-      "fname": "Overwatch"
-    },
-    {
-      "name": "pacman99",
-      "img": "pacman99",
-      "fname": "PAC-MAN 99"
-    },
-    {
-      "name": "paper-mario",
-      "img": "paper-mario",
-      "fname": "Paper Mario: The Origami King"
-    },
-    {
-      "name": "persona-5",
-      "img": "persona-5",
-      "fname": "Persona 5 Strikers"
-    },
-    {
-      "name": "phogs",
-      "img": "phogs",
-      "fname": "PHOGS!"
-    },
-    {
-      "name": "pikmin-3",
-      "img": "pikmin-3",
-      "fname": "Pikmin 3 Deluxe"
-    },
-    {
-      "name": "pokemon-lets-go-eevee",
-      "img": "pokemon-lets-go-eevee",
-      "fname": "Pokémon: Let's Go, Eevee!"
-    },
-    {
-      "name": "pokemon-lets-go-pikachu",
-      "img": "pokemon-lets-go-pikachu",
-      "fname": "Pokémon: Let's Go, Pikachu!"
-    },
-    {
-      "name": "pokemon-mystery",
-      "img": "pokemon-mystery",
-      "fname": "Pokémon Mystery Dungeon: Rescue Team DX"
-    },
-    {
-      "name": "pokemon-shield",
-      "img": "pokemon-shield",
-      "fname": "Pokémon Shield"
-    },
-    {
-      "name": "pokemon-snap",
-      "img": "pokemon-snap",
-      "fname": "New Pokémon Snap"
-    },
-    {
-      "name": "pokemon-sword",
-      "img": "pokemon-sword",
-      "fname": "Pokemon Sword"
-    },
-    {
-      "name": "pokemon-unite",
-      "img": "pokemon-unite",
-      "fname": "Pokémon UNITE"
-    },
-    {
-      "name": "puyopuyo-tetris",
-      "img": "puyopuyo-tetris",
-      "fname": "Puyo Puyo Tetris"
-    },
-    {
-      "name": "rayman",
-      "img": "rayman",
-      "fname": "Rayman Legends: Definitive Edition"
-    },
-    {
-      "name": "ring-fit",
-      "img": "ring-fit",
-      "fname": "Ring Fit Adventure"
-    },
-    {
-      "name": "rocket-league",
-      "img": "rocket-league",
-      "fname": "Rocket League"
-    },
-    {
-      "name": "skyrim",
-      "img": "skyrim",
-      "fname": "The Elder Scrolls V: Skyrim"
-    },
-    {
-      "name": "smash",
-      "img": "smash",
-      "fname": "Super Smash Bros. Ultimate"
-    },
-    {
-      "name": "snake-pass",
-      "img": "snake-pass",
-      "fname": "Snake Pass"
-    },
-    {
-      "name": "snes",
-      "img": "snes",
-      "fname": "Super Nintendo Entertainment System"
-    },
-    {
-      "name": "snipperclips",
-      "img": "snipperclips",
-      "fname": "Snipperclips"
-    },
-    {
-      "name": "sonic-mania",
-      "img": "sonic-mania",
-      "fname": "Sonic Mania"
-    },
-    {
-      "name": "splatoon",
-      "img": "splatoon",
-      "fname": "Splatoon 2"
-    },
-    {
-      "name": "stardew",
-      "img": "stardew",
-      "fname": "Stardew Valley"
-    },
-    {
-      "name": "terraria",
-      "img": "terraria",
-      "fname": "Terraria"
-    },
-    {
-      "name": "tetris99",
-      "img": "tetris",
-      "fname": "Tetris 99"
-    },
-    {
-      "name": "thief-simulator",
-      "img": "thief-simulator",
-      "fname": "Thief Simulator"
-    },
-    {
-      "name": "undertale",
-      "img": "undertale",
-      "fname": "Undertale"
-    },
-    {
-      "name": "witcher-3",
-      "img": "witcher-3",
-      "fname": "The Witcher 3: Wild Hunt"
-    },
-    {
-      "name": "xenoblade",
-      "img": "xenoblade",
-      "fname": "Xenoblade Chronicles 2"
-    },
-    {
-      "name": "yoshi",
-      "img": "yoshi",
-      "fname": "Yoshi's Crafted World"
-    },
-    {
-      "name": "yt",
-      "img": "yt",
-      "fname": "YouTube"
-    },
+	"version": "1.6.0",
+	"announcement": "Version 1.6.0 is now out!",
+	"games": [
+	{
+		"name": "1-2-switch",
+		"img": "1-2-switch",
+		"fname": "1-2-Switch"
+	},
+	{
+		"name": "3d-all-stars",
+		"img": "3d-all-stars",
+		"fname": "Super Mario 3D All-Stars"
+	},
+	{
+		"name": "3d-world",
+		"img": "3d-world",
+		"fname": "Super Mario 3d World + Bowser's Fury"
+	},
+	{
+		"name": "ace-attorney",
+		"img": "ace-attorney",
+		"fname": "Phoenix Wright: Ace Attorney Trilogy"
+	},
+	{
+		"name": "ace-attorney-chronicles",
+		"img": "ace-attorney-chronicles",
+		"fname": "The Great Ace Attorney Chronicles"
+	},
+	{
+		"name": "animal-crossing",
+		"img": "animal-crossing",
+		"fname": "Animal Crossing: New Horizons"
+	},
+	{
+		"name": "among-us",
+		"img": "among-us",
+		"fname": "Among Us"
+	},
+	{
+		"name": "arms",
+		"img": "arms",
+		"fname": "ARMS"
+	},
+	{
+		"name": "boxboy-boxgirl",
+		"img": "boxboy-boxgirl",
+		"fname": "BOXBOY! + BOXGIRL!"
+	},
+	{
+		"name": "cadence-hyrule",
+		"img": "cadence-hyrule",
+		"fname": "Cadence of Hyrule"
+	},
+	{
+		"name": "captain-toad",
+		"img": "captain-toad",
+		"fname": "Captain Toad: Treasure Tracker"
+	},
+	{
+		"name": "celeste",
+		"img": "celeste",
+		"fname": "Celeste"
+	},
+	{
+		"name": "clubhouse",
+		"img": "clubhouse",
+		"fname": "Clubhouse Games: 51 Worldwide Classics"
+	},
+	{
+		"name": "cooking-simulator",
+		"img": "cooking-simulator",
+		"fname": "Cooking Simulator"
+	},
+	{
+		"name": "cuphead",
+		"img": "cuphead",
+		"fname": "Cuphead"
+	},
+	{
+		"name": "dead-by-daylight",
+		"img": "dead-by-daylight",
+		"fname": "Dead by Daylight"
+	},
+	{
+		"name": "devil-may-cry",
+		"img": "devil-may-cry",
+		"fname": "Devil May Cry 3"
+	},
+	{
+		"name": "doom",
+		"img": "doom",
+		"fname": "DOOM"
+	},
+	{
+		"name": "fire-emblem-houses",
+		"img": "fire-emblem-houses",
+		"fname": "Fire Emblem: Three Houses"
+	},
+	{
+		"name": "fire-emblem-warriors",
+		"img": "fire-emblem-warriors",
+		"fname": "Fire Emblem Warriors"
+	},
+	{
+		"name": "fortnite",
+		"img": "fortnite",
+		"fname": "Fortnite"
+	},
+	{
+		"name": "funimation",
+		"img": "funimation",
+		"fname": "Funimation"
+	},
+	{
+		"name": "good-job",
+		"img": "good-job",
+		"fname": "Good Job!"
+	},
+	{
+		"name": "gris",
+		"img": "gris",
+		"fname": "GRIS"
+	},
+	{
+		"name": "hades",
+		"img": "hades",
+		"fname": "Hades"
+	},
+	{
+		"name": "hatsune-miku",
+		"img": "hatsune-miku",
+		"fname": "Hatsune Miku: Project Diva Megamix"
+	},
+	{
+		"name": "hollow",
+		"img": "hollow",
+		"fname": "Hollow Knight"
+	},
+	{
+		"name": "hulu",
+		"img": "hulu",
+		"fname": "Hulu"
+	},
+	{
+		"name": "hyrule-warriors",
+		"img": "hyrule-warriors",
+		"fname": "Hyrule Warrios: Definited Edition"
+	},
+	{
+		"name": "kirby",
+		"img": "kirby",
+		"fname": "Kirby Star Allies"
+	},
+	{
+		"name": "kirby-clash",
+		"img": "kirby-clash",
+		"fname": "Super Kirby Clash"
+	},
+	{
+		"name": "link-awakening",
+		"img": "link-awakening",
+		"fname": "The Legend of Zelda: Link's Awakening"
+	},
+	{
+		"name": "luigi-mansion",
+		"img": "luigi-mansion",
+		"fname": "Luigi's Mansion 3"
+	},
+	{
+		"name": "maker",
+		"img": "maker",
+		"fname": "Super Mario Maker 2"
+	},
+	{
+		"name": "mario-bros-deluxe",
+		"img": "mario-bros-deluxe",
+		"fname": "Super Mario Bros. U Deluxe"
+	},
+	{
+		"name": "mario-golf",
+		"img": "mario-golf",
+		"fname": "Mario Golf: Super Rush"
+	},
+	{
+		"name": "mario-kart",
+		"img": "mario-kart",
+		"fname": "Mario Kart 8 Deluxe"
+	},
+	{
+		"name": "mario-odyssey",
+		"img": "mario-odyssey",
+		"fname": "Super Mario Odyssey"
+	},
+	{
+		"name": "mario-party",
+		"img": "mario-party",
+		"fname": "Super Mario Party"
+	},
+	{
+		"name": "mario-rabbids",
+		"img": "mario-rabbids",
+		"fname": "Mario & Rabbids: Kingdom Battle"
+	},
+	{
+		"name": "mario-sonic-olympic-games",
+		"img": "mario-sonic-olympic-games",
+		"fname": "Mario & Sonic at the Olympic Games Tokyo 2020"
+	},
+	{
+		"name": "mario-tennis",
+		"img": "mario-tennis",
+		"fname": "Mario Tennis Aces"
+	},
+	{
+		"name": "miitopia",
+		"img": "miitopia",
+		"fname": "Miitopia"
+	},
+	{
+		"name": "minecraft",
+		"img": "minecraft",
+		"fname": "Minecraft"
+	},
+	{
+		"name": "monopoly",
+		"img": "monopoly",
+		"fname": "Monopoly"
+	},
+	{
+		"name": "monster-hunter",
+		"img": "monster-hunter",
+		"fname": "Monster Hunter Rise"
+	},
+	{
+		"name": "nes",
+		"img": "nes",
+		"fname": "Nintendo Entertainment System"
+	},
+	{
+		"name": "octopath",
+		"img": "octopath",
+		"fname": "OCTOPATH TRAVELER"
+	},
+	{
+		"name": "okami",
+		"img": "okami-hd",
+		"fname": "Okami HD"
+	},
+	{
+		"name": "overcooked-2",
+		"img": "overcooked-2",
+		"fname": "Overcooked! 2"
+	},
+	{
+		"name": "overcooked-special",
+		"img": "overcooked-special",
+		"fname": "Overcooked! Special Edition"
+	},
+	{
+		"name": "overwatch",
+		"img": "overwatch",
+		"fname": "Overwatch"
+	},
+	{
+		"name": "pacman99",
+		"img": "pacman99",
+		"fname": "PAC-MAN 99"
+	},
+	{
+		"name": "paper-mario",
+		"img": "paper-mario",
+		"fname": "Paper Mario: The Origami King"
+	},
+	{
+		"name": "persona-5",
+		"img": "persona-5",
+		"fname": "Persona 5 Strikers"
+	},
+	{
+		"name": "phogs",
+		"img": "phogs",
+		"fname": "PHOGS!"
+	},
+	{
+		"name": "pikmin-3",
+		"img": "pikmin-3",
+		"fname": "Pikmin 3 Deluxe"
+	},
+	{
+		"name": "pokemon-lets-go-eevee",
+		"img": "pokemon-lets-go-eevee",
+		"fname": "Pokémon: Let's Go, Eevee!"
+	},
+	{
+		"name": "pokemon-lets-go-pikachu",
+		"img": "pokemon-lets-go-pikachu",
+		"fname": "Pokémon: Let's Go, Pikachu!"
+	},
+	{
+		"name": "pokemon-mystery",
+		"img": "pokemon-mystery",
+		"fname": "Pokémon Mystery Dungeon: Rescue Team DX"
+	},
+	{
+		"name": "pokemon-shield",
+		"img": "pokemon-shield",
+		"fname": "Pokémon Shield"
+	},
+	{
+		"name": "pokemon-snap",
+		"img": "pokemon-snap",
+		"fname": "New Pokémon Snap"
+	},
+	{
+		"name": "pokemon-sword",
+		"img": "pokemon-sword",
+		"fname": "Pokemon Sword"
+	},
+	{
+		"name": "pokemon-unite",
+		"img": "pokemon-unite",
+		"fname": "Pokémon UNITE"
+	},
+	{
+		"name": "puyopuyo-tetris",
+		"img": "puyopuyo-tetris",
+		"fname": "Puyo Puyo Tetris"
+	},
+	{
+		"name": "rayman",
+		"img": "rayman",
+		"fname": "Rayman Legends: Definitive Edition"
+	},
+	{
+		"name": "ring-fit",
+		"img": "ring-fit",
+		"fname": "Ring Fit Adventure"
+	},
+	{
+		"name": "rocket-league",
+		"img": "rocket-league",
+		"fname": "Rocket League"
+	},
+	{
+		"name": "skyrim",
+		"img": "skyrim",
+		"fname": "The Elder Scrolls V: Skyrim"
+	},
+	{
+		"name": "smash",
+		"img": "smash",
+		"fname": "Super Smash Bros. Ultimate"
+	},
+	{
+		"name": "snake-pass",
+		"img": "snake-pass",
+		"fname": "Snake Pass"
+	},
+	{
+		"name": "snes",
+		"img": "snes",
+		"fname": "Super Nintendo Entertainment System"
+	},
+	{
+		"name": "snipperclips",
+		"img": "snipperclips",
+		"fname": "Snipperclips"
+	},
+	{
+		"name": "sonic-mania",
+		"img": "sonic-mania",
+		"fname": "Sonic Mania"
+	},
+	{
+		"name": "splatoon",
+		"img": "splatoon",
+		"fname": "Splatoon 2"
+	},
+	{
+		"name": "stardew",
+		"img": "stardew",
+		"fname": "Stardew Valley"
+	},
+	{
+		"name": "terraria",
+		"img": "terraria",
+		"fname": "Terraria"
+	},
+	{
+		"name": "tetris99",
+		"img": "tetris",
+		"fname": "Tetris 99"
+	},
+	{
+		"name": "thief-simulator",
+		"img": "thief-simulator",
+		"fname": "Thief Simulator"
+	},
+	{
+		"name": "undertale",
+		"img": "undertale",
+		"fname": "Undertale"
+	},
+	{
+		"name": "witcher-3",
+		"img": "witcher-3",
+		"fname": "The Witcher 3: Wild Hunt"
+	},
+	{
+		"name": "xenoblade",
+		"img": "xenoblade",
+		"fname": "Xenoblade Chronicles 2"
+	},
+	{
+		"name": "yoshi",
+		"img": "yoshi",
+		"fname": "Yoshi's Crafted World"
+	},
+	{
+		"name": "yt",
+		"img": "yt",
+		"fname": "YouTube"
+	},
 	{
 		"name": "zelda",
 		"img": "zelda",

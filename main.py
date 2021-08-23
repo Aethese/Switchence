@@ -110,7 +110,7 @@ def createFiles():
 		configjson = {}
 		configjson['config'] = [{
 			'sw-code': sw,
-			'version': '1.6.0',
+			'version': '1.6.1',
 			'update-notifier': True,
 			'fname': False,
 			'show-button': True,
@@ -157,7 +157,7 @@ if os.path.isfile('config.json'):
 			if sw == None: # in case an empty config folder is found
 				sw = ''
 			if version == None:
-				version = '1.6.0'
+				version = '1.6.1'
 			log.loading('Missing config settings found, creating them...')
 			createFiles()
 		except Exception as error:

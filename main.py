@@ -86,7 +86,7 @@ def updateProgram(setting, onlineVer):
 
 #+= variables =+#
 id = '803309090696724554' # just pre defining variables
-beta = True # if current build is a test build
+beta = False # if current build is a test build
 version = None
 oVersion = None # online version
 sw = None

@@ -1,6 +1,6 @@
 {
-	"version": "1.6.1",
-	"announcement": "Version 1.6.1 is out and fixes a small issue",
+	"version": "1.6.1.1",
+	"announcement": "Version 1.6.1.1 is out with fixes for v1.6.0",
 	"games": [
 	{
 		"name": "1-2-switch",

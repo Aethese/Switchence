@@ -24,5 +24,6 @@ Most inspiration from this project came from myself, but also [this](https://git
 
 # Future Plans
 ### These are the major future plans for the program
-- [ ] Add Linux and Mac support
+- [ ] Add Mac support
+- [ ] Add Linux support
 - [ ] Version 2.0.0 (big overhaul)

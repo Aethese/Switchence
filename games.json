@@ -328,6 +328,11 @@
 		"fname": "Puyo Puyo Tetris"
 	},
 	{
+		"name": "puyopuyo-tetris2",
+		"img": "puyopuyo-tetris2",
+		"fname": "Puyo Puyo Tetris 2"
+	},
+	{
 		"name": "rayman",
 		"img": "rayman",
 		"fname": "Rayman Legends: Definitive Edition"

@@ -93,8 +93,6 @@ def updateProgram(setting, onlineVer):
 			log.loading('Checking new version...')
 			if currentOnlineVersion.status_code != 200:
 				log.error(f'Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
-			elif currentOnlineVersion.status_code == 429:
-				log.info('Woah, slow down! You\'re being rate limited!')
 			log.loading('Successfully loaded new version! Getting new update...')
 			onlineVersionBinary = currentOnlineVersion.content # if status code = 200, update to latest version
 			with open('main.py', 'wb') as file: # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz for getting this to work!
@@ -201,8 +199,6 @@ try:
 	gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json') # auto update game list :)
 	if gamejson.status_code != 200:
 		log.error(f'Could not get game list with status code {gamejson.status_code}')
-	elif gamejson.status_code == 429:
-		log.info('Woah, slow down! You\'re being rate limited!')
 	gamejsontext = gamejson.text
 	games = json.loads(gamejsontext)
 	oVersion = games['version']
@@ -296,10 +292,7 @@ def changeUpdateNotifier():
 		log.info(f'Update notifier set to {Fore.LIGHTRED_EX}FALSE{Fore.RESET}. Rerun the program to use it with the new settings')
 
 def changeFNameSetting():
-	if configfname is False:
-		l = 'short'
-	else:
-		l = 'full'
+	l = 'short' if configfname is False else 'full'
 	k = input(f'Your current setting is set to: {Fore.LIGHTGREEN_EX}{l}{Fore.RESET}. What do you want to change it to (\'full\' for full game names, \'short\' for shortened game names)? ')
 	k = k.lower()
 	if k in ['full', 'f']:
@@ -362,7 +355,7 @@ Made by: Aethese#1337
 ''')
 
 #+= handle announcement =+#
-if announcement != None and announcement != '':
+if announcement not in [None, '']:
 	print(f'{Fore.LIGHTCYAN_EX}[ANNOUNCEMENT]{Fore.RESET} {announcement}\n')
 
 #+= handle new update =+#
@@ -412,14 +405,14 @@ elif x in ['options', 'o']:
 #+= sw handling =+#
 y = input(f'Do you want to show your friend code \'SW-{sw}\' (you can change this by typing \'change\')? ')
 y = y.lower()
-if y == 'yes' or y == 'y':
+if y in ['yes', 'y']:
 	if sw == '' or sw is None:
 		log.info('Friend code not set. Rerun the program and change your friend code to your friend code')
-elif y == 'change' or y == 'c':
+elif y in ['change', 'c']:
 	c = input('What is your new friend code (just type the numbers)? ')
 	b = input(f'Is \'SW-{c}\' correct? ')
 	b = b.lower()
-	if b == 'yes' or b == 'y':
+	if b in ['yes', 'y']:
 		try:
 			updateConfig('sw-code', c)
 			sw = c
@@ -455,12 +448,11 @@ try:
 			name = i['name']
 			img = i['img']
 			fname = i['fname']
-			if y == 'yes' or y == 'y':
+			if y in ['yes', 'y']:
 				changePresence(True, name, img, fname)
-				break
 			else:
 				changePresence(False, name, img, fname)
-				break
+			break
 except Exception as error:
 	log.error(f'Can\'t find the game ({chosenOne}) specified (2) | {error}')
 

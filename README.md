@@ -22,8 +22,5 @@ I currently only support **Windows** for this app. It currently doesn't work for
 # Inspiration
 Most inspiration from this project came from myself, but also [this](https://github.com/Da532/NS-RPC) repo. I recommend to check it out :) *it looks better lol*
 
-# Future Plans
-### These are the major future plans for the program
-- [ ] Add Mac support
-- [ ] Add Linux support
-- [ ] Version 2.0.0 (big overhaul)
+# Contributors
+None *so far :(*

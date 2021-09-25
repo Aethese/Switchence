@@ -1,6 +1,6 @@
 {
 	"version": "1.7.0",
-	"announcement": "Version 1.7.0 is now out!",
+	"announcement": "Added 7 more games!",
 	"games": [
 	{
 		"name": "1-2-switch",
@@ -48,6 +48,11 @@
 		"fname": "BOXBOY! + BOXGIRL!"
 	},
 	{
+		"name": "bravely-default2",
+		"img": "bravely-default2",
+		"fname": "Bravely Default II"
+	},
+	{
 		"name": "cadence-hyrule",
 		"img": "cadence-hyrule",
 		"fname": "Cadence of Hyrule"
@@ -86,6 +91,16 @@
 		"name": "devil-may-cry",
 		"img": "devil-may-cry",
 		"fname": "Devil May Cry 3"
+	},
+	{
+		"name": "diablo-eternal-collection",
+		"img": "diablo-eternal-collection",
+		"fname": "Diablo III: Eternal Collection"
+	},
+	{
+		"name": "diablo-resurrected",
+		"img": "diablo-resurrected",
+		"fname": "Diablo II: Resurrected"
 	},
 	{
 		"name": "doom",
@@ -233,9 +248,24 @@
 		"fname": "Monster Hunter Rise"
 	},
 	{
+		"name": "monster-hunter-stories2",
+		"img": "monster-hunter-stories2",
+		"fname": "Monster Hunter Stories 2: Wings of Ruin"
+	},
+	{
+		"name": "neo-world-ends-with-you",
+		"img": "neo-world-ends-with-you",
+		"fname": "NEO: The World Ends With You"
+	},
+	{
 		"name": "nes",
 		"img": "nes",
 		"fname": "Nintendo Entertainment System"
+	},
+	{
+		"name": "no-more-heroes3",
+		"img": "no-more-heroes3",
+		"fname": "No More Heroes III"
 	},
 	{
 		"name": "octopath",
@@ -346,6 +376,11 @@
 		"name": "rocket-league",
 		"img": "rocket-league",
 		"fname": "Rocket League"
+	},
+	{
+		"name": "shadowverse",
+		"img": "shadowverse",
+		"fname": "Shadowverse: Champion's Battle"
 	},
 	{
 		"name": "skyrim",

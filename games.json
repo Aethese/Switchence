@@ -1,6 +1,6 @@
 {
-	"version": "1.7.0",
-	"announcement": "Version 1.8.0 is 87.3037% faster than version 1.7.0 in its current build and is almost ready for release!",
+	"version": "1.7.1",
+	"announcement": "Small release out that just adds initialize command for v1.7.0",
 	"games": [
 	{
 		"name": "1-2-switch",

@@ -33,6 +33,7 @@ except Exception as error:
 		print('Installation of required modules cancelled')
 		time.sleep(600)
 		sys.exit()
+initializeTime = time.time()
 
 #+= important functions =+#
 class log:
@@ -385,6 +386,7 @@ if configfname is False:
 	print(', '.join(gamenames))
 elif configfname:
 	print(', '.join(gamefnames))
+initializeTime = time.time() - initializeTime
 x = input('\nWhat game do you wanna play? ')
 x = x.lower()
 
@@ -401,12 +403,15 @@ elif x in ['change name', 'change-name', 'cn', 'c-n']:
 	changeFNameSetting()
 elif x in ['auto update', 'auto-update', 'au', 'a-u']:
 	changeAutoUpdate()
+elif x in ['initialize', 'i']:
+	log.info(f'Time Switchence took to initialize: {initializeTime}')
 elif x in ['options', 'o']:
 	log.info(f'''The current options are:
 \'github\' this will bring up the public GitHub repo
 \'update notifier\' which toggles the built-in update notifier, this is set to {Fore.LIGHTCYAN_EX}{updatenotifier}{Fore.RESET}
 \'change name\' this will toggle how game names are shown on the game select screen, this is set to {Fore.LIGHTCYAN_EX}{configfname}{Fore.RESET}
 \'auto update\' which toggles the built-in auto updater, this is {Fore.LIGHTCYAN_EX}{autoupdate}{Fore.RESET}
+\'initialize\' this will let you know how long it took Switchence to initialize
 \'options\' this will bring up this page''')
 
 #+= sw handling =+#

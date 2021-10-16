@@ -1,8 +1,22 @@
 # Switchence
-**Simple** Nintendo Switch rich presence app for Windows that allows you to show what game you're playing on Discord. What makes this better than other Discord rich presence apps is that this one **auto-updates** it's game list whenever you start it so you don't have to create your own Discord app, add your own images and edit the json file. You also have the ability to have the program auto update or you can get notified if their is a new update available for the program. What's great about this is that you can still use the program you have currently installed even if it is a lower version!
+Switchence is a **simple** Nintendo Switch rich presence app that allows you to show what game you're playing on Discord. What makes this better than other Discord rich presence apps is that this one **auto-updates** it's game list whenever you start it so you don't have to create your own Discord app, add your own images and edit the json file.
 
-# Prerequisites
-* Download the latest version from [releases](https://github.com/Aethese/Switchence/releases/)
+# Features
+## Auto updating
+Not only does the program auto update itself, its game list does aswell! This makes sure you're always up to date without having to go to the GitHub page or fix the issues yourself.
+
+## Easy setup
+The program is easy to set up for your friend code and many options built into the program. You can view all of the available settings by typing 'options' in the set game input.
+
+## Very fast
+The program is very fast! Staying as fast as possible so you don't have to wait at all.
+
+## Active community
+Have a question, issue or [game request](https://github.com/Aethese/Switchence#game-requests)? Well ask away because you are guaranteed to get a response within a day or two!
+
+# Installing from source
+* Python 3.7+ (may work with lower versions)
+* Download the latest file from [releases](https://github.com/Aethese/Switchence/releases/) (you can choose exe or Switchence.zip)
 * A Discord account and the Discord desktop app
 * An internet connection
 * Everything in the *requirements.txt* file
@@ -10,17 +24,14 @@
 pip install -r requirements.txt
 ```
 
-# Requests
-I do take requests for games. All you have to do is create an issue with the title being "Game Request" and the game name in the description. I should be able to add your game in the next game list update (around a week or as soon as I see it)!
+# Game Requests
+I do take requests for games. All you have to do is create an issue with the title being "Game Request" and the game name in the description. I should be able to add your game in the next game list update soon after I see your request!
 
 # Find an error?
 Report it! You can do so by creating an [issue](https://github.com/Aethese/Switchence/issues/) so I can figure out how to help you and/or fix the problem for the next release!
 
 # Supported OS
-I currently only support **Windows** for this app. It currently doesn't work for Linux or Mac but I have plans on making it work soon.
-
-# Inspiration
-Most inspiration from this project came from myself, but also [this](https://github.com/Da532/NS-RPC) repo. I recommend to check it out :) *it looks better lol*
+I currently support **Windows** and **Linux** officially for this app. It may or may not work for Mac. If it doesn't work for Mac their is no guarantee I can fix the incompatibility issue.
 
 # Contributors
-None *so far :(*
+<a href="https://github.com/aethese/switchence/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=aethese/switchence"/></a>

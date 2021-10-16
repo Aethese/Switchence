@@ -1,6 +1,6 @@
 {
-	"version": "1.7.1",
-	"announcement": "Small release out that just adds initialize command for v1.7.0",
+	"version": "1.8.0",
+	"announcement": "1.8.0 is out with blazingly new speed and LINUX support!",
 	"games": [
 	{
 		"name": "1-2-switch",

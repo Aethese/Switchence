@@ -9,9 +9,14 @@ try:
 	import ctypes
 	from pypresence import Presence
 	from colorama import Fore, init
-	init(autoreset=True) # auto reset color every print
-except Exception as error:
-	print(f'Couldn\'t import everything | {error}')
+	os.system('cls' if os.name == 'nt' else 'clear')
+	init(autoreset=True)  # auto reset color after every print
+except ImportError as missingmod:
+	print('[ERROR] Couldn\'t import everything')
+	try:  # tries to print missing module's name, if it can't just print error
+		print(f'Module \'{missingmod.name}\' is missing')
+	except:
+		print(f'[ERROR] Erorr message: {missingmod}')
 	module = input('Would you like to install all of the modules? ')
 	if module in ['yes', 'y']:
 		print('Installing now...')
@@ -24,7 +29,8 @@ except Exception as error:
 			time.sleep(600)
 			sys.exit()
 		except Exception as error:
-			print(f'{Fore.LIGHTRED_EX}[Error]{Fore.RESET} {error}\nPlease report this error on the Switchence GitHub issue page if this error happens consistently')
+			print(f'{Fore.LIGHTRED_EX}[Error]{Fore.RESET} {error}')
+			print('Please report this error on the Switchence GitHub issue page if this error happens consistently')
 			time.sleep(5)
 			webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
 			time.sleep(600)
@@ -35,12 +41,17 @@ except Exception as error:
 		sys.exit()
 initializeTime = time.time()
 
+
 #+= important functions =+#
 class log:
+	def __init__(self, text):
+		self.text = text
+
 	def error(text: str):
 		changeWindowTitle('Error')
 		clear()
-		print(f'{Fore.LIGHTRED_EX}[Error]{Fore.RESET} {text}\nPlease report this error on the Switchence GitHub issue page if this error happens consistently')
+		print(f'{Fore.LIGHTRED_EX}[Error]{Fore.RESET} {text}')
+		print('Please report this error on the Switchence GitHub issue page if this error happens consistently')
 		time.sleep(5)
 		webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
 		time.sleep(600)
@@ -53,15 +64,54 @@ class log:
 		time.sleep(600)
 		sys.exit()
 
-	def warning(text: str):
-		print(f'\n{Fore.LIGHTYELLOW_EX}[WARNING]{Fore.RESET} {text}\n')
-
 	def loading(text: str):
 		print(f'{Fore.LIGHTCYAN_EX}[Loading]{Fore.RESET} {text}')
-log.loading('Loading initial functions...')
 
+
+class config:
+	def update(self, changeto):  # self = setting being changed
+		with open('config.json', 'r') as jsonfile:
+			jsonFile = json.load(jsonfile)
+			for details in jsonFile['config']:
+				details[self] = changeto
+		with open('config.json', 'w') as jsonfile:
+			json.dump(jsonFile, jsonfile, indent=4)
+
+	@staticmethod
+	def create(swcode):
+		try:  # fucking global vars
+			global sw, version, updatenotifier, configfname, showbutton, legacy, autoupdate
+			configjson = {'config': [{
+				'sw-code': swcode,
+				'version': '1.8.0',
+				'update-notifier': True,
+				'fname': False,
+				'show-button': True,
+				'legacy': True,
+				'auto-update': False
+			}]}
+			log.loading('Got settings to save, saving them...')
+			with open('config.json', 'w') as jsonfile:
+				json.dump(configjson, jsonfile, indent=4)
+			log.loading('Saved settings!')
+			with open('config.json', 'r') as jsonfile: # actually get the info lol
+				log.loading('Setting config settings...')
+				jsonFile = json.load(jsonfile)
+				for details in jsonFile['config']:
+					sw = details['sw-code']
+					version = details['version']
+					updatenotifier = details['update-notifier']
+					configfname = details['fname']
+					showbutton = details['show-button']
+					legacy = details['legacy']
+					autoupdate = details['auto-update']
+				log.loading('Config file settings set!')
+		except Exception as error:
+			log.error(f'Couldn\'t create config settings | {error}')
+
+log.loading('Loading initial functions...')
 def clear():
-	os.system('cls' if os.name =='nt' else 'clear') # *supposedly* multi platform supported clear
+	os.system('cls' if os.name == 'nt' else 'clear')  # *supposedly* multi platform supported clear
 clear()
 
 def changeWindowTitle(title):
@@ -69,16 +119,6 @@ def changeWindowTitle(title):
 		ctypes.windll.kernel32.SetConsoleTitleW(f'Switchence | {title}')
 changeWindowTitle('Loading...')
 
-def updateConfig(changePart, changeTo):
-	try:
-		with open('config.json', 'r') as jsonfile:
-			jsonFile = json.load(jsonfile)
-			for details in jsonFile['config']:
-				details[changePart] = changeTo
-		with open('config.json', 'w') as jsonfile:
-			json.dump(jsonFile, jsonfile, indent=4)
-	except Exception as error:
-		log.error(f'Couldn\'t update config file | {error}')
 
 def updateProgram(setting, onlineVer):
 	if setting:
@@ -86,34 +126,33 @@ def updateProgram(setting, onlineVer):
 		log.loading(f'Updating to version {onlineVer}...')
 		try:
 			if os.path.isfile('Switchence.exe'):
-				updateConfig('auto-update', False) # fixes infinite error loop lol
+				config.update('auto-update', False)  # fixes infinite error loop lol
 				log.error('The exe file does not currently support auto updating')
 			if not os.path.isfile('main.py'):
 				log.error('File \'main.py\' not found, did you rename the file?')
 			currentOnlineVersion = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/main.py')
 			log.loading('Checking new version...')
-			if currentOnlineVersion.status_code != 200:
+			if currentOnlineVersion.status_code != 200:  # request to get raw code was not successful
 				log.error(f'Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
-			elif currentOnlineVersion.status_code == 429:
+			elif currentOnlineVersion.status_code == 429:  # being rate limited
 				log.info('Woah, slow down! You\'re being rate limited!')
 			log.loading('Successfully loaded new version! Getting new update...')
-			onlineVersionBinary = currentOnlineVersion.content # if status code = 200, update to latest version
-			with open('main.py', 'wb') as file: # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz for getting this to work!
+			onlineVersionBinary = currentOnlineVersion.content  # get binary version of raw code
+			with open('main.py', 'wb') as file:  # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz for getting this to work!
 				file.write(onlineVersionBinary)
 			log.loading('Installed latest version! Updating local version...')
-			updateConfig('version', onlineVer)
+			config.update('version', onlineVer)
 			changeWindowTitle(f'Updated to version {onlineVer}!')
 			log.info(f'Finished updating to version {onlineVer}!')
 		except Exception as error:
 			log.error(f'Couldn\'t change version setting when updating | {error}')
-	elif setting is False:
-		log.warning('Attempted to update program without the Auto Updater on')
+
 
 #+= variables =+#
-RPCid = '803309090696724554' # just pre defining variables
-beta = False # if current build is a test build
+# just pre defining variables
+beta = False  # if current build is a test build
 version = None
-oVersion = None # online version
+oVersion = None  # online version
 sw = None
 updatenotifier = None
 configfname = None
@@ -123,44 +162,10 @@ autoupdate = None
 gamenames = []
 gamefnames = []
 chosenOne = ''
-img = ''
-fname = ''
 updateAvailable = False
 announcement = None
 
 #+= loading config file =+#
-def createFiles():
-	try: # fucking global vars
-		global sw, version, updatenotifier, configfname, showbutton, legacy, autoupdate
-		configjson = {'config': [
-			{
-			'sw-code': sw,
-			'version': '1.7.0',
-			'update-notifier': True,
-			'fname': False,
-			'show-button': True,
-			'legacy': True,
-			'auto-update': False
-		}]}
-		log.loading('Got settings to save, saving them...')
-		with open('config.json', 'w') as jsonfile:
-			json.dump(configjson, jsonfile, indent=4)
-		log.loading('Saved settings!')
-		with open('config.json', 'r') as jsonfile: # actually get the info lol
-			log.loading('Setting config settings...')
-			jsonFile = json.load(jsonfile)
-			for details in jsonFile['config']:
-				sw = details['sw-code']
-				version = details['version']
-				updatenotifier = details['update-notifier']
-				configfname = details['fname']
-				showbutton = details['show-button']
-				legacy = details['legacy']
-				autoupdate = details['auto-update']
-			log.loading('Config file settings set!')
-	except Exception as error:
-		log.error(f'Couldn\'t create config settings | {error}')
-
 log.loading('Checking for config file...')
 if os.path.isfile('config.json'):
 	log.loading('Found config file, attempting to read contents...')
@@ -177,77 +182,59 @@ if os.path.isfile('config.json'):
 				legacy = details['legacy']
 				autoupdate = details['auto-update']
 			log.loading('Loaded config settings!')
-	except: # if some settings are missing, recreate the file while saving some settings
-		try:
-			if sw is None: # in case an empty config folder is found
-				sw = ''
-			if version is None:
-				version = '1.7.0'
-			log.loading('Missing config settings found, creating them...')
-			log.loading('This means some settings will be reset to default')
-			createFiles()
-		except Exception as error:
-			log.error(f'Couldn\'t load config file (1) | {error}')
+	except KeyError:  # if some settings are missing, recreate the file while saving some settings
+		if sw is None:  # in case an empty config folder is found
+			sw = ''
+		if version is None:
+			version = '1.8.0'
+		log.loading('Missing config settings found, creating them...')
+		log.loading('This means some settings will be reset to default')
+		config.create(sw)
 elif os.path.isfile('config.json') is False:
 	log.loading('Config file not found, attempting to create one...')
-	try:
-		sw = ''
-		createFiles()
-	except Exception as error:
-		log.error(f'Couldn\'t load config file (2) | {error}')
+	sw = ''  # sw var is needed in function below, so it needs to be pre defined
+	config.create(sw)
 
 #+= game list =+#
 log.loading('Attempting to load game list...')
-try:
-	gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json') # auto update game list :)
-	if gamejson.status_code != 200:
-		log.error(f'Could not get game list with status code {gamejson.status_code}')
-	elif gamejson.status_code == 429:
-		log.info('Woah, slow down! You\'re being rate limited!')
-	gamejsontext = gamejson.text
-	games = json.loads(gamejsontext)
-	oVersion = games['version']
-	announcement = games['announcement']
-	log.loading('Game list loaded!')
-except Exception as error:
-	log.error(f'Couldn\'t load game list | {error}')
+gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json')  # auto update game list :)
+if gamejson.status_code != 200:
+	log.error(f'Failed to get game list with status code {gamejson.status_code}')
+elif gamejson.status_code == 429:
+	log.info('Woah, slow down! You\'re being rate limited!')
+gamejsontext = gamejson.text
+games = json.loads(gamejsontext)
+oVersion = games['version']
+announcement = games['announcement']
+log.loading('Game list loaded!')
 
 log.loading('Attempting to read game list info...')
-try:
-	for details in games['games']:
-		gamenames.append(details['name'])
-		gamefnames.append(details['fname'])
-	log.loading('Successfully read game list info!')
-except Exception as error:
-	log.error(f'Couldn\'t load game names from list | {error}')
+for details in games['games']:
+	gamenames.append(details['name'])
+	gamefnames.append(details['fname'])
+log.loading('Successfully read game list info!')
 
 #+= checking version =+#
 log.loading('Checking file version...')
-if version == '' or version is None: # checks your version
+if version in [None, '']: # checks your version
 	log.loading('File version not found, attempting to create...')
-	try:
-		updateConfig('version', oVersion)
-		log.loading('Successfully created file version!')
-	except Exception as error:
-		log.error(f'Couldn\'t write to the version file | {error}')
+	config.update('version', oVersion)
+	log.loading('Successfully created file version!')
 elif version != oVersion:
 	updateAvailable = True
 
 #+= rpc =+#
 log.loading('Attempting to start Rich Presence...')
-try:
-	RPC = Presence(RPCid)
-	RPC.connect()
-	log.loading('Successfully started Rich Presence!')
-except Exception as error:
-	log.error(f'RPC couldn\'t connect | {error}')
+RPC = Presence('803309090696724554')
+RPC.connect()
+log.loading('Successfully started Rich Presence!')
+
 
 #+= some more important functions =+#
 def changePresence(swStatus, pName, pImg, pFname):
 	start_time = time.time()
-	local = time.localtime()
-	string = time.strftime('%H:%M', local)
-	if beta: # set small image to indicate build ran by user is a beta build
+	string = time.strftime('%H:%M', time.localtime())
+	if beta:  # set small image to indicate build ran by user is a beta build or not
 		smallText = 'Switchence Beta'
 		smallImg = 'gold_icon'
 	else:
@@ -256,8 +243,8 @@ def changePresence(swStatus, pName, pImg, pFname):
 	if swStatus is False:
 		try:
 			if showbutton:
-				RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, 
-						   buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
+				RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname,
+							buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 				print(f'Set game to {pFname} at {string}')
 				changeWindowTitle(f'Playing {pFname}')
 			elif showbutton is False:
@@ -269,8 +256,8 @@ def changePresence(swStatus, pName, pImg, pFname):
 	elif swStatus:
 		try:
 			if showbutton:
-				RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, 
-						   state=f'SW-{sw}', buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
+				RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname,
+							state=f'SW-{sw}', buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 				print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
 				changeWindowTitle(f'Playing {pFname}')
 			elif showbutton is False:
@@ -284,70 +271,49 @@ def changeUpdateNotifier():
 	picked = input('What setting do you want the Update Notifier to be on (on or off)? ')
 	picked = picked.lower()
 	if picked in ['on', 'true', 't']: # why do you want this on tbh
-		try:
-			updateConfig('update-notifier', True)
-		except Exception as error:
-			log.error(f'Couldn\'t change update-notifier setting | {error}')
+		config.update('update-notifier', True)
 		log.info(f'Update notifier set to {Fore.LIGHTGREEN_EX}TRUE{Fore.RESET}. Rerun the program to use it with the new settings')
 	elif picked in ['off', 'off', 'f']:
-		try:
-			updateConfig('update-notifier', False)
-		except Exception as error:
-			log.error(f'Couldn\'t change update-notifier setting | {error}')
+		config.update('update-notifier', False)
 		log.info(f'Update notifier set to {Fore.LIGHTRED_EX}FALSE{Fore.RESET}. Rerun the program to use it with the new settings')
 
 def changeFNameSetting():
-	if configfname is False:
-		l = 'short'
-	else:
-		l = 'full'
-	k = input(f'Your current setting is set to: {Fore.LIGHTGREEN_EX}{l}{Fore.RESET}. What do you want to change it to (\'full\' for full game names, \'short\' for shortened game names)? ')
+	length = 'short' if configfname is False else 'full'
+	print(f'Your current setting is set to: {Fore.LIGHTGREEN_EX}{length}{Fore.RESET}')
+	k = input('What do you want to change it to (\'full\' for full game names, \'short\' for shortened game names)? ')
 	k = k.lower()
 	if k in ['full', 'f']:
-		try:
-			updateConfig('fname', True)
-			log.info(f'Set game name to {Fore.LIGHTGREEN_EX}Full{Fore.RESET}')
-		except Exception as error:
-			log.error(f'Couldn\'t change fname setting | {error}')
+		config.update('fname', True)
+		log.info(f'Set game name to {Fore.LIGHTGREEN_EX}Full{Fore.RESET}')
 	elif k in ['short', 's']:
-		try:
-			updateConfig('fname', False)
-			log.info(f'Set game name to {Fore.LIGHTGREEN_EX}Short{Fore.RESET}')
-		except Exception as error:
-			log.error(f'Couldn\'t change fname setting | {error}')
+		config.update('fname', False)
+		log.info(f'Set game name to {Fore.LIGHTGREEN_EX}Short{Fore.RESET}')
 
 def changeAutoUpdate():
 	print(f'Your current Auto Update setting is set to {Fore.LIGHTGREEN_EX}{autoupdate}{Fore.RESET}')
 	ask = input('What would you like to change it to? On or off? ')
 	ask = ask.lower()
 	if ask == 'on':
-		try:
-			updateConfig('auto-update', True)
-			log.info(f'Set Auto Update setting to {Fore.LIGHTGREEN_EX}True{Fore.RESET}')
-		except Exception as error:
-			log.error(f'Couldn\'t change fname setting | {error}')
+		config.update('auto-update', True)
+		log.info(f'Set Auto Update setting to {Fore.LIGHTGREEN_EX}True{Fore.RESET}')
 	elif ask == 'off':
-		try:
-			updateConfig('auto-update', False)
-			log.info(f'Set Auto Update setting to {Fore.LIGHTRED_EX}False{Fore.RESET}')
-		except Exception as error:
-			log.error(f'Couldn\'t change fname setting | {error}')
+		config.update('auto-update', False)
+		log.info(f'Set Auto Update setting to {Fore.LIGHTRED_EX}False{Fore.RESET}')
 	else:
 		log.error('Keeping auto update setting the same since you did not answer correctly')
 
+
 #+= looking for game status before picking a game =+#
 log.loading('Attempting to set looking for game status...')
-try:
-	start_time = time.time()
-	if showbutton:
-		RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game', 
-				   buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
-	elif showbutton is False:
-		RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game', start=start_time)
-except Exception as error:
-	log.error(f'Couldn\'t set looking for game status | {error}')
+startTime = time.time()
+if showbutton:
+	RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game',
+				buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=startTime)
+elif showbutton is False:
+	RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game', start=startTime)
 log.loading('Successfully set looking for game status!')
-time.sleep(0.4)
+
+#+= home page =+#
 changeWindowTitle('Picking a game')
 clear()
 print('''
@@ -363,7 +329,7 @@ Made by: Aethese#1337
 ''')
 
 #+= handle announcement =+#
-if announcement != None and announcement != '':
+if announcement not in [None, '']:
 	print(f'{Fore.LIGHTCYAN_EX}[ANNOUNCEMENT]{Fore.RESET} {announcement}\n')
 
 #+= handle new update =+#
@@ -372,7 +338,7 @@ if updateAvailable:
 		print(f'{Fore.LIGHTGREEN_EX}[INFO]{Fore.RESET} New update found, updating to latest version...')
 		time.sleep(1)
 		updateProgram(autoupdate, oVersion)
-	if updatenotifier: # this will show if auto updates aren't on
+	if updatenotifier:  # this will show if auto updates aren't on
 		print(f'{Fore.LIGHTGREEN_EX}[INFO]{Fore.RESET} Your current version of Switchence {Fore.LIGHTRED_EX}v{version}{Fore.RESET} is not up to date')
 		print(f'{Fore.LIGHTGREEN_EX}[INFO]{Fore.RESET} You can update Switchence to the current version {Fore.LIGHTRED_EX}v{oVersion}{Fore.RESET} by turning on Auto Updates or by visiting the official GitHub page')
 		print(f'{Fore.LIGHTGREEN_EX}[INFO]{Fore.RESET} If you wish to turn on auto updates type \'auto update\' below')
@@ -384,7 +350,7 @@ if updateAvailable:
 print('Here are the current games: ')
 if configfname is False:
 	print(', '.join(gamenames))
-elif configfname:
+else:
 	print(', '.join(gamefnames))
 initializeTime = time.time() - initializeTime
 x = input('\nWhat game do you wanna play? ')
@@ -392,10 +358,10 @@ x = x.lower()
 
 #+= input options =+#
 if x in ['github', 'gh']:
-	print('i mean i guess')
-	time.sleep(0.5)
+	print('Opening GitHub page...')
+	time.sleep(1)
 	webbrowser.open('https://github.com/Aethese/Switchence/', new=2, autoraise=True)
-	time.sleep(2.5)
+	time.sleep(10)
 	sys.exit()
 elif x in ['update notifier', 'update-notifier', 'un', 'u-n']:
 	changeUpdateNotifier()
@@ -415,59 +381,49 @@ elif x in ['options', 'o']:
 \'options\' this will bring up this page''')
 
 #+= sw handling =+#
-y = input(f'Do you want to show your friend code \'SW-{sw}\' (you can change this by typing \'change\')? ')
+y = input(f'Do you want to show your friend code, SW-{sw} (you can change this by typing \'change\')? ')
 y = y.lower()
-if y == 'yes' or y == 'y':
-	if sw == '' or sw is None:
-		log.info('Friend code not set. Rerun the program and change your friend code to your friend code')
-elif y == 'change' or y == 'c':
+if y in ['yes', 'y']:
+	if sw in [None, '']:
+		print('Friend code not set, continuing with setting set to off')
+		y = 'n'
+elif y in ['change', 'c']:
 	c = input('What is your new friend code (just type the numbers)? ')
 	b = input(f'Is \'SW-{c}\' correct? ')
 	b = b.lower()
-	if b == 'yes' or b == 'y':
-		try:
-			updateConfig('sw-code', c)
-			sw = c
-			print(f'Friend code changed to SW-{c}')
-			y = 'yes'
-		except Exception as error:
-			log.error(f'Couldn\'t change sw-code | {error}')
+	if b in ['yes', 'y']:
+		config.update('sw-code', c)
+		sw = c
+		print(f'Friend code changed to SW-{c}')
+		y = 'y'
 	else:
 		print('Friend code not changed, continuing with setting set to off')
 		y = 'n'
 
-
 #+= search for game =+#
-try:
-	for n in games['games']:
-		z = n['name']
-		o = n['fname']
-		if z.lower() == x:
-			chosenOne = z
-			break
-		elif o.lower() == x:
-			chosenOne = o
-			break
-	else:
-		log.info(f'The game you specified, {chosenOne}, is not in the current game list')
-except Exception as error:
-	log.error(f'Could not get game name/fname (1) | {error}')
+for n in games['games']:
+	z = n['name']
+	o = n['fname']
+	if z.lower() == x:
+		chosenOne = z
+		break
+	elif o.lower() == x:
+		chosenOne = o
+		break
+else:
+	log.info(f'The game you specified, {x}, is not in the current game list')
 
 #+= send info to changePresence function about game picked =+#
-try:
-	for i in games['games']:
-		if i['name'] == chosenOne or i['fname'] == chosenOne:
-			name = i['name']
-			img = i['img']
-			fname = i['fname']
-			if y == 'yes' or y == 'y':
-				changePresence(True, name, img, fname)
-				break
-			else:
-				changePresence(False, name, img, fname)
-				break
-except Exception as error:
-	log.error(f'Can\'t find the game ({chosenOne}) specified (2) | {error}')
+for i in games['games']:
+	if chosenOne in [i['name'], i['fname']]:
+		name = i['name']
+		img = i['img']
+		fname = i['fname']
+		if y in ['yes', 'y']:
+			changePresence(True, name, img, fname)
+			break
+		changePresence(False, name, img, fname)  # sw code showing is no
+		break
 
 #+= just needed, trust me =+#
 while True:

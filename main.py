@@ -121,31 +121,30 @@ changeWindowTitle('Loading...')
 
 
 def updateProgram(setting, onlineVer):
-	if setting:
-		changeWindowTitle(f'Updating to version {onlineVer}')
-		log.loading(f'Updating to version {onlineVer}...')
-		try:
-			if os.path.isfile('Switchence.exe'):
-				config.update('auto-update', False)  # fixes infinite error loop lol
-				log.error('The exe file does not currently support auto updating')
-			if not os.path.isfile('main.py'):
-				log.error('File \'main.py\' not found, did you rename the file?')
-			currentOnlineVersion = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/main.py')
-			log.loading('Checking new version...')
-			if currentOnlineVersion.status_code != 200:  # request to get raw code was not successful
-				log.error(f'Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
-			elif currentOnlineVersion.status_code == 429:  # being rate limited
-				log.info('Woah, slow down! You\'re being rate limited!')
-			log.loading('Successfully loaded new version! Getting new update...')
-			onlineVersionBinary = currentOnlineVersion.content  # get binary version of raw code
-			with open('main.py', 'wb') as file:  # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz for getting this to work!
-				file.write(onlineVersionBinary)
-			log.loading('Installed latest version! Updating local version...')
-			config.update('version', onlineVer)
-			changeWindowTitle(f'Updated to version {onlineVer}!')
-			log.info(f'Finished updating to version {onlineVer}!')
-		except Exception as error:
-			log.error(f'Couldn\'t change version setting when updating | {error}')
+	if not setting:
+		return
+	changeWindowTitle(f'Updating to version {onlineVer}')
+	log.loading(f'Updating to version {onlineVer}...')
+	try:
+		if os.path.isfile('Switchence.exe'):
+			config.update('auto-update', False)  # fixes infinite error loop lol
+			log.error('The exe file does not currently support auto updating')
+		if not os.path.isfile('main.py'):
+			log.error('File \'main.py\' not found, did you rename the file?')
+		currentOnlineVersion = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/main.py')
+		log.loading('Checking new version...')
+		if currentOnlineVersion.status_code != 200:  # request to get raw code was not successful
+			log.error(f'Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
+		log.loading('Successfully loaded new version! Getting new update...')
+		onlineVersionBinary = currentOnlineVersion.content  # get binary version of raw code
+		with open('main.py', 'wb') as file:  # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz for getting this to work!
+			file.write(onlineVersionBinary)
+		log.loading('Installed latest version! Updating local version...')
+		config.update('version', onlineVer)
+		changeWindowTitle(f'Updated to version {onlineVer}!')
+		log.info(f'Finished updating to version {onlineVer}!')
+	except Exception as error:
+		log.error(f'Couldn\'t change version setting when updating | {error}')
 
 
 #+= variables =+#
@@ -200,8 +199,6 @@ log.loading('Attempting to load game list...')
 gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json')  # auto update game list :)
 if gamejson.status_code != 200:
 	log.error(f'Failed to get game list with status code {gamejson.status_code}')
-elif gamejson.status_code == 429:
-	log.info('Woah, slow down! You\'re being rate limited!')
 gamejsontext = gamejson.text
 games = json.loads(gamejsontext)
 oVersion = games['version']

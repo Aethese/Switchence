@@ -1,6 +1,9 @@
 {
 	"version": "1.8.0",
 	"announcement": "New games soon",
+	"tips": ["You can add games to your favorite list with the 'favorite' command", 
+		"You can type 'options' into the game pick input to see all available commands", 
+		"You can always share Switchence with friends :)"],
 	"games": [
 	{
 		"name": "1-2-switch",

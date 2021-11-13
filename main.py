@@ -122,13 +122,13 @@ changeWindowTitle('Loading...')
 
 def reopen(doit):
 	fileName = os.path.basename(__file__)
-	if doit:
-		if os.path.isfile('Switchence.exe'):  # TODO: add support for if they changed file name lol
-			sys.exit()  # TODO: actually reopen exe file lol
-		elif '.py' in fileName:
-			os.system(f'python3 {fileName}')
-			sys.exit()
-	else: return fileName
+	if not doit:
+		return fileName
+	if os.path.isfile('Switchence.exe'):  # TODO: add support for if they changed file name lol
+		sys.exit()  # TODO: actually reopen exe file lol
+	elif '.py' in fileName:
+		os.system(f'python3 {fileName}')
+		sys.exit()
 
 
 #=+ updating Switchence +=#
@@ -159,8 +159,6 @@ def updateProgram(onlineVer):
 	currentOnlineVersion = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/main.py')
 	if currentOnlineVersion.status_code != 200:  # request to get raw code was not successful
 		log.error(f'Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
-	elif currentOnlineVersion.status_code == 429:  # being rate limited
-		log.info('Woah, slow down! You\'re being rate limited!', True)
 	onlineVersionBinary = currentOnlineVersion.content  # get binary version of raw code
 	with open(currentFile, 'wb') as file:  # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz
 		file.write(onlineVersionBinary)  # for getting this to work!
@@ -224,8 +222,6 @@ log.loading('Attempting to load game list...')
 gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json')  # auto update game list :)
 if gamejson.status_code != 200:
 	log.error(f'Failed to get game list with status code {gamejson.status_code}')
-elif gamejson.status_code == 429:
-	log.info('Woah, slow down! You\'re being rate limited!', True)
 gamejsontext = gamejson.text
 games = json.loads(gamejsontext)
 oVersion = games['version']
@@ -269,22 +265,19 @@ def changePresence(swStatus, pImg, pFname):
 		if showbutton:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname,
 						buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
-			print(f'Set game to {pFname} at {string}')
-			changeWindowTitle(f'Playing {pFname}')
 		else:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, start=start_time)
-			print(f'Set game to {pFname} at {string}')
-			changeWindowTitle(f'Playing {pFname}')
+		print(f'Set game to {pFname} at {string}')
+		changeWindowTitle(f'Playing {pFname}')
 	elif swStatus:
 		if showbutton:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname,
 						state=f'SW-{sw}', buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
-			print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
-			changeWindowTitle(f'Playing {pFname}')
 		else:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, state=f'SW-{sw}', start=start_time)
-			print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
-			changeWindowTitle(f'Playing {pFname}')
+
+		print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
+		changeWindowTitle(f'Playing {pFname}')
 
 
 def changeUpdateNotifier():

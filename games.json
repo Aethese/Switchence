@@ -1,9 +1,10 @@
 {
-	"version": "1.8.0",
-	"announcement": "New games soon",
+	"version": "1.9.0",
+	"announcement": "1.9.0 is now out including new games!",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
-		"You can always share Switchence with friends :)"],
+		"You can always share Switchence with friends :)",
+		"You can always ask for new games to be added and they will most likely be added (unless they're super unknown)"],
 	"games": [
 	{
 		"name": "1-2-switch",
@@ -44,6 +45,11 @@
 		"name": "arms",
 		"img": "arms",
 		"fname": "ARMS"
+	},
+	{
+		"name": "astral-chain",
+		"img": "astral-chain",
+		"fname": "Astral Chain"
 	},
 	{
 		"name": "boxboy-boxgirl",
@@ -109,6 +115,11 @@
 		"name": "doom",
 		"img": "doom",
 		"fname": "DOOM"
+	},
+	{
+		"name": "final-fantasy-maxima",
+		"img": "final-fantasy-maxima",
+		"fname": "World of Final Fantasy Maxima"
 	},
 	{
 		"name": "fire-emblem-houses",
@@ -226,9 +237,19 @@
 		"fname": "Mario & Sonic at the Olympic Games Tokyo 2020"
 	},
 	{
+		"name": "mario-superstars",
+		"img": "mario-superstars",
+		"fname": "Mario Party Superstars"
+	},
+	{
 		"name": "mario-tennis",
 		"img": "mario-tennis",
 		"fname": "Mario Tennis Aces"
+	},
+	{
+		"name": "metroid-dread",
+		"img": "metroid-dread",
+		"fname": "Metroid Dread"
 	},
 	{
 		"name": "miitopia",
@@ -321,6 +342,11 @@
 		"fname": "Pikmin 3 Deluxe"
 	},
 	{
+		"name": "pokemon-brilliant-diamond",
+		"img": "pokemon-brilliant-diamond",
+		"fname": "Pokémon Brilliant Diamond"
+	},
+	{
 		"name": "pokemon-lets-go-eevee",
 		"img": "pokemon-lets-go-eevee",
 		"fname": "Pokémon: Let's Go, Eevee!"
@@ -339,6 +365,11 @@
 		"name": "pokemon-shield",
 		"img": "pokemon-shield",
 		"fname": "Pokémon Shield"
+	},
+	{
+		"name": "pokemon-shining-pearl",
+		"img": "pokemon-shining-pearl",
+		"fname": "Pokémon Shining Pearl"
 	},
 	{
 		"name": "pokemon-snap",
@@ -381,9 +412,19 @@
 		"fname": "Rocket League"
 	},
 	{
+		"name": "samurai-warriors5",
+		"img": "samurai-warriors5",
+		"fname": "Samurai Warriors 5"
+	},
+	{
 		"name": "shadowverse",
 		"img": "shadowverse",
 		"fname": "Shadowverse: Champion's Battle"
+	},
+	{
+		"name": "shin-megami-tensei",
+		"img": "shin-megami-tensei",
+		"fname": "Shin Megami Tensei V"
 	},
 	{
 		"name": "skyrim",
@@ -426,6 +467,11 @@
 		"fname": "Stardew Valley"
 	},
 	{
+		"name": "super-robot-wars30",
+		"img": "super-robot-wars30",
+		"fname": " Super Robot Wars 30"
+	},
+	{
 		"name": "terraria",
 		"img": "terraria",
 		"fname": "Terraria"
@@ -439,6 +485,11 @@
 		"name": "thief-simulator",
 		"img": "thief-simulator",
 		"fname": "Thief Simulator"
+	},
+	{
+		"name": "tokyo-mirage-sessions",
+		"img": "tokyo-mirage-sessions",
+		"fname": "Tokyo Mirage Sessions #FE Encore"
 	},
 	{
 		"name": "undertale",

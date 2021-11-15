@@ -5,6 +5,9 @@ Switchence is a **simple** Nintendo Switch rich presence app that allows you to 
 ## Auto updating
 Not only does the program auto update itself, its game list does aswell! This makes sure you're always up to date without having to go to the GitHub page or fix the issues yourself.
 
+## Growing game list
+Not only is the game list huge already, it's being actively updated for all of the latest releases. If you want to add a game you can make a [game request](https://github.com/Aethese/Switchence#game-requests).
+
 ## Easy setup
 The program is easy to set up for your friend code and many options built into the program. You can view all of the available settings by typing 'options' in the set game input.
 
@@ -14,11 +17,13 @@ The program is very fast! Staying as fast as possible so you don't have to wait 
 ## Active community
 Have a question, issue or [game request](https://github.com/Aethese/Switchence#game-requests)? Well ask away because you are guaranteed to get a response within a day or two!
 
-# Installing from source
-* Python 3.7+ (may work with lower versions)
-* Download the latest file from [releases](https://github.com/Aethese/Switchence/releases/) (you can choose exe or Switchence.zip)
+# Installation
+* Download the latest file from [releases](https://github.com/Aethese/Switchence/releases/)
 * A Discord account and the Discord desktop app
 * An internet connection
+
+## Installing from source
+* Python 3.7+ (may work with lower versions)
 * Everything in the *requirements.txt* file
 ```
 pip install -r requirements.txt

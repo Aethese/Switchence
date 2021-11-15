@@ -30,7 +30,7 @@ pip install -r requirements.txt
 ```
 
 # Game Requests
-I do take requests for games. All you have to do is create an issue with the title being "Game Request" and the game name in the description. I should be able to add your game in the next game list update soon after I see your request!
+I do take requests for games. All you have to do is create an [issue](https://github.com/Aethese/Switchence/issues/) with the title being "Game Request" and the game name in the description. I should be able to add your game in the next game list update soon after I see your request!
 
 # Find an error?
 Report it! You can do so by creating an [issue](https://github.com/Aethese/Switchence/issues/) so I can figure out how to help you and/or fix the problem for the next release!

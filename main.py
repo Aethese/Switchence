@@ -17,24 +17,24 @@ except ImportError as missingmod:
 	print(f'[Error] Module \'{missingmod.name}\' is missing')
 	module = input('Would you like to install all of the required modules? ')
 	if module in ['yes', 'y']:
-		print('Installing now...')
+		print('[Info] Installing now...')
 		try:
 			os.system('pip install --upgrade pip')
 			os.system('pip install pypresence')
 			os.system('pip install requests')
 			os.system('pip install colorama')
-			print('\nSuccessfully installed all of the required modules! Please restart Switchence')
+			print('\n[Info] Successfully installed all of the required modules! Please restart Switchence')
 			time.sleep(600)
 			sys.exit()
 		except Exception as error:
-			print(f'{Fore.LIGHTRED_EX}[Error]{Fore.RESET} {error}')
+			print(f'[Error] {error}')
 			print('Please report this error on the Switchence GitHub issue page if this error happens consistently')
 			time.sleep(5)
 			webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
 			time.sleep(600)
 			sys.exit()
 	else:
-		print('Installation of required modules cancelled')
+		print('[Info] Installation of required modules cancelled')
 		time.sleep(600)
 		sys.exit()
 initializeTime = time.time()
@@ -57,9 +57,10 @@ class log:
 
 	def info(text: str, close):  # second param is for if i want switchence to close after printing info
 		changeWindowTitle('Info')
-		clear()
 		print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}')
 		if close:
+			clear()
+			print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}')
 			print('This program will now close in 10 minutes')
 			time.sleep(600)
 			sys.exit()
@@ -70,11 +71,11 @@ class log:
 
 class config:
 	def update(self, changeto):  # self = setting being changed
-		with open('config.json', 'r') as jsonfile:
-			jsonFile = json.load(jsonfile)
-			for details in jsonFile['config']:
-				details[self] = changeto
-		with open('config.json', 'w') as jsonfile:
+		with open('config.json', 'r') as jfile:
+			jFile = json.load(jfile)
+			for i in jFile['config']:
+				i[self] = changeto
+		with open('config.json', 'w') as jfile:
 			json.dump(jsonFile, jsonfile, indent=4)
 
 	@staticmethod
@@ -83,7 +84,7 @@ class config:
 			global sw, version, updatenotifier, configfname, showbutton, autoupdate, favorites
 			configjson = {'config': [{
 				'sw-code': swcode,
-				'version': '1.9.0',
+				'version': '1.9.1',
 				'update-notifier': True,
 				'fname': False,
 				'show-button': True,
@@ -110,52 +111,33 @@ class config:
 
 log.loading('Loading initial functions...')
 def clear():
-	os.system('cls' if os.name == 'nt' else 'clear')  # *supposedly* multi platform supported clear
+	os.system('cls' if os.name == 'nt' else 'clear')  # *supposedly* multiplatform supported clear
 clear()
 
 
 def changeWindowTitle(title):
-	if os.name == 'nt':  # hopefully multi platform support
+	if os.name == 'nt':  # hopefully multiplatform support
 		ctypes.windll.kernel32.SetConsoleTitleW(f'Switchence | {title}')
 changeWindowTitle('Loading...')
 
 
 def reopen(doit):
 	fileName = os.path.basename(__file__)
-	if doit:
-		if os.path.isfile('Switchence.exe'):  # TODO: add support for if they changed file name lol
-			sys.exit()  # TODO: actually reopen exe file lol
-		elif '.py' in fileName:
-			os.system(f'python3 {fileName}')
-			sys.exit()
-	else: return fileName
-
-
-#=+ updating Switchence +=#
-#--  WIP sadly  --#
-def updateEXE(onlineV):
-	log.info(f'Updating to version {onlineV}...', False)
-	url = f'https://github.com/aethese/switchence/releases/download/v{onlineV}/Switchence.exe'
-	exeRequest = requests.get(url)
-	os.rename('Switchence.exe', 'Switchence (Old).exe')
-	with open('Switchence.exe', 'ab') as outputFile:
-		outputFile.write(exeRequest.content)
-	deleteOld = input('Would you like to delete the old file? ')
-	if deleteOld in ['yes', 'y']:
-		os.remove('Switchence (Old).exe')
-		log.info('Deleted old file', False)
-	else: log.info('Did not delete old file, it is current named \'Switchence (Old).exe\'', False)
-	log.info(f'Finished updating to version {onlineV}!', True)
-
-
-def updateProgram(onlineVer):
-	changeWindowTitle(f'Updating to version {onlineVer}')
-	log.info(f'Updating to version {onlineVer}...', False)
-	currentFile = reopen(False)
+	if not doit:
+		return fileName  # just to get path
 	if os.path.isfile('Switchence.exe'):  # TODO: add support for if they changed file name lol
-		#updateEXE(onlineVer)  # TODO: get this to work lol
+		sys.exit()  # TODO: actually reopen exe file lol
+	elif '.py' in fileName:
+		os.system(f'python3 {fileName}')
+
+
+def updateProgram(onlinever):
+	changeWindowTitle(f'Updating to version {onlinever}')
+	log.info(f'Updating to version {onlinever}...', False)
+	currentFile = reopen(False)
+	if os.path.isfile('Switchence.exe'):
 		config.update('auto-update', False)  # fixes infinite error loop lol
-		log.error('The exe file does not currently support auto updating')
+		log.info('The exe file does not currently support auto updating', True)
 	currentOnlineVersion = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/main.py')
 	if currentOnlineVersion.status_code != 200:  # request to get raw code was not successful
 		log.error(f'Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
@@ -164,12 +146,12 @@ def updateProgram(onlineVer):
 	onlineVersionBinary = currentOnlineVersion.content  # get binary version of raw code
 	with open(currentFile, 'wb') as file:  # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz
 		file.write(onlineVersionBinary)  # for getting this to work!
-	config.update('version', onlineVer)
-	changeWindowTitle(f'Updated to version {onlineVer}!')
-	log.info(f'Finished updating to version {onlineVer}!', False)
+	config.update('version', onlinever)
+	changeWindowTitle(f'Updated to version {onlinever}')
 	ro = input('Would you like to reopen Switchence? ')
 	if ro in ['yes', 'y']:
 		reopen(True)
+	log.info(f'Finished updating to version {onlinever}', True)
 
 
 #+= variables =+#
@@ -210,7 +192,7 @@ if os.path.isfile('config.json'):
 		if sw is None:  # in case an empty config folder is found
 			sw = ''
 		if version is None:
-			version = '1.9.0'
+			version = '1.9.1'
 		log.loading('Missing config settings found, creating them...')
 		log.loading('This means some settings will be reset to default')
 		config.create(sw)
@@ -256,7 +238,7 @@ log.loading('Successfully started Rich Presence!')
 
 
 #+= some more important functions =+#
-def changePresence(swStatus, pImg, pFname):
+def changePresence(swstatus, pImg, pFname):
 	start_time = time.time()
 	string = time.strftime('%H:%M', time.localtime())
 	if beta:  # set small image to indicate build ran by user is a beta build or not
@@ -265,26 +247,22 @@ def changePresence(swStatus, pImg, pFname):
 	else:
 		smallText = f'Switchence v{version}'
 		smallImg = 'switch_png'
-	if swStatus is False:
+	if swstatus is False:
 		if showbutton:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname,
-						buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
-			print(f'Set game to {pFname} at {string}')
-			changeWindowTitle(f'Playing {pFname}')
+			buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 		else:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, start=start_time)
-			print(f'Set game to {pFname} at {string}')
-			changeWindowTitle(f'Playing {pFname}')
-	elif swStatus:
+		print(f'Set game to {pFname} at {string}')
+		changeWindowTitle(f'Playing {pFname}')
+	else:
 		if showbutton:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname,
 						state=f'SW-{sw}', buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
-			print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
-			changeWindowTitle(f'Playing {pFname}')
 		else:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, state=f'SW-{sw}', start=start_time)
-			print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
-			changeWindowTitle(f'Playing {pFname}')
+		print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
+		changeWindowTitle(f'Playing {pFname}')
 
 
 def changeUpdateNotifier():
@@ -333,22 +311,32 @@ def changeAutoUpdate():
 		log.info(f'Set Auto Update setting to {Fore.LIGHTRED_EX}False{Fore.RESET}. Switchence will now restart shortly...', False)
 		time.sleep(3)
 		reopen(True)
-	else: log.error('Keeping auto update setting the same since you did not answer correctly')
+	else:
+		log.error('Keeping auto update setting the same since you did not answer correctly')
+
 
 def addFavorite():
 	favask = input('Would you like to add or remove a favorite? ')
 	if favask in ['remove', 'r']:
 		if not favorites:
-			log.info('Your favorite list is currently empty!', True)
+			log.info('Your favorite list is currently empty', True)
 		rask = input('What game would you like to remove from your favorites? ')
+		if rask not in favorites:
+			log.info(f'{rask} is currently not in your favorite list', True)
 		favorites.remove(rask)
 		config.update('favorites', favorites)
-		log.info(f'Successfully removed {rask} from your favorite list!', True)
+		log.info(f'Successfully removed {rask} from your favorite list', True)
 	else:
 		addask = input('What game would you like to add to your favorites? ')
 		favorites.append(addask)
 		config.update('favorites', favorites)
-		log.info(f'Successfully added {addask} to your favorite list!', True)
+		log.info(f'Successfully added {addask} to your favorite list', True)
+
+
+def form():
+	log.info('Opening the form...', False)
+	webbrowser.open('https://forms.gle/ofCZ8QXQYxPvTcDE7', new=2, autoraise=True)
+	log.info('Form is now open! Thanks for being willing to fill out the form!', True)
 
 
 #+= looking for game status before picking a game =+#
@@ -392,8 +380,8 @@ if updateAvailable:
 		log.info(f'You can update Switchence to the current version {Fore.LIGHTRED_EX}v{oVersion}{Fore.RESET} by turning on Auto Updates or by visiting the official GitHub page', False)
 		log.info('If you wish to turn on auto updates type \'auto update\' below', False)
 		log.info('If you wish to turn off update notifications, type \'update notifier\' below', False)
-		log.info('If you want to visit the GitHub page to update to the latest version type \'github\' below', False)
-		time.sleep(2)
+		log.info('If you want to visit the GitHub page to update to the latest version type \'github\' below\n', False)
+		time.sleep(1)
 
 #+= pick game =+#
 print('Here are the current games:')
@@ -402,18 +390,18 @@ if favorites:
 	print(Fore.LIGHTYELLOW_EX+', '.join(favorites))
 if configfname is False:
 	print(Fore.WHITE+', '.join(gamenames))  # reset yellow color from above
-else: print(Fore.WHITE+', '.join(gamefnames))
+else:
+	print(Fore.WHITE+', '.join(gamefnames)) # reset yellow color from above
 initializeTime = time.time() - initializeTime
 x = input('\nWhat game do you wanna play? ')
 x = x.lower()
 
 #+= input options =+#
 if x in ['github', 'gh']:
-	print('Opening GitHub page...')
+	log.info('Opening GitHub page...', False)
 	time.sleep(1)
 	webbrowser.open('https://github.com/Aethese/Switchence/', new=2, autoraise=True)
-	time.sleep(10)
-	sys.exit()
+	log.info('GitHub page opened', True)
 elif x in ['update notifier', 'update-notifier', 'un', 'u-n']:
 	changeUpdateNotifier()
 elif x in ['change name', 'change-name', 'cn', 'c-n']:
@@ -424,6 +412,8 @@ elif x in ['initialize', 'i']:
 	log.info(f'Time Switchence took to initialize: {initializeTime}', True)
 elif x in ['favorite', 'f']:
 	addFavorite()
+elif x in ['form']:
+	form()
 elif x in ['options', 'o']:
 	log.info(f'''The current options are:
 \'github\' this will bring up the public GitHub repo
@@ -431,7 +421,8 @@ elif x in ['options', 'o']:
 \'change name\' this will toggle how game names are shown on the game select screen, this is set to {Fore.LIGHTCYAN_EX}{configfname}{Fore.RESET}
 \'auto update\' which toggles the built-in auto updater, this is {Fore.LIGHTCYAN_EX}{autoupdate}{Fore.RESET}
 \'initialize\' this will let you know how long it took Switchence to initialize
-\'favorite\' this will let you favorite a game show it shows up colored
+\'favorite\' this will let you favorite a game show it shows up 
+\'form\' this will bring up the Google form that has questions related to Switchence (please fill it out!)
 \'options\' this will bring up this page''', True)
 
 #+= sw handling =+#
@@ -439,7 +430,7 @@ y = input(f'Do you want to show your friend code, SW-{sw} (you can change this b
 y = y.lower()
 if y in ['yes', 'y']:
 	if sw in [None, '']:
-		print('Friend code not set, continuing with setting set to off')
+		log.info('Friend code not set, continuing with setting set to off', False)
 		y = 'n'
 elif y in ['change', 'c']:
 	c = input('What is your new friend code (just type the numbers)? ')
@@ -448,10 +439,10 @@ elif y in ['change', 'c']:
 	if b in ['yes', 'y']:
 		config.update('sw-code', c)
 		sw = c
-		print(f'Friend code changed to SW-{c}')
+		log.info(f'Friend code changed to SW-{c}', False)
 		y = 'y'
 	else:
-		print('Friend code not changed, continuing with setting set to off')
+		log.info('Friend code not changed, continuing with setting set to off', False)
 		y = 'n'
 
 #+= search for game =+#
@@ -464,7 +455,8 @@ for n in games['games']:
 	elif o.lower() == x:
 		chosenOne = o
 		break
-else: log.info(f'The game you specified, {x}, is not in the current game list', True)
+else:
+	log.info(f'The game you specified, {x}, is not in the current game list', True)
 
 #+= send info to changePresence function about game picked =+#
 for i in games['games']:

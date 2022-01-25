@@ -508,9 +508,14 @@
 		"fname": "The Witcher 3: Wild Hunt"
 	},
 	{
-		"name": "xenoblade",
-		"img": "xenoblade",
+		"name": "xenoblade2",
+		"img": "xenoblade2",
 		"fname": "Xenoblade Chronicles 2"
+	},
+	{
+		"name": "xenoblade-chronicles",
+		"img": "xenoblade-chronicles",
+		"fname": "Xenoblade Chronicles: Definitive Edition"
 	},
 	{
 		"name": "yoshi",

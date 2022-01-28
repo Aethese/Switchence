@@ -27,10 +27,8 @@ except ImportError as missingmod:
 			time.sleep(600)
 			sys.exit()
 		except Exception as error:
-			print(f'[Error] {error}')
-			print('Please report this error on the Switchence GitHub issue page if this error happens consistently')
-			time.sleep(5)
-			webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
+			print('Error in installing required modules automatically. Please install them manually. Error below')
+			print(error)
 			time.sleep(600)
 			sys.exit()
 	else:
@@ -42,8 +40,9 @@ initializeTime = time.time()
 
 #+= important functions =+#
 class log:
-	def __init__(self, text):
+	def __init__(self, text, color):
 		self.text = text
+		self.color = color
 
 	def error(text: str):
 		changeWindowTitle('Error')
@@ -65,8 +64,14 @@ class log:
 			time.sleep(600)
 			sys.exit()
 
-	def loading(text: str):
-		print(f'{Fore.LIGHTCYAN_EX}[Loading]{Fore.RESET} {text}')
+	def loading(text: str, color):  # color is the color of the loading text
+		if color == 'green':
+			color = Fore.LIGHTGREEN_EX
+		elif color == 'yellow':
+			color = Fore.LIGHTYELLOW_EX
+		else:
+			color = Fore.LIGHTRED_EX
+		print(f'{Fore.LIGHTCYAN_EX}[Loading] {color}{text}{Fore.RESET}')
 
 
 class config:
@@ -76,7 +81,7 @@ class config:
 			for i in jFile['config']:
 				i[self] = changeto
 		with open('config.json', 'w') as jfile:
-			json.dump(jsonFile, jsonfile, indent=4)
+			json.dump(jFile, jfile, indent=4)
 
 	@staticmethod
 	def create(swcode):
@@ -84,14 +89,14 @@ class config:
 			global sw, version, updatenotifier, configfname, showbutton, autoupdate, favorites
 			configjson = {'config': [{
 				'sw-code': swcode,
-				'version': '1.9.1',
+				'version': '1.9.2',
 				'update-notifier': True,
 				'fname': False,
 				'show-button': True,
 				'auto-update': False,
 				'favorites': []
 			}]}
-			log.loading('Got settings to save, saving them...')
+			log.loading('Got settings to save, saving them...', 'yellow')
 			with open('config.json', 'w') as jsonfile:
 				json.dump(configjson, jsonfile, indent=4)
 			with open('config.json', 'r') as jsonfile:  # actually get the info lol
@@ -104,12 +109,12 @@ class config:
 					showbutton = details['show-button']
 					autoupdate = details['auto-update']
 					favorites = details['favorites']
-				log.loading('Config file settings set!')
+				log.loading('Config file settings set!', 'green')
 		except Exception as error:
 			log.error(f'Couldn\'t create config settings | {error}')
 
 
-log.loading('Loading initial functions...')
+log.loading('Loading initial functions...', 'yellow')
 def clear():
 	os.system('cls' if os.name == 'nt' else 'clear')  # *supposedly* multiplatform supported clear
 clear()
@@ -121,13 +126,13 @@ def changeWindowTitle(title):
 changeWindowTitle('Loading...')
 
 
-def reopen(doit):
+def reopen(path):
 	fileName = os.path.basename(__file__)
-	if not doit:
+	if not path:
 		return fileName  # just to get path
 	if os.path.isfile('Switchence.exe'):  # TODO: add support for if they changed file name lol
 		sys.exit()  # TODO: actually reopen exe file lol
-	elif '.py' in fileName:
+	elif '.py' in fileName:  # even exe files are considered .py files :/
 		os.system(f'python3 {fileName}')
 
 
@@ -173,9 +178,9 @@ favorites = None
 tips = None
 
 #+= loading config file =+#
-log.loading('Checking for config file...')
+log.loading('Checking for config file...', 'yellow')
 if os.path.isfile('config.json'):
-	log.loading('Found config file, attempting to read contents...')
+	log.loading('Found config file, attempting to read contents...', 'yellow')
 	try:
 		with open('config.json', 'r') as jsonfile:
 			jsonFile = json.load(jsonfile)
@@ -187,22 +192,22 @@ if os.path.isfile('config.json'):
 				showbutton = details['show-button']
 				autoupdate = details['auto-update']
 				favorites = details['favorites']
-			log.loading('Loaded config settings!')
+			log.loading('Loaded config settings!', 'green')
 	except KeyError:  # if some settings are missing, recreate the file while saving some settings
-		if sw is None:  # in case an empty config folder is found
+		if sw is None:  # in case an empty config file is found
 			sw = ''
 		if version is None:
-			version = '1.9.1'
-		log.loading('Missing config settings found, creating them...')
-		log.loading('This means some settings will be reset to default')
+			version = '1.9.2'
+		log.loading('Missing config settings found, creating them...', 'red')
+		log.loading('This means some settings will be reset to default', 'red')
 		config.create(sw)
 elif os.path.isfile('config.json') is False:
-	log.loading('Config file not found, attempting to create one...')
+	log.loading('Config file not found, attempting to create one...', 'yellow')
 	sw = ''  # sw var is needed in function below, so it needs to be pre defined
 	config.create(sw)
 
 #+= game list =+#
-log.loading('Attempting to load game list...')
+log.loading('Attempting to load game list...', 'yellow')
 gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json')  # auto update game list :)
 if gamejson.status_code != 200:
 	log.error(f'Failed to get game list with status code {gamejson.status_code}')
@@ -213,28 +218,28 @@ games = json.loads(gamejsontext)
 oVersion = games['version']
 announcement = games['announcement']
 tips = games['tips']
-log.loading('Game list loaded!')
+log.loading('Game list loaded!', 'green')
 
-log.loading('Attempting to read game list info...')
+log.loading('Attempting to read game list info...', 'yellow')
 for details in games['games']:
 	gamenames.append(details['name'])
 	gamefnames.append(details['fname'])
-log.loading('Successfully read game list info!')
+log.loading('Successfully read game list info!', 'green')
 
 #+= checking version =+#
-log.loading('Checking file version...')
+log.loading('Checking file version...', 'yellow')
 if version in [None, '']:  # checks your version
-	log.loading('File version not found, attempting to create...')
+	log.loading('File version not found, attempting to create...', 'red')
 	config.update('version', oVersion)
-	log.loading('Successfully created file version!')
+	log.loading('Successfully created file version!', 'green')
 elif version != oVersion:
 	updateAvailable = True
 
 #+= rpc =+#
-log.loading('Attempting to start Rich Presence...')
+log.loading('Attempting to start Rich Presence...', 'yellow')
 RPC = Presence('803309090696724554')
 RPC.connect()
-log.loading('Successfully started Rich Presence!')
+log.loading('Successfully started Rich Presence!', 'green')
 
 
 #+= some more important functions =+#
@@ -253,7 +258,7 @@ def changePresence(swstatus, pImg, pFname):
 			buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 		else:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, start=start_time)
-		print(f'Set game to {pFname} at {string}')
+		print(f'Set game to {Fore.LIGHTGREEN_EX}{pFname}{Fore.RESET} at {string}')
 		changeWindowTitle(f'Playing {pFname}')
 	else:
 		if showbutton:
@@ -261,7 +266,7 @@ def changePresence(swstatus, pImg, pFname):
 						state=f'SW-{sw}', buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 		else:
 			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, state=f'SW-{sw}', start=start_time)
-		print(f'Set game to {pFname} at {string} with friend code \'SW-{sw}\' showing')
+		print(f'Set game to {Fore.LIGHTGREEN_EX}{pFname}{Fore.RESET} at {string} with friend code \'SW-{sw}\' showing')
 		changeWindowTitle(f'Playing {pFname}')
 
 
@@ -339,15 +344,22 @@ def form():
 	log.info('Form is now open! Thanks for being willing to fill out the form!', True)
 
 
+def shortcut(game: int, favs):
+	for i in range(len(favs)):
+		if i + 1 == game:
+			return favs[i]
+	log.error('You don\'t have that many favorites in your favorite list. Use the \'shortcut\' command to figure out how shortcuts work')
+
+
 #+= looking for game status before picking a game =+#
-log.loading('Attempting to set looking for game status...')
+log.loading('Attempting to set looking for game status...', 'yellow')
 startTime = time.time()
 if showbutton:
 	RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game',
 				buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=startTime)
 elif showbutton is False:
 	RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game', start=startTime)
-log.loading('Successfully set looking for game status!')
+log.loading('Successfully set looking for game status!', 'green')
 
 #+= home page =+#
 changeWindowTitle('Picking a game')
@@ -361,7 +373,7 @@ Y88b.                        888             888
       "888 888  888  888 888 888    888      888  888 88888888 888  888 888      88888888 
 Y88b  d88P Y88b 888 d88P 888 Y88b.  Y88b.    888  888 Y8b.     888  888 Y88b.    Y8b.     
  "Y8888P"   "Y8888888P"  888  "Y888  "Y8888P 888  888  "Y8888  888  888  "Y8888P  "Y8888    
-Made by: Aethese#1337
+Made by: Aethese
 ''')
 
 #+= handle announcement and tips =+#
@@ -408,12 +420,15 @@ elif x in ['change name', 'change-name', 'cn', 'c-n']:
 	changeFNameSetting()
 elif x in ['auto update', 'auto-update', 'au', 'a-u']:
 	changeAutoUpdate()
-elif x in ['initialize', 'i']:
+elif x in ['initialize', 'init', 'i']:
 	log.info(f'Time Switchence took to initialize: {initializeTime}', True)
 elif x in ['favorite', 'f']:
 	addFavorite()
-elif x in ['form']:
+elif x == 'form':
 	form()
+elif x in ['shortcut', 'shortcuts', 's']:
+	log.info(f'''You currently have {Fore.LIGHTRED_EX}{len(favorites)}{Fore.RESET} favorites in your favorite list
+Let\'s say you want to pick the first one, just type {Fore.LIGHTRED_EX}1{Fore.RESET} to pick your first favorite''', True)
 elif x in ['options', 'o']:
 	log.info(f'''The current options are:
 \'github\' this will bring up the public GitHub repo
@@ -423,6 +438,7 @@ elif x in ['options', 'o']:
 \'initialize\' this will let you know how long it took Switchence to initialize
 \'favorite\' this will let you favorite a game show it shows up 
 \'form\' this will bring up the Google form that has questions related to Switchence (please fill it out!)
+\'shortcut\' this will tell you how shortcuts work
 \'options\' this will bring up this page''', True)
 
 #+= sw handling =+#
@@ -446,6 +462,12 @@ elif y in ['change', 'c']:
 		y = 'n'
 
 #+= search for game =+#
+try:
+	xInt = int(x)
+except ValueError:
+	xInt = None
+if isinstance(xInt, int):  # for shortcuts
+	x = shortcut(xInt, favorites)
 for n in games['games']:
 	z = n['name']
 	o = n['fname']
@@ -456,7 +478,7 @@ for n in games['games']:
 		chosenOne = o
 		break
 else:
-	log.info(f'The game you specified, {x}, is not in the current game list', True)
+	log.info(f'The game you specified, {Fore.LIGHTGREEN_EX}{x}{Fore.RESET}, is not in the current game list', True)
 
 #+= send info to changePresence function about game picked =+#
 for i in games['games']:

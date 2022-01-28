@@ -1,11 +1,12 @@
 {
-	"version": "1.9.1",
-	"announcement": "Please fill out my form on Switchence with the 'form' command",
+	"version": "1.9.2",
+	"announcement": "v1.9.2 has been released with new shortcuts and bug fixes",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",
 		"You can always ask for new games to be added and they will most likely be added (unless it's super unknown)",
-		"You having a good day makes my day :)"],
+		"You can request new features for Switchence by making an issue on GitHub",
+		"Use the 'shortcut' command to figoure out how shortcuts work"],
 	"games": [
 	{
 		"name": "1-2-switch",
@@ -535,7 +536,7 @@
 	{
 		"name": "zelda-skyward-sword",
 		"img": "zelda-skyward-sword",
-		"fname": "The Legend of Zelda™: Skyward Sword HD"
+		"fname": "The Legend of Zelda: Skyward Sword HD"
 	}
 	]
 }

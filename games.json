@@ -354,6 +354,11 @@
 		"fname": "Pokémon Brilliant Diamond"
 	},
 	{
+		"name": "pokemon-legend-arceus",
+		"img": "pokemon-legend-arceus",
+		"fname": "Pokémon Legends: Arceus"
+	},
+	{
 		"name": "pokemon-lets-go-eevee",
 		"img": "pokemon-lets-go-eevee",
 		"fname": "Pokémon: Let's Go, Eevee!"

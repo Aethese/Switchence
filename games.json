@@ -1,6 +1,6 @@
 {
 	"version": "1.9.2",
-	"announcement": "Join the Discord server: discord.gg/238heBqmZb",
+	"announcement": "",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",
@@ -507,6 +507,11 @@
 		"name": "undertale",
 		"img": "undertale",
 		"fname": "Undertale"
+	},
+	{
+		"name": "wild-at-heart",
+		"img": "wild-at-heart",
+		"fname": "The Wild at Heart"
 	},
 	{
 		"name": "witcher-3",

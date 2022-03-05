@@ -1,9 +1,17 @@
 #+= imports =+#
+import sys
+import os
 import time
+if sys.version_info < (3, 8):
+	os.system('cls' if os.name == 'nt' else 'clear')
+	print('[Warning] Your version of Python is lower than the recommended Python version')
+	print('This program officially supports Python version 3.8 and higher')
+	print(sys.version_info)
+	vInput = input('Do you wish to continue (Y/N)? ')
+	if not vInput.lower() in ['yes', 'y']:
+		sys.exit(0)
 import json
 import webbrowser
-import os
-import sys
 import ctypes
 import random
 try:  # only try for the modules that need to be installed
@@ -25,12 +33,12 @@ except ImportError as missingmod:
 			os.system('pip install colorama')
 			print('\n[Info] Successfully installed all of the required modules! Please restart Switchence')
 			time.sleep(600)
-			sys.exit()
+			sys.exit(0)
 		except Exception as error:
 			print('Error in installing required modules automatically. Please install them manually. Error below')
 			print(error)
 			time.sleep(600)
-			sys.exit()
+			sys.exit(0)
 	else:
 		print('[Info] Installation of required modules cancelled')
 		time.sleep(600)
@@ -52,7 +60,7 @@ class log:
 		time.sleep(5)
 		webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
 		time.sleep(600)
-		sys.exit()
+		sys.exit(1)
 
 	def info(text: str, close):  # second param is for if i want switchence to close after printing info
 		changeWindowTitle('Info')
@@ -62,7 +70,7 @@ class log:
 			print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}')
 			print('This program will now close in 10 minutes')
 			time.sleep(600)
-			sys.exit()
+			sys.exit(0)
 
 	def loading(text: str, color):  # color is the color of the loading text
 		if color == 'green':
@@ -89,7 +97,7 @@ class config:
 			global sw, version, updatenotifier, configfname, showbutton, autoupdate, favorites
 			configjson = {'config': [{
 				'sw-code': swcode,
-				'version': '1.9.2',
+				'version': '1.9.3',
 				'update-notifier': True,
 				'fname': False,
 				'show-button': True,
@@ -131,9 +139,11 @@ def reopen(path):
 	if not path:
 		return fileName  # just to get path
 	if os.path.isfile('Switchence.exe'):  # TODO: add support for if they changed file name lol
-		sys.exit()  # TODO: actually reopen exe file lol
+		sys.exit(0)  # TODO: actually reopen exe file lol
 	elif '.py' in fileName:  # even exe files are considered .py files :/
 		os.system(f'python3 {fileName}')
+	else:
+		sys.exit(1)
 
 
 def updateProgram(onlinever):
@@ -193,11 +203,11 @@ if os.path.isfile('config.json'):
 				autoupdate = details['auto-update']
 				favorites = details['favorites']
 			log.loading('Loaded config settings!', 'green')
-	except KeyError:  # if some settings are missing, recreate the file while saving some settings
+	except Exception:  # if some settings are missing, recreate the file while saving some settings
 		if sw is None:  # in case an empty config file is found
 			sw = ''
 		if version is None:
-			version = '1.9.2'
+			version = '1.9.3'
 		log.loading('Missing config settings found, creating them...', 'red')
 		log.loading('This means some settings will be reset to default', 'red')
 		config.create(sw)
@@ -243,7 +253,7 @@ log.loading('Successfully started Rich Presence!', 'green')
 
 
 #+= some more important functions =+#
-def changePresence(swstatus, pImg, pFname):
+def changePresence(swstatus, gameimg, gamefname):
 	start_time = time.time()
 	string = time.strftime('%H:%M', time.localtime())
 	if beta:  # set small image to indicate build ran by user is a beta build or not
@@ -254,20 +264,20 @@ def changePresence(swstatus, pImg, pFname):
 		smallImg = 'switch_png'
 	if swstatus is False:
 		if showbutton:
-			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname,
-			buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
+			RPC.update(large_image=gameimg, large_text=gamefname, small_image=smallImg, small_text=smallText, details=gamefname,
+					   buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 		else:
-			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, start=start_time)
-		print(f'Set game to {Fore.LIGHTGREEN_EX}{pFname}{Fore.RESET} at {string}')
-		changeWindowTitle(f'Playing {pFname}')
+			RPC.update(large_image=gameimg, large_text=gamefname, small_image=smallImg, small_text=smallText, details=gamefname, start=start_time)
+		print(f'Set game to {Fore.LIGHTGREEN_EX}{gamefname}{Fore.RESET} at {string}')
+		changeWindowTitle(f'Playing {gamefname}')
 	else:
 		if showbutton:
-			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname,
-						state=f'SW-{sw}', buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
+			RPC.update(large_image=gameimg, large_text=gamefname, small_image=smallImg, small_text=smallText, details=gamefname,
+					state=f'SW-{sw}', buttons=[{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}], start=start_time)
 		else:
-			RPC.update(large_image=pImg, large_text=pFname, small_image=smallImg, small_text=smallText, details=pFname, state=f'SW-{sw}', start=start_time)
-		print(f'Set game to {Fore.LIGHTGREEN_EX}{pFname}{Fore.RESET} at {string} with friend code \'SW-{sw}\' showing')
-		changeWindowTitle(f'Playing {pFname}')
+			RPC.update(large_image=gameimg, large_text=gamefname, small_image=smallImg, small_text=smallText, details=gamefname, state=f'SW-{sw}', start=start_time)
+		print(f'Set game to {Fore.LIGHTGREEN_EX}{gamefname}{Fore.RESET} at {string} with friend code \'SW-{sw}\' showing')
+		changeWindowTitle(f'Playing {gamefname}')
 
 
 def changeUpdateNotifier():
@@ -288,7 +298,7 @@ def changeUpdateNotifier():
 def changeFNameSetting():
 	length = 'short' if configfname is False else 'full'
 	print(f'\nYour current setting is set to: {Fore.LIGHTGREEN_EX}{length}{Fore.RESET}')
-	k = input('What do you want to change it setting to? \'Full\' for full game names or \'short\' for shortened game names. ')
+	k = input('What do you want to change it setting to? \'Full\' for full game names or \'short\' for shortened game names ')
 	k = k.lower()
 	if k in ['full', 'f']:
 		config.update('fname', True)
@@ -344,7 +354,7 @@ def form():
 	log.info('Form is now open! Thanks for being willing to fill out the form!', True)
 
 
-def shortcut(game: int, favs):
+def shortcut(game: int, favs) -> int:
 	for i in range(len(favs)):
 		if i + 1 == game:
 			return favs[i]
@@ -409,7 +419,7 @@ x = input('\nWhat game do you wanna play? ')
 x = x.lower()
 
 #+= input options =+#
-if x in ['github', 'gh']:
+if x in ['github', 'gh', 'g']:
 	log.info('Opening GitHub page...', False)
 	time.sleep(1)
 	webbrowser.open('https://github.com/Aethese/Switchence/', new=2, autoraise=True)
@@ -429,9 +439,15 @@ elif x == 'form':
 elif x in ['shortcut', 'shortcuts', 's']:
 	log.info(f'''You currently have {Fore.LIGHTRED_EX}{len(favorites)}{Fore.RESET} favorites in your favorite list
 Let\'s say you want to pick the first one, just type {Fore.LIGHTRED_EX}1{Fore.RESET} to pick your first favorite''', True)
+elif x in ['discord', 'd']:
+	log.info('Opening Discord server link...', False)
+	time.sleep(1)
+	webbrowser.open('https://discord.gg/238heBqmZb', new=2, autoraise=True)
+	log.info('Discord server link opened!', True)
 elif x in ['options', 'o']:
 	log.info(f'''The current options are:
 \'github\' this will bring up the public GitHub repo
+\'discord\' this will bring up the public Discord server
 \'update notifier\' which toggles the built-in update notifier, this is set to {Fore.LIGHTCYAN_EX}{updatenotifier}{Fore.RESET}
 \'change name\' this will toggle how game names are shown on the game select screen, this is set to {Fore.LIGHTCYAN_EX}{configfname}{Fore.RESET}
 \'auto update\' which toggles the built-in auto updater, this is {Fore.LIGHTCYAN_EX}{autoupdate}{Fore.RESET}
@@ -483,8 +499,7 @@ else:
 #+= send info to changePresence function about game picked =+#
 for i in games['games']:
 	if chosenOne in [i['name'], i['fname']]:
-		name = i['name']
-		img = i['img']
+		img = i['name']  # the short game name is the same as the img name
 		fname = i['fname']
 		if y in ['yes', 'y']:
 			changePresence(True, img, fname)

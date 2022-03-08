@@ -6,7 +6,7 @@ Switchence is a **simple** Nintendo Switch rich presence app that allows you to 
 Not only does the program auto-update itself, but its game list does as well! This ensures sure you're always up to date with the latest version.
 
 ## Growing game list ⬆️
-Not only is the game list huge already, it's being actively updated for all of the latest big game releases. If you want to add a game you can make a [game request](https://github.com/Aethese/Switchence#game-requests).
+Not only is the game list huge already, it's being actively updated for all of the latest big game releases. If you want to add a game you can make a [game request](https://github.com/Aethese/Switchence#game-requests-).
 
 ## Easy setup 😌
 The program is easy to set up for your friend code and has many options built into the program. You can view all of the available settings by typing 'options' in the set game input.
@@ -15,7 +15,7 @@ The program is easy to set up for your friend code and has many options built in
 Switchence is very fast! Staying as fast as possible, so you don't have to wait at all for the program to load.
 
 ## Active community 🙋
-Have a question, issue or [game request](https://github.com/Aethese/Switchence#game-requests)? Well ask away! You are guaranteed to get a response within a day or two!
+Have a question, issue or [game request](https://github.com/Aethese/Switchence#game-requests-)? Well ask away! You are guaranteed to get a response within a day or two!
 
 # Installation 🔨
 ## Installing from source

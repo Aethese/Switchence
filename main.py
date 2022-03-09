@@ -8,7 +8,7 @@ if sys.version_info < (3, 8):
 	print('This program officially supports Python version 3.8 and higher')
 	print(sys.version_info)
 	vInput = input('Do you wish to continue (Y/N)? ')
-	if not vInput.lower() in ['yes', 'y']:
+	if vInput.lower() not in ['yes', 'y']:
 		sys.exit(0)
 import json
 import webbrowser
@@ -156,8 +156,6 @@ def updateProgram(onlinever):
 	currentOnlineVersion = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/main.py')
 	if currentOnlineVersion.status_code != 200:  # request to get raw code was not successful
 		log.error(f'Status code is not 200, it is {currentOnlineVersion.status_code}, so the program will not update')
-	elif currentOnlineVersion.status_code == 429:  # being rate limited
-		log.info('Woah, slow down! You\'re being rate limited!', True)
 	onlineVersionBinary = currentOnlineVersion.content  # get binary version of raw code
 	with open(currentFile, 'wb') as file:  # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz
 		file.write(onlineVersionBinary)  # for getting this to work!
@@ -221,8 +219,6 @@ log.loading('Attempting to load game list...', 'yellow')
 gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json')  # auto update game list :)
 if gamejson.status_code != 200:
 	log.error(f'Failed to get game list with status code {gamejson.status_code}')
-elif gamejson.status_code == 429:
-	log.info('Woah, slow down! You\'re being rate limited!', True)
 gamejsontext = gamejson.text
 games = json.loads(gamejsontext)
 oVersion = games['version']
@@ -269,7 +265,6 @@ def changePresence(swstatus, gameimg, gamefname):
 		else:
 			RPC.update(large_image=gameimg, large_text=gamefname, small_image=smallImg, small_text=smallText, details=gamefname, start=start_time)
 		print(f'Set game to {Fore.LIGHTGREEN_EX}{gamefname}{Fore.RESET} at {string}')
-		changeWindowTitle(f'Playing {gamefname}')
 	else:
 		if showbutton:
 			RPC.update(large_image=gameimg, large_text=gamefname, small_image=smallImg, small_text=smallText, details=gamefname,
@@ -277,7 +272,8 @@ def changePresence(swstatus, gameimg, gamefname):
 		else:
 			RPC.update(large_image=gameimg, large_text=gamefname, small_image=smallImg, small_text=smallText, details=gamefname, state=f'SW-{sw}', start=start_time)
 		print(f'Set game to {Fore.LIGHTGREEN_EX}{gamefname}{Fore.RESET} at {string} with friend code \'SW-{sw}\' showing')
-		changeWindowTitle(f'Playing {gamefname}')
+
+	changeWindowTitle(f'Playing {gamefname}')
 
 
 def changeUpdateNotifier():

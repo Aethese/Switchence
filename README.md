@@ -39,6 +39,9 @@ If you like this project and would like to support it, the best way is to star t
 # Game Requests 🎮
 I do take requests for games. All you have to do is create an [issue](https://github.com/Aethese/Switchence/issues/) with the title being "Game Request" and the game name in the description. I should be able to add your game in the next game list update soon after I see your request!
 
+## Wrong/bad image for a game?
+Let me know! I'd prefer if you could find one that's at least 512x512 to help me out because searching for good game images can be hard sometimes. But if you say it looks bad and I agree I'll change it!
+
 # Find an error? ❌
 Report it! You can do so by creating an [issue](https://github.com/Aethese/Switchence/issues/) so I can figure out how to help you and/or fix the problem for the next release!
 

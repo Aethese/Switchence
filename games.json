@@ -1,6 +1,6 @@
 {
 	"version": "1.9.3",
-	"announcement": "v1.9.3 is now out! Please also update Pypresence!",
+	"announcement": "",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",
@@ -156,6 +156,10 @@
 	{
 		"name": "kirby-clash",
 		"fname": "Super Kirby Clash"
+	},
+	{
+		"name": "kirby-forgotten-land",
+		"fname": "Kirby and the Forgotten Land"
 	},
 	{
 		"name": "link-awakening",
@@ -340,6 +344,10 @@
 	{
 		"name": "rocket-league",
 		"fname": "Rocket League"
+	},
+	{
+		"name": "rune-factory5",
+		"fname": "Rune Factory 5"
 	},
 	{
 		"name": "samurai-warriors5",

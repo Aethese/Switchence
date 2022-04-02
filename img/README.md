@@ -22,5 +22,8 @@ gamejson = requests.get('URL LINK HERE')
 
 That's all you have to change to be able to use your own game list and still have the app auto-update on its own! But of course if you want a game added you can just ask instead of using your own game list ;)
 
+## Have any questions? 😊
+Make an issue and ask away! I'll help you to the best of my abilities!
+
 # Copyright notice ⚠
 I do not own **ANY** of these images, I just use them for my non-commercial application! Just a warning that you cannot use these images for commercial reasons or anything like that! You have been warned!

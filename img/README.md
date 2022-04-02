@@ -1,5 +1,5 @@
 # What is this folder for? 🤔
-If you would like to make your own [Discord Application](https://discord.com/developers/applications) to add any game of your liking, you can use the images I use.
+If you would like to make your own [Discord Application](https://discord.com/developers/applications) to add any game of your liking, you can use the images I use for your own application.
 
 ## How would I make my own application? 👷‍♂️
 Simple! Just go to the [Discord Application](https://discord.com/developers/applications) page and create a new application on the top right. After you picked a name (such as `Nintendo Switch`) you can change the name and multiple other settings! I use `Nintendo Switch` since that shows up when you start the app on Discord.

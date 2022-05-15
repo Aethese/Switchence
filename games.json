@@ -1,13 +1,14 @@
 {
-	"version": "1.9.3",
-	"announcement": "",
+	"version": "1.9.4",
+	"announcement": "v1.9.4 is now out! Also form has been updated so please fill that out! Link to form can be found with the 'form' command",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",
-		"You can always ask for new games to be added and they will most likely be added (unless it's super unknown)",
+		"You can always ask for new games to be added and they will most likely be added (unless it's a super unknown game)",
 		"You can request new features for Switchence by making an issue on GitHub",
-		"Use the 'shortcut' command to figoure out how shortcuts work",
-		"Use the 'Discord' command to get an invite link to join the Discord server"],
+		"Use the 'shortcut' command to figure out how shortcuts work",
+		"Use the 'Discord' command to get an invite link to join the Discord server",
+		"You are always allowed to fill out the Google form with the 'form' command to answer some questions about Switchence :)"],
 	"games": [
 	{
 		"name": "1-2-switch",

@@ -335,7 +335,7 @@ elif version != oVersion:
 
 #+= rpc =+#
 log.loading('Attempting to start Rich Presence...', 'yellow')
-RPC = Presence('803309090696724554')
+RPC = Presence('802943733045526588')
 RPC.connect()
 log.loading('Successfully started Rich Presence!', 'green')
 

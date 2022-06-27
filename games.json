@@ -1,6 +1,6 @@
 {
 	"version": "1.9.4",
-	"announcement": "v1.9.4 is now out! Also form has been updated so please fill that out! Link to form can be found with the 'form' command",
+	"announcement": "",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",
@@ -85,6 +85,10 @@
 	{
 		"name": "dead-by-daylight",
 		"fname": "Dead by Daylight"
+	},
+	{
+		"name": "deltarune",
+		"fname": "DELTARUNE Chapter 1&2"
 	},
 	{
 		"name": "devil-may-cry",

@@ -17,6 +17,9 @@ Switchence is very fast! Staying as fast as possible, so you don't have to wait 
 ## Active community 🙋
 Have a question, issue or [game request](https://github.com/Aethese/Switchence#game-requests-)? Well ask away! You are guaranteed to get a response within a day or two!
 
+## Good code documentation 📄
+Good code documentation that allows for other developers to add onto Switchence so the app is always improving!
+
 # Installation 🔨
 ## Installing from source
 * Download the latest zip file from [releases](https://github.com/Aethese/Switchence/releases/).

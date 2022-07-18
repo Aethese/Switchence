@@ -1,6 +1,6 @@
 {
-	"version": "1.9.4",
-	"announcement": "",
+	"version": "1.9.5",
+	"announcement": "v1.9.5 is now out!",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",

@@ -44,7 +44,7 @@ except ImportError as missing_module:
 		sys.exit(0)
 initialize_time = time.time()
 logs = []
-CURRENT_VERSION = '1.9.5'
+CURRENT_VERSION = '1.9.6'
 
 
 #+= important functions =+#
@@ -237,7 +237,8 @@ def change_window_title(title: str):
 	changes the terminal window title
 	'''
 	
-	os.system(f'title {title}')
+	if os.name == 'nt':
+		os.system(f'title {title}')
 change_window_title('Loading...')
 
 

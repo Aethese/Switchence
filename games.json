@@ -1,6 +1,6 @@
 {
-	"version": "1.9.5",
-	"announcement": "v1.9.5 is now out!",
+	"version": "1.9.6",
+	"announcement": "v1.9.6 has been released containing a simple hotfix",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",
@@ -8,7 +8,8 @@
 		"You can request new features for Switchence by making an issue on GitHub",
 		"Use the 'shortcut' command to figure out how shortcuts work",
 		"Use the 'Discord' command to get an invite link to join the Discord server",
-		"You are always allowed to fill out the Google form with the 'form' command to answer some questions about Switchence :)"],
+		"You can always fill out the Google form with the 'form' command to answer some questions about Switchence :)",
+		"If you would like to support my work, you can either star the repo, join the Discord server or support me through Patreon :)"],
 	"games": [
 	{
 		"name": "1-2-switch",

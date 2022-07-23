@@ -1,6 +1,6 @@
 {
 	"version": "1.9.6",
-	"announcement": "v1.9.6 has been released containing a simple hotfix",
+	"announcement": "Added 3 new games",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",
@@ -92,6 +92,10 @@
 		"fname": "DELTARUNE Chapter 1&2"
 	},
 	{
+		"name": "demon-slayer",
+		"fname": "Demon Slayer -Kimetsu no Yaiba- The Hinokami Chronicles"
+	},
+	{
 		"name": "devil-may-cry",
 		"fname": "Devil May Cry 3"
 	},
@@ -122,6 +126,10 @@
 	{
 		"name": "fire-emblem-warriors",
 		"fname": "Fire Emblem Warriors"
+	},
+	{
+		"name": "fire-emblem-warriors-3-hopes",
+		"fname": "Fire Emblem Warriors: Three Hopes"
 	},
 	{
 		"name": "fortnite",
@@ -430,6 +438,10 @@
 	{
 		"name": "tokyo-mirage-sessions",
 		"fname": "Tokyo Mirage Sessions #FE Encore"
+	},
+	{
+		"name": "triangle-strategy",
+		"fname": "TRIANGLE STRATEGY"
 	},
 	{
 		"name": "undertale",

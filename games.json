@@ -452,6 +452,10 @@
 		"fname": "Xenoblade Chronicles: Definitive Edition"
 	},
 	{
+		"name": "xenoblade-chronicles-3",
+		"fname": "Xenoblade Chronicles 3"
+	},
+	{
 		"name": "yoshi",
 		"fname": "Yoshi's Crafted World"
 	},
@@ -466,10 +470,7 @@
 	{
 		"name": "zelda-skyward-sword",
 		"fname": "The Legend of Zelda: Skyward Sword HD"
-	}, 
-	{
-		"name": "Xenoblade3",
-		"fname": "Xenoblade Chronicles 3"
-	}
+	} 
+	
 	]
 }

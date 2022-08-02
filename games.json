@@ -1,6 +1,6 @@
 {
 	"version": "1.9.6",
-	"announcement": "Added 3 new games",
+	"announcement": "",
 	"tips": ["You can add games to your favorite list with the 'favorite' command", 
 		"You can type 'options' into the game pick input to see all available commands", 
 		"You can always share Switchence with friends :)",
@@ -483,5 +483,4 @@
 		"name": "zelda-skyward-sword",
 		"fname": "The Legend of Zelda: Skyward Sword HD"
 	}
-	]
-}
+]}

@@ -15,7 +15,7 @@ The program is easy to set up for your friend code and has many options built in
 Switchence is very fast! Staying as fast as possible, so you don't have to wait at all for the program to load.
 
 ## Active community 🙋
-Have a question, issue or [game request](https://github.com/Aethese/Switchence#game-requests-)? Well ask away! You are guaranteed to get a response within a day or two!
+Have a question, issue or [game request](https://github.com/Aethese/Switchence#game-requests-)? Well ask away! You are guaranteed to get a response within the next couple of days!
 
 ## Good code documentation 📄
 Good code documentation that allows for other developers to add onto Switchence so the app is always improving!

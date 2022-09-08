@@ -14,9 +14,6 @@ The program is easy to set up for your friend code and has many options built in
 ## Very fast 🏃
 Switchence is very fast! Staying as fast as possible, so you don't have to wait at all for the program to load.
 
-## Active community 🙋
-Have a question, issue or [game request](https://github.com/Aethese/Switchence#game-requests-)? Well ask away! You are guaranteed to get a response within the next couple of days!
-
 ## Good code documentation 📄
 Good code documentation that allows for other developers to add onto Switchence so the app is always improving!
 
@@ -31,13 +28,13 @@ pip install -r requirements.txt
 * Have a Discord account and the Discord desktop app
 * Have an internet connection
 
-## Installing EXE
+## Installing EXE for Windows
 * Download the latest exe file from [releases](https://github.com/Aethese/Switchence/releases/)
 * Have a Discord account and the Discord desktop app
 * Have an internet connection
 
 # Support 🎗
-If you like this project and would like to support it, the best way is to star the repo and join the [Discord server](discord.gg/238heBqmZb)!
+If you like this project and would like to support it, there are multiple ways you could do that. You could star this repository, support me on [Patreon](https://patreon.com/aethese) and get access to beta builds, or join the the [Discord server](discord.gg/238heBqmZb)!
 
 # Game Requests 🎮
 I do take requests for games. All you have to do is create an [issue](https://github.com/Aethese/Switchence/issues/) with the title being "Game Request" and the game name in the description. I should be able to add your game in the next game list update soon after I see your request!

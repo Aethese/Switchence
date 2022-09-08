@@ -1,3 +1,6 @@
+# v1.10.0 public beta released!
+If you head on over to the [v1.10.0-beta](https://github.com/Aethese/Switchence/tree/v1.10.0-beta) branch you will find the source code for the newest update! There will also be some beta releases in [Releases](https://github.com/Aethese/Switchence/releases) so keep your eye out for them! Read more about the beta [here](https://github.com/Aethese/Switchence/blob/v1.10.0-beta/README.md#about-this-beta)!
+
 # Switchence
 Switchence is a **simple** Nintendo Switch rich presence app that allows you to show what game you're playing on Discord. What makes this better than other Discord rich presence apps is that this one **auto-updates** its game list whenever you start it so you don't have to create your own Discord app, add your own images and edit the json file.
 

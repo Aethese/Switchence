@@ -7,300 +7,51 @@ if sys.version_info < (3, 8):
 	os.system('cls' if os.name == 'nt' else 'clear')
 	print('[Warning] Your version of Python is lower than the recommended Python version')
 	print('Switchence officially supports Python version 3.8 and higher')
-	vInput = input('Do you wish to continue (Y/N)? ')
-	if vInput.lower() in ['no', 'n']:
+	if input('Do you wish to continue? (Y/N) ')[0] in 'Nn':
 		sys.exit(0)
 
 import json
-import random
 import time
 import webbrowser
+from random import choice as random_choice
 
 try:  # only try for the modules that need to be installed
 	from colorama import Fore, init
-	from pypresence import Presence
 	import requests
 	init()
-	os.system('cls' if os.name == 'nt' else 'clear')
 except ImportError as missing_module:
-	os.system('cls' if os.name == 'nt' else 'clear')
 	print(f'[Error] Module \'{missing_module.name}\' is missing')
-	install_modules = input('Would you like to install all of the required modules? ')
-	if install_modules in ['yes', 'y']:
+	if input('Would you like to install all of the required modules? ')[0] in 'Yy':
 		print('[Info] Installing now...')
 		try:
-			os.system('pip install --upgrade pip')
-			os.system('pip install pypresence')
-			os.system('pip install requests')
-			os.system('pip install colorama')
+			os.system('pip3 install --upgrade pip')
+			os.system('pip3 install pypresence')
+			os.system('pip3 install requests')
+			os.system('pip3 install colorama')
 			print('\n[Info] Successfully installed all of the required modules! Please restart Switchence')
 			sys.exit(0)
 		except Exception as error:
-			print('Error in installing required modules automatically. Please install them manually. Error below')
+			print('Error in installing required modules automatically. Please install them manually. Error below:')
 			print(error)
 			sys.exit(1)
 	else:
-		print('[Info] Installation of required modules cancelled')
+		print('[Info] Installation of required modules canceled')
 		sys.exit(0)
+
+# import src files after checking to see if all modules are installed
+from src import utils
+utils.clear()
+from src import presence, updater
+from src.config import config
+from src.logger import logger
+
+# init stuff
+logger.loading('Initializing...', 'yellow')
 initialize_time = time.time()
-logs = []
-CURRENT_VERSION = '1.9.6'
-
-
-#+= important functions =+#
-class log:
-	'''
-	custom logging function to log error, info and loading texts. also saves logs to file
-	'''
-	def __init__(self, text: str, color: str):
-		self.text = text
-		self.color = color
-
-	@staticmethod
-	def return_logs():
-		'''
-		returns the logs in a formatted way. just newline after every log lol
-		'''
-
-		formatted_logs = '\n'.join(logs)
-		return formatted_logs
-
-	@staticmethod
-	def save_logs():
-		'''
-		saves current logs to file when terminal closes
-		'''
-
-		with open('logs.switchence', 'w') as log_file:
-			all_logs = log.return_logs()
-			log_file.write(all_logs)
-
-	def add_log(log_to_add: str):
-		'''
-		adds to local logs variable the newly added log
-
-		Parameters
-		----------
-		log_to_add : str
-			the log message that will be formatted then logged
-		'''
-
-		current_time = time.strftime('%H:%M:%S', time.localtime())
-		# format looks like this: TIME(15:15:15) - LOG_MESSAGE
-		log_message = f'{current_time} - {log_to_add}'
-		logs.append(log_message)
-
-		log.save_logs()  # sadly have to run this every after every log
-
-	def error(text: str):
-		'''
-		Parameters
-		----------
-		text : str
-			the text that is printed when logged
-		'''
-
-		change_window_title('Error')
-		clear()
-		error_text_plain = f'[Error] {text}'
-		log.add_log(error_text_plain)
-		print(f'{Fore.LIGHTRED_EX}[Error]{Fore.RESET} {text}')
-		print('Please report this error on the Switchence GitHub issue page if this error happens consistently')
-		time.sleep(1)
-		webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
-		sys.exit(1)
-
-	def info(text: str, close: bool):  # second param is for if i want switchence to close after printing info
-		'''
-		Parameters
-		----------
-		text : str
-			the text that is printed when logged
-		close : bool
-			decides if the program closes or not after logging the message
-		'''
-
-		change_window_title('Info')
-		info_text_plain = f'[Info] {text}'
-		log.add_log(info_text_plain)
-		print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}')
-		if close:
-			clear()
-			print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}')
-			sys.exit(0)
-
-	def loading(text: str, color: str):  # color is the color of the loading text
-		'''
-		Parameters
-		----------
-		text : str
-			the text that is printed when logged
-		color : str
-			can pick between green, yellow or red as the logged color text
-		'''
-
-		if color == 'green':
-			color = Fore.LIGHTGREEN_EX
-		elif color == 'yellow':
-			color = Fore.LIGHTYELLOW_EX
-		else:
-			color = Fore.LIGHTRED_EX
-		loading_text_plain = f'[Loading] {text}'
-		log.add_log(loading_text_plain)
-		print(f'{Fore.LIGHTCYAN_EX}[Loading] {color}{text}{Fore.RESET}')
-
-
-class config:
-	'''
-	config file handler class. used for updating the config file, and creating a new config file
-	'''
-
-	def update(setting_changed: str, change_to):
-		'''
-		updates the config file by changing one value
-
-		Parameters
-		----------
-		setting_changed : str
-			the setting that's being changed, such as version
-		change_to : any
-			what the new setting is being changed to. can be a string, bool, updated list, and prob more
-		'''
-
-		with open('config.json', 'r') as jfile:
-			jFile = json.load(jfile)
-			for i in jFile['config']:
-				i[setting_changed] = change_to
-		with open('config.json', 'w') as jfile:
-			json.dump(jFile, jfile, indent=4)
-
-	@staticmethod
-	def create(swcode: str, saved_favorites: list = [], current_version: str = CURRENT_VERSION):
-		'''
-		creates a blank config file
-
-		Parameters
-		----------
-		swcode : str
-			used to set the sw code (or friend code) for the new config file. can be empty if sw code is not found
-		saved_favorites : list
-			used to set the new game list for new config file. can be empty if favorite list not found.
-			doesn't need to be passed all the time if config file not found
-		current_version : str
-			used to set new version for new config file. will default to current build version if version isn't found
-		'''
-
-		# load up all the vars from the global scale
-		global sw, version, updatenotifier, configfname, showbutton, autoupdate, favorites
-		# create settings to save to config file
-		configjson = {'config': [{
-			'sw-code': swcode,
-			'version': current_version,
-			'update-notifier': True,
-			'fname': False,
-			'show-button': True,
-			'auto-update': False,
-			'favorites': saved_favorites
-		}]}
-
-		log.loading('Loaded settings to save, saving them...', 'yellow')
-		# save settings to file
-		with open('config.json', 'w') as jsonfile:
-			json.dump(configjson, jsonfile, indent=4)
-
-		# reopen config file then save the settings within it
-		with open('config.json', 'r') as jsonfile:
-			jsonFile = json.load(jsonfile)
-			for details in jsonFile['config']:
-				sw = details['sw-code']
-				version = details['version']
-				updatenotifier = details['update-notifier']
-				configfname = details['fname']
-				showbutton = details['show-button']
-				autoupdate = details['auto-update']
-				favorites = details['favorites']
-		log.loading('Config file settings set!', 'green')
-
-
-log.loading('Loading initial functions...', 'yellow')
-def clear():
-	'''
-	just clears the terminal screen
-	'''
-
-	os.system('cls' if os.name == 'nt' else 'clear')
-clear()
-
-
-def change_window_title(title: str):
-	'''
-	changes the terminal window title
-	'''
-	
-	if os.name == 'nt':
-		os.system(f'title {title}')
-change_window_title('Loading...')
-
-
-def reopen():
-	'''
-	reopens Switchence
-	'''
-
-	log.add_log('Attempting to reopen Switchence :/')
-	file_name = os.path.basename(__file__)
-	if os.path.isfile('Switchence.exe'):  # TODO: add support for if they changed file name lol
-		log.add_log('EXE file found, exiting')
-		sys.exit(1)  # TODO: actually reopen exe file lol
-	elif '.py' in file_name:  # even exe files are considered .py files :/
-		log.add_log('Attempting to reopen Switchence with python3')
-		os.system(f'python3 {file_name}')
-	else:
-		log.add_log('Unknown error while trying to reopen Switchence')
-		sys.exit(1)
-
-
-def update_program(online_ver: str):
-	'''
-	automatically updates Switchence by pulling the latest raw file from GitHub to update to
-
-	Parameters
-	----------
-	online_ver : str
-		the newest version number
-	'''
-
-	change_window_title(f'Updating to version {online_ver}')
-	log.info(f'Updating to version {online_ver}...', False)
-
-	# get the path location of file
-	current_file = os.path.basename(__file__)
-	if os.path.isfile('Switchence.exe'):
-		config.update('auto-update', False)
-		log.info('The exe file does not currently support auto updating', True)
-
-	# request up-to-date file from github
-	current_online_version = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/main.py')
-	if current_online_version.status_code != 200:
-		log.error(f'Status code is not 200, it is {current_online_version.status_code}, so the program will not update')
-	elif current_online_version.status_code == 429:  # being rate limited
-		log.info('Woah, slow down! You\'re being rate limited!', True)
-
-	# get binary version of raw code
-	online_version_binary = current_online_version.content
-	with open(current_file, 'wb') as file:  # thanks to https://stackoverflow.com/users/13155625/dawid-januszkiewicz
-		file.write(online_version_binary)  # for getting this to work!
-	config.update('version', online_ver)
-	change_window_title(f'Updated to version {online_ver}')
-	reopen_prompt = input('Would you like to reopen Switchence? ')
-	if reopen_prompt in ['yes', 'y']:
-		reopen()
-	log.info(f'Finished updating to version {online_ver}', True)
-
 
 #+= variables =+#
+# config settings
 version = None
-oVersion = None  # online version
 sw = None
 updatenotifier = None
 configfname = None
@@ -308,17 +59,21 @@ showbutton = None
 autoupdate = None
 gamenames = []
 gamefnames = []
-update_available = False
-announcement = None
+hide_all_except_favs = None
 favorites = None
-tips = None
 # in debug mode Switchence uses a local version of the games.json file
 debug = False
 
+# different vars used by Switchence
+oVersion = None  # online version
+update_available = False
+announcement = None
+tips = None
+
 #+= loading config file =+#
-log.loading('Checking for config file...', 'yellow')
+logger.loading('Checking for config file...', 'yellow')
 if os.path.isfile('config.json'):
-	log.loading('Found config file, attempting to read contents...', 'yellow')
+	logger.loading('Found config file, attempting to read contents...', 'yellow')
 	try:
 		with open('config.json', 'r') as json_file:
 			json_File = json.load(json_file)
@@ -329,10 +84,11 @@ if os.path.isfile('config.json'):
 				configfname = details['fname']
 				showbutton = details['show-button']
 				autoupdate = details['auto-update']
+				hide_all_except_favs = details['hide-all-except-favs']
 				favorites = details['favorites']
-		log.loading('Loaded config settings!', 'green')
 
-		try:  # test to see if in debug mode. what's in debug mode is stated where the debug var is stated
+		# test to see if in debug mode. what's in debug mode is stated where the debug var is stated
+		try:
 			with open('config.json', 'r') as test_debug:
 				test_debug = json.load(test_debug)
 				for i in test_debug['config']:
@@ -340,6 +96,14 @@ if os.path.isfile('config.json'):
 					break
 		except:
 			pass
+		
+		logger.loading('Loaded config settings!', 'green')
+		logger.add_log(f'Version: {version}')
+		logger.add_log(f'Built-in: {utils.CURRENT_VERSION}')
+		logger.add_log(f'Auto updater: {autoupdate}')
+		logger.add_log(f'Update notifier: {updatenotifier}')
+		logger.add_log(f'Beta: {utils.BETA_BUILD}')
+		logger.add_log(f'Debug mode: {debug}')
 	except Exception:  # if some settings are missing, recreate the file while saving some settings
 		try:  # attempt to save sw-code
 			with open('config.json', 'r') as json_file:
@@ -357,7 +121,7 @@ if os.path.isfile('config.json'):
 					version = i['version']
 					break
 		except KeyError:
-			version = CURRENT_VERSION
+			version = utils.CURRENT_VERSION
 
 		try:  # attempt to save favorite list
 			with open('config.json', 'r') as json_file:
@@ -368,29 +132,26 @@ if os.path.isfile('config.json'):
 		except KeyError:
 			favorites = []
 
-		log.loading('Missing config settings found, creating them...', 'red')
-		log.loading('This means some settings will be reset to default', 'red')
-		overwrite_config = input('Would you like to overwrite your current config file? ')
-		if overwrite_config:
-			config.create(sw, favorites, version)
-		else:
-			log.info('Ok, will not overwrite current config file and now exiting', True)
+		logger.loading('Missing config settings found, creating them...', 'red')
+		logger.loading('This means some settings will be reset to default', 'red')
+		if input('Would you like to overwrite your current config file? (Y/N) ')[0] in 'Nn':
+			logger.info('Ok, will not overwrite current config file and now exiting', True)
+		sw, version, updatenotifier, configfname, showbutton, autoupdate, hide_all_except_favs, favorites = config.create(sw, favorites, version)
 else:  # config file can't be found
-	log.loading('Config file not found, attempting to create one...', 'yellow')
+	logger.loading('Config file not found, attempting to create one...', 'yellow')
 	sw = ''  # sw var is needed in function below, so it needs to be pre defined
-	config.create(sw)
+	sw, version, updatenotifier, configfname, showbutton, autoupdate, hide_all_except_favs, favorites = config.create(sw, [], utils.CURRENT_VERSION)
 
 #+= game list =+#
-log.loading('Attempting to load game list...', 'yellow')
+logger.loading('Attempting to load game list...', 'yellow')
 if debug:
 	with open('games.json', 'r') as gamesjson:
-		games = json.loads(gamesjson.read())
+		games = json.load(gamesjson)
 else:
 	gamejson = requests.get('https://raw.githubusercontent.com/Aethese/Switchence/main/games.json')  # auto update game list :)
 	if gamejson.status_code != 200:
-		log.error(f'Failed to get game list with status code {gamejson.status_code}')
-	elif gamejson.status_code == 429:
-		log.info('Woah, slow down! You\'re being rate limited!', True)
+		logger.error(f'Failed to get game list with status code {gamejson.status_code}')
+
 	# use the online data and make it readable for the program
 	gamejsontext = gamejson.text  # get text content from request (just json file)
 	games = json.loads(gamejsontext)  # load the text content from request
@@ -398,203 +159,26 @@ else:
 oVersion = games['version']
 announcement = games['announcement']
 tips = games['tips']
-log.loading('Game list loaded!', 'green')
+logger.loading('Game list loaded!', 'green')
 
-log.loading('Attempting to read game list info...', 'yellow')
+logger.loading('Attempting to read game list info...', 'yellow')
 for details in games['games']:
 	gamenames.append(details['name'])
 	gamefnames.append(details['fname'])
-log.loading('Successfully read game list info!', 'green')
+logger.loading('Successfully read game list info!', 'green')
 
 #+= checking version =+#
-log.loading('Checking file version...', 'yellow')
+logger.loading('Checking file version...', 'yellow')
 if version in [None, '']:  # checks your version
-	log.loading('File version not found, attempting to create...', 'red')
+	logger.loading('File version not found, attempting to create...', 'red')
 	config.update('version', oVersion)
-	log.loading('Successfully created file version!', 'green')
+	logger.loading('Successfully created file version!', 'green')
 elif version != oVersion:
 	update_available = True
 
-#+= rpc =+#
-log.loading('Attempting to start Rich Presence...', 'yellow')
-RPC = Presence('803309090696724554')
-RPC.connect()
-log.loading('Successfully started Rich Presence!', 'green')
-
-
-#+= some more important functions =+#
-def change_presence(swstatus: bool, gameimg: str, gamefname: str):
-	'''
-	changes the presence for Switchence. changes how it updates the RPC depending on if the user wants to show friend code and if they want to show a
-	button that will lead anyone to the public GitHub page if they click on it
-
-	Parameters
-	----------
-	swstatus : bool
-		if the friend code is being shown
-	gameimg : str
-		name of the image to show on discord
-	gamefname : str
-		full name of the game the user wants to play
-	'''
-
-	start_time = time.time()
-	current_time_formatted = time.strftime('%H:%M', time.localtime())
-	# set small image to indicate build ran by user is a beta build or not
-	if debug:
-		small_text = 'Switchence Beta'
-		small_img = 'gold_icon'
-	else:
-		small_text = f'Switchence v{version}'
-		small_img = 'switch_png'
-
-	if showbutton:
-		button = [{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}]
-	else:
-		button = None
-	
-	if swstatus:
-		sw_code = f'SW-{sw}'
-	else:
-		sw_code = None
-
-	RPC.update(large_image=gameimg, large_text=gamefname, small_image=small_img, small_text=small_text, details=gamefname,
-		state=sw_code, buttons=button, start=start_time)
-	print(f'Set game to {Fore.LIGHTGREEN_EX}{gamefname}{Fore.RESET} at {current_time_formatted}')
-	log.add_log(f'Set game to {gamefname} at {current_time_formatted}')
-	change_window_title(f'Playing {gamefname}')
-
-
-def change_update_notifier():
-	'''
-	changes setting for the new update notifications
-	'''
-
-	picked = input('\nWhat setting do you want the Update Notifier to be set to, on or off? ')
-	picked = picked.lower()
-	if picked in ['on', 'true', 't']:  # why do you want this on tbh
-		config.update('update-notifier', True)
-		log.info(f'Update notifier set to {Fore.LIGHTGREEN_EX}TRUE{Fore.RESET}. Switchence will now restart shortly...', False)
-		time.sleep(3)
-		reopen()
-	elif picked in ['off', 'false', 'f']:
-		config.update('update-notifier', False)
-		log.info(f'Update notifier set to {Fore.LIGHTRED_EX}FALSE{Fore.RESET}. Switchence will now restart shortly...', False)
-		time.sleep(3)
-		reopen()
-
-
-def change_FName_setting():
-	'''
-	changes setting for if the user wants to show the full game name for the games or not
-	'''
-
-	length = 'short' if configfname is False else 'full'
-	print(f'\nYour current setting is set to: {Fore.LIGHTGREEN_EX}{length}{Fore.RESET}')
-	k = input('What do you want to change it setting to? \'Full\' for full game names or \'short\' for shortened game names ')
-	k = k.lower()
-	if k in ['full', 'f']:
-		config.update('fname', True)
-		log.info(f'Set game name to {Fore.LIGHTGREEN_EX}Full{Fore.RESET}. Switchence will now restart shortly...', False)
-		time.sleep(3)
-		reopen()
-	elif k in ['short', 's']:
-		config.update('fname', False)
-		log.info(f'Set game name to {Fore.LIGHTGREEN_EX}Short{Fore.RESET}. Switchence will now restart shortly...', False)
-		time.sleep(3)
-		reopen()
-
-
-def change_auto_update():
-	'''
-	changes setting for the auto updater
-	'''
-
-	print(f'\nYour current Auto Update setting is set to {Fore.LIGHTGREEN_EX}{autoupdate}{Fore.RESET}')
-	ask = input('What would you like to change it to? On or off? ')
-	ask = ask.lower()
-	if ask == 'on':
-		config.update('auto-update', True)
-		log.info(f'Set Auto Update setting to {Fore.LIGHTGREEN_EX}True{Fore.RESET}. Switchence will now restart shortly...', False)
-		time.sleep(3)
-		reopen()
-	elif ask == 'off':
-		config.update('auto-update', False)
-		log.info(f'Set Auto Update setting to {Fore.LIGHTRED_EX}False{Fore.RESET}. Switchence will now restart shortly...', False)
-		time.sleep(3)
-		reopen()
-	else:
-		log.error('Keeping auto update setting the same since you did not answer correctly')
-
-
-def add_favorite():
-	'''
-	allows the user to add or remove games from their favorite list
-	'''
-
-	favask = input('Would you like to add or remove a favorite? ')
-	if favask in ['remove', 'r']:
-		if not favorites:
-			log.info('Your favorite list is currently empty', True)
-		remove_ask = input('What game would you like to remove from your favorites? ')
-		if remove_ask not in favorites:
-			log.info(f'{remove_ask} is currently not in your favorite list', True)
-		favorites.remove(remove_ask)
-		config.update('favorites', favorites)
-		log.info(f'Successfully removed {remove_ask} from your favorite list', True)
-	else:
-		add_ask = input('What game would you like to add to your favorites? ')
-		favorites.append(add_ask)
-		config.update('favorites', favorites)
-		log.info(f'Successfully added {add_ask} to your favorite list', True)
-
-
-def form():
-	'''
-	opens the survey form
-	'''
-
-	log.info('Opening the form...', False)
-	webbrowser.open('https://forms.gle/ofCZ8QXQYxPvTcDE7', new=2, autoraise=True)
-	log.info('Form is now open! Thanks for being willing to fill out the form!', True)
-
-
-def shortcut(chosen_game: int, favs: list) -> int:
-	'''
-	gets the selected game from the list from an int from user
-
-	Parameters
-	----------
-	chosen_game : int
-		the game in the list the user wants to play
-	favs : list
-		the current favorite list of the user
-	
-	Returns
-	-------
-	favs[i] : str
-		returns the favorite game name corresponding with the option the user selected
-	'''
-
-	for i in range(len(favs)):
-		if i + 1 == chosen_game:
-			return favs[i]
-	log.error('You don\'t have that many favorites in your favorite list. Use the \'shortcut\' command to figure out how shortcuts work')
-
-
-#+= looking for game status before picking a game =+#
-log.loading('Attempting to set looking for game status...', 'yellow')
-start_time = time.time()
-if showbutton:
-	button = [{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}]
-else:
-	button = None
-RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game', buttons=button, start=start_time)
-log.loading('Successfully set looking for game status!', 'green')
-
 #+= home page =+#
-change_window_title('Picking a game')
-clear()
+presence.looking_for_game(showbutton)
+utils.clear()
 print('''
  .d8888b.                d8b 888             888                                          
 d88P  Y88b               Y8P 888             888                                          
@@ -604,74 +188,82 @@ Y88b.                        888             888
       "888 888  888  888 888 888    888      888  888 88888888 888  888 888      88888888 
 Y88b  d88P Y88b 888 d88P 888 Y88b.  Y88b.    888  888 Y8b.     888  888 Y88b.    Y8b.     
  "Y8888P"   "Y8888888P"  888  "Y888  "Y8888P 888  888  "Y8888  888  888  "Y8888P  "Y8888    
-Made by: Aethese
+Made by Aethese
 ''')
+logger.add_log('Printed logo')
 
-#+= handle announcement and tips =+#
-if announcement not in [None, '']:
+#+= handle announcement, tips, and print if in debug mode =+#
+if announcement != '':
 	print(f'{Fore.LIGHTCYAN_EX}[Announcement]{Fore.RESET} {announcement}')
-print(f'{Fore.LIGHTCYAN_EX}[Tip]{Fore.RESET} {random.choice(tips)}')
+print(f'{Fore.LIGHTCYAN_EX}[Tip]{Fore.RESET} {random_choice(tips)}')
 
-if debug:  # if in debug mode print at top that you're in debug mode
-	print(f'{Fore.LIGHTCYAN_EX}[Debug]{Fore.RESET} Debug mode is currently {Fore.LIGHTGREEN_EX}enabled{Fore.RESET}\n')
-else:  # just add an empty space after tips
-	print()
+if debug:  # if in debug mode print at the top that you're in debug mode
+	print(f'{Fore.LIGHTCYAN_EX}[Debug]{Fore.RESET} Debug mode is currently {Fore.LIGHTGREEN_EX}enabled{Fore.RESET}')
+print(Fore.RESET)  # just add an empty space after tips and reset color
 
 #+= handle new update =+#
 if update_available:
 	if autoupdate:
-		log.info('New update found, updating to latest version...', False)
+		logger.info('New update found, updating to latest version...', False)
 		time.sleep(1)
-		update_program(oVersion)
+		updater.update_program(oVersion, os.path.basename(__file__), debug)
 	if updatenotifier:  # this will only show if auto updates aren't on
-		log.info(f'Your current version of Switchence {Fore.LIGHTRED_EX}v{version}{Fore.RESET} is not up to date', False)
-		log.info(f'You can update Switchence to the current version {Fore.LIGHTRED_EX}v{oVersion}{Fore.RESET} by turning on Auto Updates or by visiting the official GitHub page', False)
-		log.info('If you wish to turn on auto updates type \'auto update\' below', False)
-		log.info('If you wish to turn off update notifications, type \'update notifier\' below', False)
-		log.info('If you want to visit the GitHub page to update to the latest version type \'github\' below\n', False)
-		time.sleep(1)
+		logger.info(f'Your current version of Switchence {Fore.LIGHTRED_EX}v{version}{Fore.RESET} is not up to date', False)
+		logger.info(f'You can update Switchence to the current version {Fore.LIGHTRED_EX}v{oVersion}{Fore.RESET} by turning on Auto Updates or by visiting the official GitHub page', False)
+		logger.info('If you wish to turn on auto updates type \'auto update\' below', False)
+		logger.info('If you wish to turn off update notifications, type \'update notifier\' below', False)
+		logger.info('If you want to visit the GitHub page to update to the latest version type \'github\' below\n', False)
+		time.sleep(0.75)
 
 #+= pick game =+#
 print('Here are the current games:')
 if favorites:
 	favorites.sort()  # sort alphabetically
 	print(Fore.LIGHTYELLOW_EX+', '.join(favorites))
-if configfname:  # if user wants to show full game names
-	# Fore.WHITE to reset yellow color from above
-	print(Fore.WHITE+', '.join(gamefnames))
+
+# prints the entire game list unless user doesn't want them to
+if not hide_all_except_favs:
+	if configfname:  # if user wants to show full game names
+		print(Fore.RESET+', '.join(gamefnames))  # Fore.WHITE to reset yellow color from above
+	else:
+		print(Fore.RESET+', '.join(gamenames))
 else:
-	print(Fore.WHITE+', '.join(gamenames))
+	print(Fore.RESET+'Game list is hidden, to change type \'hide games\' to try to change')
+
 initialize_time = time.time() - initialize_time
-game_input = input('\nWhat game do you wanna play? ')
+game_input = input('\nWhat game do you wanna play or what command do you want to use? ')
 game_input = game_input.lower()
 
 #+= input options =+#
+# sorry :(
 if game_input in ['github', 'gh', 'g']:
-	log.info('Opening GitHub page...', False)
+	logger.info('Opening GitHub page...', False)
 	time.sleep(1)
 	webbrowser.open('https://github.com/Aethese/Switchence/', new=2, autoraise=True)
-	log.info('GitHub page opened', True)
+	logger.info('GitHub page opened', True)
 elif game_input in ['update notifier', 'update-notifier', 'un', 'u-n']:
-	change_update_notifier()
+	utils.change_setting('Update Notifier', 'update-notifier', updatenotifier)
 elif game_input in ['change name', 'change-name', 'cn', 'c-n']:
-	change_FName_setting()
+	utils.change_setting('Show Full Game Names', 'fname', configfname)
 elif game_input in ['auto update', 'auto-update', 'au', 'a-u']:
-	change_auto_update()
+	utils.change_setting('Auto Update', 'auto-update', autoupdate)
 elif game_input in ['initialize', 'init', 'i']:
-	log.info(f'Time Switchence took to initialize: {initialize_time}', True)
-elif game_input in ['favorite']:
-	add_favorite()
+	logger.info(f'Time Switchence took to initialize: {initialize_time}', True)
+elif game_input in ['favorite', 'favourite']:
+	utils.add_favorite(favorites)
 elif game_input == 'form':
-	form()
+	utils.form()
 elif game_input in ['shortcut', 'shortcuts']:
-	log.info(f'''You currently have {Fore.LIGHTRED_EX}{len(favorites)}{Fore.RESET} favorite(s) in your favorite list
+	logger.info(f'''You currently have {Fore.LIGHTRED_EX}{len(favorites)}{Fore.RESET} favorite(s) in your favorite list
 Let\'s say you want to pick the first one, just type {Fore.LIGHTRED_EX}1{Fore.RESET} to pick your first favorite''', True)
 elif game_input in ['discord', 'd']:
-	log.info('Opening Discord server link...', False)
+	logger.info('Opening Discord server link...', False)
 	webbrowser.open('https://discord.gg/238heBqmZb', new=2, autoraise=True)
-	log.info('Discord server link opened!', True)
+	logger.info('Discord server link opened!', True)
+elif game_input in ['hide games', 'hide-games', 'h g', 'h-g']:
+	utils.change_setting('Hide Games', 'hide-all-except-favs', hide_all_except_favs)
 elif game_input in ['options', 'o']:
-	log.info(f'''The current options are:
+	logger.info(f'''The current options are:
 \'github\' this will bring up the public GitHub repo
 \'discord\' this will bring up the public Discord server
 \'update notifier\' which toggles the built-in update notifier, this is set to {Fore.LIGHTCYAN_EX}{updatenotifier}{Fore.RESET}
@@ -681,53 +273,52 @@ elif game_input in ['options', 'o']:
 \'favorite\' this will let you favorite a game show it shows up 
 \'form\' this will bring up the Google form that has questions related to Switchence (please fill it out!)
 \'shortcut\' this will tell you how shortcuts work
+\'hide games\' this will toggle if the game list will be shown or not, this is set to {Fore.LIGHTCYAN_EX}{hide_all_except_favs}{Fore.RESET}
 \'options\' this will bring up this page :P''', True)
 
 #+= sw handling =+#
 show_sw_code = input(f'Do you want to show your friend code, SW-{sw} (you can change this by typing \'change\')? ')
 show_sw_code = show_sw_code.lower()
 if show_sw_code in ['yes', 'y']:
-	if sw in [None, '']:
-		log.info('Friend code not set, continuing with setting set to off', False)
+	if sw == '':
+		logger.info('Friend code not set, continuing with setting set to off', False)
 		show_sw_code = 'n'
 elif show_sw_code in ['change', 'c']:
 	new_sw_code = input('What is your new friend code (just type the numbers)? ')
-	confirm_new_code = input(f'Is \'SW-{new_sw_code}\' correct? ')
-	confirm_new_code = confirm_new_code.lower()
-	if confirm_new_code in ['yes', 'y']:
+	if input(f'Is \'SW-{new_sw_code}\' correct? ')[0] in 'Yy':
 		config.update('sw-code', new_sw_code)
 		sw = new_sw_code
-		log.info(f'Friend code changed to SW-{new_sw_code}', False)
+		logger.info(f'Friend code changed to SW-{new_sw_code}', False)
 		show_sw_code = 'y'
 	else:
-		log.info('Friend code not changed, continuing with setting set to off', False)
+		logger.info('Friend code not changed, continuing with setting set to off', False)
 		show_sw_code = 'n'
 
 #+= search for game =+#
 # attempt to change game_input to int to see if the user wants to pick a favorite
-log.add_log('Checking to see if user wants to play favorite...')
+logger.add_log('Checking to see if user wants to play favorite...')
 try:
 	game_input_int = int(game_input)
 except ValueError:
-	log.add_log('User didn\'t pick favorite game')
+	logger.add_log('User didn\'t pick favorite game')
 	game_input_int = None
 if isinstance(game_input_int, int):  # for shortcuts
-	log.add_log('User did pick favorite game')
-	game_input = shortcut(game_input_int, favorites)
+	logger.add_log('User did pick favorite game')
+	game_input = utils.shortcut(game_input_int, favorites)
 
 for details in games['games']:
 	details_name = details['name']
 	details_fname = details['fname']  # if user has full game name being shown
 	if details_name.lower() == game_input:
-		log.add_log('Found game through small game name')
+		logger.add_log('Found game through small game name')
 		chosen_game = details_name
 		break
 	elif details_fname.lower() == game_input:
-		log.add_log('Found game through full game name')
+		logger.add_log('Found game through full game name')
 		chosen_game = details_fname
 		break
 else:
-	log.info(f'The game you specified, {Fore.LIGHTGREEN_EX}{game_input}{Fore.RESET}, is not in the current game list', True)
+	logger.info(f'The game you specified, {Fore.LIGHTGREEN_EX}{game_input}{Fore.RESET}, is not in the current game list', True)
 
 #+= send info to changePresence function about game picked =+#
 for i in games['games']:
@@ -735,9 +326,9 @@ for i in games['games']:
 		img = i['name']  # the short game name is the same as the img name
 		fname = i['fname']
 		if show_sw_code in ['yes', 'y']:
-			change_presence(True, img, fname)
+			presence.change_presence(True, img, fname, debug, version, showbutton, sw)
 			break
-		change_presence(False, img, fname)
+		presence.change_presence(False, img, fname, debug, version, showbutton, sw)
 		break
 
 

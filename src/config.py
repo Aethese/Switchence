@@ -6,7 +6,7 @@ class config:
 	config file handler class. used for updating the config file, and creating a new config file
 	'''
 
-	def update(setting_changed: str, change_to):
+	def update(self, change_to):
 		'''
 		updates the config file by changing one value
 
@@ -21,7 +21,7 @@ class config:
 		with open('config.json', 'r') as jfile:
 			jFile = json.load(jfile)
 			for i in jFile['config']:
-				i[setting_changed] = change_to
+				i[self] = change_to
 		with open('config.json', 'w') as jfile:
 			json.dump(jFile, jfile, indent=4)
 

@@ -32,22 +32,22 @@ def update_program(online_ver: str, current_file: str, in_debug_mode: bool):
 
 	# request the up-to-date files from GitHub
 	logger.info('Getting online files...', False)
-	status_codes = []
 	# online files
 	beginning_link = 'https://raw.githubusercontent.com/Aethese/Switchence/main/'
-	online_main = requests.get(beginning_link + 'main.py')
-	online_config = requests.get(beginning_link + 'src/config.py')
-	online_log = requests.get(beginning_link + 'src/log.py')
-	online_presence = requests.get(beginning_link + 'src/presence.py')
-	online_utils = requests.get(beginning_link + 'src/utils.py')
+	online_main = requests.get(f'{beginning_link}main.py')
+	online_config = requests.get(f'{beginning_link}src/config.py')
+	online_log = requests.get(f'{beginning_link}src/log.py')
+	online_presence = requests.get(f'{beginning_link}src/presence.py')
+	online_utils = requests.get(f'{beginning_link}src/utils.py')
 	logger.info('Online files obtained', False)
 
-	# add the status codes to the status_codes list
-	status_codes.append(online_main.status_code)
-	status_codes.append(online_config.status_code)
-	status_codes.append(online_log.status_code)
-	status_codes.append(online_presence.status_code)
-	status_codes.append(online_utils.status_code)
+	status_codes = [
+		online_main.status_code,
+		online_config.status_code,
+		online_log.status_code,
+		online_presence.status_code,
+		online_utils.status_code,
+	]
 
 	# check the status codes to see if any are not 200
 	for status_code in status_codes:

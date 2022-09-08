@@ -24,8 +24,7 @@ class logger:
 		returns the logs in a formatted way. just newline after every log lol
 		'''
 
-		formatted_logs = '\n'.join(logs)
-		return formatted_logs
+		return '\n'.join(logs)
 
 	@staticmethod
 	def save_logs():
@@ -37,7 +36,7 @@ class logger:
 			all_logs = logger.return_logs()
 			log_file.write(all_logs)
 
-	def add_log(log_to_add: str):
+	def add_log(self):
 		'''
 		adds to local logs variable the newly added log
 
@@ -49,12 +48,12 @@ class logger:
 
 		current_time = time.strftime('%H:%M:%S', time.localtime())
 		# format looks like this: TIME(15:15:15) - LOG_MESSAGE
-		log_message = f'{current_time} - {log_to_add} - [{len(logs)}]'
+		log_message = f'{current_time} - {self} - [{len(logs)}]'
 		logs.append(log_message)
 
 		logger.save_logs()  # sadly have to run this every after every log
 
-	def error(text: str):
+	def error(self):
 		'''
 		Parameters
 		----------
@@ -64,15 +63,15 @@ class logger:
 
 		utils.change_window_title('Error')
 		utils.clear()
-		error_text_plain = f'[Error] {text}'
+		error_text_plain = f'[Error] {self}'
 		logger.add_log(error_text_plain)
-		print(f'{Fore.LIGHTRED_EX}[Error]{Fore.RESET} {text}')
+		print(f'{Fore.LIGHTRED_EX}[Error]{Fore.RESET} {self}')
 		print('Please report this error on the Switchence GitHub issue page if this error happens consistently')
 		time.sleep(1)
 		webbrowser.open('https://github.com/Aethese/Switchence/issues/', new=2, autoraise=True)
 		sys.exit(1)
 
-	def info(text: str, close: bool):  # second param is for if i want switchence to close after printing info
+	def info(self, close: bool):	# second param is for if i want switchence to close after printing info
 		'''
 		Parameters
 		----------
@@ -83,15 +82,15 @@ class logger:
 		'''
 
 		utils.change_window_title('Info')
-		info_text_plain = f'[Info] {text}'
+		info_text_plain = f'[Info] {self}'
 		logger.add_log(info_text_plain)
-		print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}')
+		print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {self}')
 		if close:
 			utils.clear()
-			print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {text}')
+			print(f'{Fore.LIGHTGREEN_EX}[Info]{Fore.RESET} {self}')
 			sys.exit(0)
 
-	def loading(text: str, color: str):  # color is the color of the loading text
+	def loading(self, color: str):	# color is the color of the loading text
 		'''
 		Parameters
 		----------
@@ -107,8 +106,8 @@ class logger:
 			color = Fore.LIGHTYELLOW_EX
 		else:
 			color = Fore.LIGHTRED_EX
-		loading_text_plain = f'[Loading] {text}'
+		loading_text_plain = f'[Loading] {self}'
 		logger.add_log(loading_text_plain)
-		print(f'{Fore.LIGHTCYAN_EX}[Loading] {color}{text}{Fore.RESET}')
+		print(f'{Fore.LIGHTCYAN_EX}[Loading] {color}{self}{Fore.RESET}')
 
 logger.add_log('Switchence Logger initialized')

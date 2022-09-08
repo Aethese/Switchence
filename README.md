@@ -1,3 +1,6 @@
+# About this beta
+This branch will be open for as long v1.10.0 is in public beta. The releases may or may not contain an EXE file so if you don't know how to install Python and run the program that way even with the help of this README, you may be out of luck. This branch will only be updated on a "big" update, or an update that contains a feature or a big fix. Any small changes stay on the private repo. If you have any problems with the beta **PLEASE** create an issue!
+
 # Switchence
 Switchence is a **simple** Nintendo Switch rich presence app that allows you to show what game you're playing on Discord. What makes this better than other Discord rich presence apps is that this one **auto-updates** its game list whenever you start it so you don't have to create your own Discord app, add your own images and edit the json file.
 

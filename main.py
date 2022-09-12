@@ -197,23 +197,26 @@ if announcement != '':
 	print(f'{Fore.LIGHTCYAN_EX}[Announcement]{Fore.RESET} {announcement}')
 print(f'{Fore.LIGHTCYAN_EX}[Tip]{Fore.RESET} {random_choice(tips)}')
 
-if debug:  # if in debug mode print at the top that you're in debug mode
+if debug:  # if in debug mode, print at the top that debug mode is enabled
 	print(f'{Fore.LIGHTCYAN_EX}[Debug]{Fore.RESET} Debug mode is currently {Fore.LIGHTGREEN_EX}enabled{Fore.RESET}')
-print(Fore.RESET)  # just add an empty space after tips and reset color
+print(Fore.RESET)  # add an empty space after tips and reset color
 
 #+= handle new update =+#
 if update_available:
-	if autoupdate:
-		logger.info('New update found, updating to latest version...', False)
-		time.sleep(1)
-		updater.update_program(oVersion, os.path.basename(__file__), debug)
-	if updatenotifier:  # this will only show if auto updates aren't on
-		logger.info(f'Your current version of Switchence {Fore.LIGHTRED_EX}v{version}{Fore.RESET} is not up to date', False)
-		logger.info(f'You can update Switchence to the current version {Fore.LIGHTRED_EX}v{oVersion}{Fore.RESET} by turning on Auto Updates or by visiting the official GitHub page', False)
-		logger.info('If you wish to turn on auto updates type \'auto update\' below', False)
-		logger.info('If you wish to turn off update notifications, type \'update notifier\' below', False)
-		logger.info('If you want to visit the GitHub page to update to the latest version type \'github\' below\n', False)
-		time.sleep(0.75)
+	if utils.BETA_BUILD or debug:
+		logger.add_log('Beta or debug mode detected so won\'t update nor send update notification')
+	else:
+		if autoupdate:
+			logger.info('New update found, updating to latest version...', False)
+			time.sleep(1)
+			updater.update_program(oVersion, os.path.basename(__file__))
+		if updatenotifier:  # this will only show if auto updates aren't on
+			logger.info(f'Your current version of Switchence, {Fore.LIGHTRED_EX}v{version}{Fore.RESET}, is not up to date', False)
+			logger.info(f'You can update Switchence to the current version, {Fore.LIGHTRED_EX}v{oVersion}{Fore.RESET}, by turning on Auto Updates or by visiting the official GitHub page', False)
+			logger.info('If you wish to turn on auto updates type \'auto update\' below', False)
+			logger.info('If you wish to turn off update notifications, type \'update notifier\' below', False)
+			logger.info('If you want to visit the GitHub page to update to the latest version type \'github\' below\n', False)
+			time.sleep(0.75)
 
 #+= pick game =+#
 print('Here are the current games:')
@@ -224,7 +227,7 @@ if favorites:
 # prints the entire game list unless user doesn't want them to
 if not hide_all_except_favs:
 	if configfname:  # if user wants to show full game names
-		print(Fore.RESET+', '.join(gamefnames))  # Fore.WHITE to reset yellow color from above
+		print(Fore.RESET+', '.join(gamefnames))  # Fore.RESET to reset yellow color from above
 	else:
 		print(Fore.RESET+', '.join(gamenames))
 else:

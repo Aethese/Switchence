@@ -24,8 +24,7 @@ class logger:
 		returns the logs in a formatted way. just newline after every log lol
 		'''
 
-		formatted_logs = '\n'.join(logs)
-		return formatted_logs
+		return '\n'.join(logs)
 
 	@staticmethod
 	def save_logs():

@@ -8,8 +8,9 @@ from src.config import config
 from src.logger import logger
 init()
 
-CURRENT_VERSION = '1.10.0-b5'
+CURRENT_VERSION = '1.10.0-b6'
 BETA_BUILD = True  # forcefully sets Discord Presence to show user is using a beta build
+IS_EXE = False
 
 
 def add_favorite(favorites: list):
@@ -108,8 +109,8 @@ def reopen():
 		sys.exit(1)  # TODO: actually reopen exe file lol
 	elif '.py' in file_name:  # even exe files are considered .py files :/
 		logger.add_log('Attempting to reopen Switchence with python3')
-		os.system('python main.py')
-		os.system('python3 main.py')  # just in case option above failed
+		os.system('python3 main.py')
+		os.system('python main.py')  # just in case option above failed
 	else:
 		logger.add_log('Unknown error while trying to reopen Switchence')
 		sys.exit(1)

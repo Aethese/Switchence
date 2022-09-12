@@ -88,15 +88,8 @@ def change_presence(swstatus: bool, gameimg: str, gamefname: str, debug: bool, v
 		small_img = 'switch_png'
 		logger.add_log('User is not running a beta build')
 
-	if showbutton:
-		button = [{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}]
-	else:
-		button = None
-	
-	if swstatus:
-		sw_code = f'SW-{sw}'
-	else:
-		sw_code = None
+	button = [{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}] if showbutton else None
+	sw_code = f'SW-{sw}' if swstatus else None
 
 	RPC.update(large_image=gameimg, large_text=gamefname, small_image=small_img, small_text=small_text, details=gamefname,
 		state=sw_code, buttons=button, start=start_time)

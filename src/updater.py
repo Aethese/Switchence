@@ -4,7 +4,7 @@ from src import utils
 from src.config import config
 from src.logger import logger
 
-def update_program(online_ver: str, current_file: str, in_debug_mode: bool):
+def update_program(online_ver: str, current_file: str):
 	'''
 	automatically updates Switchence by pulling the latest raw file from GitHub to update to
 
@@ -14,25 +14,18 @@ def update_program(online_ver: str, current_file: str, in_debug_mode: bool):
 		the newest version number
 	current_file : str
 		the path to the current file
-	in_debug_mode : bool
-		if the program is in debug mode. if in debug mode it stops the update
 	'''
 
 	utils.change_window_title(f'Updating to version {online_ver}')
 	logger.info(f'Updating to version {online_ver}...', False)
 
-	if utils.BETA_BUILD or in_debug_mode:
-		logger.info('Canceled auto updater because in beta or in debug, skipping update', False)
-		return
-
 	# look in the parent folder to see if the exe file exists
-	if os.path.isfile('Switchence.exe'):
+	if os.path.isfile('Switchence.exe') or utils.IS_EXE:
 		config.update('auto-update', False)
 		logger.info('The exe file does not currently support auto updating', True)
 
 	# request the up-to-date files from GitHub
 	logger.info('Getting online files...', False)
-	status_codes = []
 	# online files
 	beginning_link = 'https://raw.githubusercontent.com/Aethese/Switchence/main/'
 	online_main = requests.get(beginning_link + 'main.py')
@@ -42,12 +35,14 @@ def update_program(online_ver: str, current_file: str, in_debug_mode: bool):
 	online_utils = requests.get(beginning_link + 'src/utils.py')
 	logger.info('Online files obtained', False)
 
-	# add the status codes to the status_codes list
-	status_codes.append(online_main.status_code)
-	status_codes.append(online_config.status_code)
-	status_codes.append(online_log.status_code)
-	status_codes.append(online_presence.status_code)
-	status_codes.append(online_utils.status_code)
+	# add the status codes to a list called status_codes
+	status_codes = [
+		online_main.status_code,
+		online_config.status_code,
+		online_log.status_code,
+		online_presence.status_code,
+		online_utils.status_code
+	]
 
 	# check the status codes to see if any are not 200
 	for status_code in status_codes:

@@ -1,13 +1,13 @@
 #+= imports =+#
-import sys
 import os
+import sys
 
 # Switchence officially supports version 3.8 and higher
 if sys.version_info < (3, 8):
 	os.system('cls' if os.name == 'nt' else 'clear')
 	print('[Warning] Your version of Python is lower than the recommended Python version')
 	print('Switchence officially supports Python version 3.8 and higher')
-	if input('Do you wish to continue? (Y/N) ')[0] in 'Nn':
+	if input('Do you wish to continue? (Y/N) ').lower().startswith('n'):
 		sys.exit(0)
 
 import json
@@ -21,7 +21,7 @@ try:  # only try for the modules that need to be installed
 	init()
 except ImportError as missing_module:
 	print(f'[Error] Module \'{missing_module.name}\' is missing')
-	if input('Would you like to install all of the required modules? ')[0] in 'Yy':
+	if input('Would you like to install all of the required modules? ').lower().startswith('y'):
 		print('[Info] Installing now...')
 		try:
 			os.system('pip3 install --upgrade pip')
@@ -106,6 +106,8 @@ if os.path.isfile('config.json'):
 		logger.add_log(f'Debug mode: {debug}')
 	except Exception:  # if some settings are missing, recreate the file while saving some settings
 		try:  # attempt to save sw-code
+			# TODO: for this section and the rest below i'm pretty sure
+			# i can just look up in config without using for
 			with open('config.json', 'r') as json_file:
 				json_File = json.load(json_file)
 				for i in json_File['config']:
@@ -134,7 +136,7 @@ if os.path.isfile('config.json'):
 
 		logger.loading('Missing config settings found, creating them...', 'red')
 		logger.loading('This means some settings will be reset to default', 'red')
-		if input('Would you like to overwrite your current config file? (Y/N) ')[0] in 'Nn':
+		if not utils.yes_no_input('Would you like to overwrite your current config file? (Y/N) '):
 			logger.info('Ok, will not overwrite current config file and now exiting', True)
 		sw, version, updatenotifier, configfname, showbutton, autoupdate, hide_all_except_favs, favorites = config.create(sw, favorites, version)
 else:  # config file can't be found
@@ -190,7 +192,6 @@ Y88b  d88P Y88b 888 d88P 888 Y88b.  Y88b.    888  888 Y8b.     888  888 Y88b.   
  "Y8888P"   "Y8888888P"  888  "Y888  "Y8888P 888  888  "Y8888  888  888  "Y8888P  "Y8888    
 Made by Aethese
 ''')
-logger.add_log('Printed logo')
 
 #+= handle announcement, tips, and print if in debug mode =+#
 if announcement != '':
@@ -288,7 +289,7 @@ if show_sw_code in ['yes', 'y']:
 		show_sw_code = 'n'
 elif show_sw_code in ['change', 'c']:
 	new_sw_code = input('What is your new friend code (just type the numbers)? ')
-	if input(f'Is \'SW-{new_sw_code}\' correct? ')[0] in 'Yy':
+	if utils.yes_no_input(f'Is \'SW-{new_sw_code}\' correct? '):
 		config.update('sw-code', new_sw_code)
 		sw = new_sw_code
 		logger.info(f'Friend code changed to SW-{new_sw_code}', False)
@@ -299,25 +300,22 @@ elif show_sw_code in ['change', 'c']:
 
 #+= search for game =+#
 # attempt to change game_input to int to see if the user wants to pick a favorite
-logger.add_log('Checking to see if user wants to play favorite...')
 try:
 	game_input_int = int(game_input)
 except ValueError:
-	logger.add_log('User didn\'t pick favorite game')
 	game_input_int = None
 if isinstance(game_input_int, int):  # for shortcuts
-	logger.add_log('User did pick favorite game')
 	game_input = utils.shortcut(game_input_int, favorites)
 
 for details in games['games']:
 	details_name = details['name']
 	details_fname = details['fname']  # if user has full game name being shown
 	if details_name.lower() == game_input:
-		logger.add_log('Found game through small game name')
+		logger.add_log(f'Found game, {game_input}, through small game name')
 		chosen_game = details_name
 		break
 	elif details_fname.lower() == game_input:
-		logger.add_log('Found game through full game name')
+		logger.add_log(f'Found game, {game_input}, through full game name')
 		chosen_game = details_fname
 		break
 else:
@@ -336,5 +334,8 @@ for i in games['games']:
 
 
 #+= needed to keep program running in background =+#
-while True:
-	time.sleep(15)
+try:
+	while True:
+		time.sleep(15)
+except KeyboardInterrupt:
+	print('\nClosed Switchence successfully')

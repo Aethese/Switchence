@@ -15,7 +15,6 @@ def update_program(online_ver: str, current_file: str):
 	current_file : str
 		the path to the current file
 	'''
-
 	utils.change_window_title(f'Updating to version {online_ver}')
 	logger.info(f'Updating to version {online_ver}...', False)
 
@@ -81,6 +80,6 @@ def update_program(online_ver: str, current_file: str):
 	# update files and prompt to reopen Switchence
 	config.update('version', online_ver)
 	utils.change_window_title(f'Updated to version {online_ver}')
-	if input('Would you like to reopen Switchence? ')[0] in 'Yy':
+	if utils.yes_no_input('Would you like to reopen Switchence? '):
 		utils.reopen()
 	logger.info(f'Finished updating to version {online_ver}', True)

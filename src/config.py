@@ -17,7 +17,6 @@ class config:
 		change_to : any
 			what the new setting is being changed to. can be a string, bool, updated list, and prob more
 		'''
-
 		with open('config.json', 'r') as jfile:
 			jFile = json.load(jfile)
 			for i in jFile['config']:
@@ -60,7 +59,6 @@ class config:
 		favorites : list
 			list of all of the user's saved favorites, or empty if no saved favorites
 		'''
-
 		# create settings to save to config file
 		configjson = {'config': [{
 			'sw-code': swcode,

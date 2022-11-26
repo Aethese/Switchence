@@ -1,4 +1,5 @@
 '''small functions that can be fit here to make `main.py` smaller and more readable'''
+import ctypes
 import os
 import sys
 import time
@@ -8,7 +9,7 @@ from src.config import config
 from src.logger import logger
 init()
 
-CURRENT_VERSION = '1.10.0-b6'
+CURRENT_VERSION = '1.10.0-b9'
 BETA_BUILD = True  # forcefully sets Discord Presence to show user is using a beta build
 IS_EXE = False
 
@@ -22,8 +23,7 @@ def add_favorite(favorites: list):
 	favorites : list
 		list of user's favorite games
 	'''
-
-	if input('Would you like to add or remove a favorite? ')[0] in 'Rr':
+	if input('Would you like to add or remove a favorite? ').lower().startswith('r'):
 		if not favorites:
 			logger.info('Your favorite list is currently empty', True)
 		remove_ask = input('What game would you like to remove from your favorites? ')
@@ -52,7 +52,6 @@ def change_setting(setting_full_name: str, setting_short_name: str, setting_var:
 	setting_var : bool
 		the variable for the setting. says if the setting is enabled or disabled
 	'''
-	
 	print(f'\nYour current {setting_full_name} setting is set to {Fore.LIGHTGREEN_EX}{setting_var}{Fore.RESET}')
 	ask = input('What would you like to change it to, on or off? ').lower()
 	if ask == 'on':
@@ -73,25 +72,21 @@ def change_window_title(title: str):
 	'''
 	changes the terminal window title
 	'''
-	
 	if os.name == 'nt':
-		os.system(f'title {title}')
+		ctypes.windll.kernel32.SetConsoleTitleW(f'Switchence | {title}')
 
 
 def clear():
 	'''
 	just clears the terminal screen
 	'''
-
 	os.system('cls' if os.name == 'nt' else 'clear')
-	logger.add_log('Cleared screen')
 
 
 def form():
 	'''
 	opens the survey form
 	'''
-
 	logger.info('Opening the form...', False)
 	webbrowser.open('https://forms.gle/ofCZ8QXQYxPvTcDE7', new=2, autoraise=True)
 	logger.info('Form is now open! Thanks for being willing to fill out the form!', True)
@@ -101,7 +96,6 @@ def reopen():
 	'''
 	reopens Switchence
 	'''
-
 	logger.add_log('Attempting to reopen Switchence :/')
 	file_name = os.path.basename(__file__)
 	if os.path.isfile('Switchence.exe'):  # TODO: add support for if they changed file name lol
@@ -110,6 +104,7 @@ def reopen():
 	elif '.py' in file_name:  # even exe files are considered .py files :/
 		logger.add_log('Attempting to reopen Switchence with python3')
 		os.system('python3 main.py')
+		logger.add_log('Attempting to reopen Switchence with python')
 		os.system('python main.py')  # just in case option above failed
 	else:
 		logger.add_log('Unknown error while trying to reopen Switchence')
@@ -132,8 +127,16 @@ def shortcut(chosen_game: int, favs: list) -> int:
 	favs[i] : str
 		returns the favorite game name corresponding with the option the user selected
 	'''
-
 	for i in range(len(favs)):
 		if i + 1 == chosen_game:
 			return favs[i]
 	logger.error('You don\'t have that many favorites in your favorite list. Use the \'shortcut\' command to figure out how shortcuts work')
+
+
+def yes_no_input(prompt: str) -> bool:
+	'''
+	given the passed in prompt, it will ask the user for a yes or no answer.
+	if the answer starts with a y, returns True. False is returned in any other
+	situation
+	'''
+	return input(prompt).lower().startswith('y')

@@ -11,7 +11,7 @@ try:
 except ImportError as missing_module:
 	os.system('cls' if os.name == 'nt' else 'clear')
 	print(f'[Error] Module \'{missing_module.name}\' is missing')
-	if input('Would you like to install all of the required modules? ')[0] in 'Yy':
+	if utils.yes_no_input('Would you like to install all of the required modules? '):
 		print('[Info] Installing now...')
 		try:
 			os.system('pip install --upgrade pip')
@@ -43,14 +43,11 @@ def looking_for_game(showbutton: bool):
 	showbutton : bool
 		if the user wants to show a button linking to the GitHub page for Switchence
 	'''
-
 	logger.loading('Attempting to set looking for game status...', 'yellow')
 	utils.change_window_title('Picking a game')
+
 	start_time = time.time()
-	if showbutton:
-		button = [{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}]
-	else:
-		button = None
+	button = [{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}] if showbutton else None
 	RPC.update(large_image='switch_png', large_text='Searching for a game', details='Searching for a game', buttons=button, start=start_time)
 	logger.loading('Successfully set looking for game status!', 'green')
 
@@ -75,9 +72,9 @@ def change_presence(swstatus: bool, gameimg: str, gamefname: str, debug: bool, v
 	showbutton : bool
 		setting for `showbutton` to see
 	'''
-
 	start_time = time.time()
 	current_time_formatted = time.strftime('%H:%M', time.localtime())
+
 	# set small image to indicate build ran by user is a beta build or not
 	if debug or utils.BETA_BUILD:
 		small_text = 'Switchence Beta'
@@ -91,8 +88,9 @@ def change_presence(swstatus: bool, gameimg: str, gamefname: str, debug: bool, v
 	button = [{'label': 'Get this program here', 'url': 'https://github.com/Aethese/Switchence/releases'}] if showbutton else None
 	sw_code = f'SW-{sw}' if swstatus else None
 
-	RPC.update(large_image=gameimg, large_text=gamefname, small_image=small_img, small_text=small_text, details=gamefname,
-		state=sw_code, buttons=button, start=start_time)
+	RPC.update(large_image=gameimg, large_text=gamefname, small_image=small_img, small_text=small_text,
+		details=gamefname, state=sw_code, buttons=button, start=start_time)
 	print(f'Set game to {Fore.LIGHTGREEN_EX}{gamefname}{Fore.RESET} at {current_time_formatted}')
+
 	logger.add_log(f'Set game to {gamefname} at {current_time_formatted}')
 	utils.change_window_title(f'Playing {gamefname}')

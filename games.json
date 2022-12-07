@@ -332,6 +332,10 @@
 		"fname": "Pokémon Mystery Dungeon: Rescue Team DX"
 	},
 	{
+		"name": "pokemon-scarlet",
+		"fname": "Pokémon Scarlet"
+	},
+	{
 		"name": "pokemon-shield",
 		"fname": "Pokémon Shield"
 	},
@@ -350,6 +354,10 @@
 	{
 		"name": "pokemon-unite",
 		"fname": "Pokémon UNITE"
+	},
+	{
+		"name": "pokemon-violet",
+		"fname": "Pokémon Violet"
 	},
 	{
 		"name": "puyopuyo-tetris",
